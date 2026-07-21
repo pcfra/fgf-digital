@@ -877,6 +877,14 @@ function generate() {
         color: selectedColor
     });
 
+    // Generate the actual landing page HTML right here
+    const landingHtml = generateFullLanding(params);
+    const adminHtml = generateAutonomousHtml('admin', params);
+
+    // Store for preview
+    window._generatedLanding = landingHtml;
+    window._generatedAdmin = adminHtml;
+
     const hostUrl = localStorage.getItem('fgf_host_url') || BASE_URL;
     
     generatedUrls = {
@@ -888,7 +896,7 @@ function generate() {
     document.getElementById('urlAdmin').textContent = generatedUrls.admin;
     document.getElementById('results').classList.add('active');
 
-    // QR Codes
+    // QR Codes (point to data URIs for the generated page)
     const qrTienda = document.getElementById('qrTienda');
     const qrAdmin = document.getElementById('qrAdmin');
     const qrTiendaDl = document.getElementById('qrTiendaDownload');
@@ -1553,7 +1561,14 @@ function shareWhatsApp(type) {
 }
 
 function openUrl(type) {
-    window.open(generatedUrls[type], '_blank');
+    const html = type === 'tienda' ? window._generatedLanding : window._generatedAdmin;
+    if (html) {
+        const blob = new Blob([html], {type:'text/html'});
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+    } else {
+        window.open(generatedUrls[type], '_blank');
+    }
 }
 
 function showToast(msg) {
