@@ -1294,6 +1294,9 @@ body{font-family:'Inter',sans-serif;background:${cfg.bg};color:${cfg.text};overf
 .contact-item{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.05);font-size:0.82rem}
 .contact-item i{color:${cfg.accent};width:16px}
 .whatsapp-float{position:fixed;bottom:20px;right:20px;z-index:99;width:50px;height:50px;border-radius:50%;background:#25D366;color:white;display:flex;align-items:center;justify-content:center;font-size:22px;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,0.3)}
+.social-row{display:flex;gap:12px;justify-content:center;margin-bottom:16px;flex-wrap:wrap}
+.social-row a{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;transition:.3s;color:#fff}
+.social-row a:hover{transform:translateY(-3px) scale(1.1)}
 .footer{text-align:center;padding:24px 20px;color:${cfg.muted};font-size:0.75rem;border-top:1px solid rgba(255,255,255,0.04)}
 </style>
 </head>
@@ -1328,6 +1331,12 @@ body{font-family:'Inter',sans-serif;background:${cfg.bg};color:${cfg.text};overf
 <a href="https://wa.me/${telefono}" class="btn btn-primary" style="margin-top:20px"><i class="fab fa-whatsapp"></i> Escribir ahora</a>
 </div>
 <div class="footer">
+<div class="social-row">
+<a href="https://instagram.com" target="_blank" style="background:linear-gradient(135deg,#f58529,#dd2a7b)"><i class="fab fa-instagram"></i></a>
+<a href="https://facebook.com" target="_blank" style="background:#1877f2"><i class="fab fa-facebook-f"></i></a>
+<a href="https://tiktok.com" target="_blank" style="background:#000"><i class="fab fa-tiktok"></i></a>
+<a href="https://wa.me/${telefono}" target="_blank" style="background:#25D366"><i class="fab fa-whatsapp"></i></a>
+</div>
 <p>${nombre} © 2026 — Creado con FGF Digital 🚀</p>
 </div>
 <a href="https://wa.me/${telefono}" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
