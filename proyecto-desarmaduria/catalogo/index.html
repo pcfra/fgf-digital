@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Repuestos | Desarmaduría FGF</title>
+    <meta name="description" content="Catálogo completo de repuestos automotrices usados - Desarmaduría FGF Talagante. Motores, cajas de cambios, suspensión, frenos y más.">
+    <link rel="icon" type="image/svg+xml" href="../logos/logo-icon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f3460;
+            --primary-dark: #1a1a2e;
+            --secondary: #e9c46a;
+            --accent: #e76f51;
+            --accent-hover: #d4553a;
+            --dark: #0d1b2a;
+            --darker: #0d1b2a;
+            --success: #25d366;
+            --light: #f0f0f0;
+            --gray: #8892a0;
+            --gray-light: #b0b8c4;
+            --card-bg: linear-gradient(145deg, rgba(26,26,46,0.85), rgba(15,52,96,0.45));
+            --border-subtle: rgba(233,196,106,0.12);
+            --border-hover: rgba(233,196,106,0.35);
+            --shadow-card: 0 4px 24px rgba(0,0,0,0.35);
+            --shadow-hover: 0 12px 40px rgba(0,0,0,0.55);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--darker);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* ===================== HEADER ===================== */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(6,13,24,0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            box-shadow: 0 4px 40px rgba(0,0,0,0.6);
+        }
+
+        .header-inner {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .header-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+
+        .header-brand {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .header-brand-name {
+            font-size: 1.05rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-brand-sub {
+            font-size: 0.6rem;
+            color: var(--gray);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray-light);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .back-link:hover {
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        /* ===================== SEARCH BAR ===================== */
+        .search-bar-wrap {
+            position: fixed;
+            top: 64px; left: 0; right: 0;
+            z-index: 990;
+            background: rgba(13,27,42,0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 0.75rem 1.5rem;
+        }
+
+        .search-bar-inner {
+            max-width: 1440px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 0.95rem;
+            pointer-events: none;
+            transition: color var(--transition);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 46px;
+            background: rgba(255,255,255,0.06);
+            border: 1.5px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 400;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input::placeholder { color: var(--gray); font-weight: 400; }
+
+        .search-input:focus {
+            border-color: var(--secondary);
+            background: rgba(255,255,255,0.09);
+            box-shadow: 0 0 0 3px rgba(233,196,106,0.12);
+        }
+
+        .search-input:focus ~ .search-icon { color: var(--secondary); }
+
+        .search-clear {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.12);
+            border: none;
+            color: #fff;
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .search-clear.visible { display: flex; }
+        .search-clear:hover { background: var(--accent); }
+
+        .search-results-count {
+            font-size: 0.78rem;
+            color: var(--gray);
+            margin-top: 6px;
+            padding-left: 4px;
+            min-height: 18px;
+            transition: var(--transition);
+        }
+
+        .search-results-count span { color: var(--secondary); font-weight: 600; }
+
+        /* ===================== MAIN LAYOUT ===================== */
+        .main-layout {
+            display: flex;
+            flex: 1;
+            margin-top: 120px;
+            max-width: 1440px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===================== SIDEBAR ===================== */
+        .sidebar {
+            width: 260px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 120px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+            padding: 1.25rem 1rem 2rem 1.25rem;
+            border-right: 1px solid var(--border-subtle);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.1) transparent;
+        }
+
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-track { background: transparent; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+
+        .sidebar-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: var(--gray);
+            margin-bottom: 1rem;
+            padding-left: 4px;
+        }
+
+        .category-list { list-style: none; }
+
+        .category-item {
+            margin-bottom: 2px;
+        }
+
+        .category-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 14px;
+            background: transparent;
+            border: 1.5px solid transparent;
+            border-radius: var(--radius-sm);
+            color: var(--gray-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.84rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: left;
+        }
+
+        .category-btn:hover {
+            background: rgba(255,255,255,0.05);
+            color: #fff;
+        }
+
+        .category-btn.active {
+            background: rgba(233,196,106,0.1);
+            border-color: rgba(233,196,106,0.25);
+            color: var(--secondary);
+        }
+
+        .category-btn i {
+            width: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .category-btn .cat-label {
+            flex: 1;
+        }
+
+        .category-count {
+            background: rgba(255,255,255,0.08);
+            color: var(--gray);
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 10px;
+            min-width: 24px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .category-btn.active .category-count {
+            background: rgba(233,196,106,0.2);
+            color: var(--secondary);
+        }
+
+        /* ===================== CONTENT AREA ===================== */
+        .content-area {
+            flex: 1;
+            padding: 1.5rem 1.5rem 3rem 1.5rem;
+            min-width: 0;
+        }
+
+        .content-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .content-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .content-title span {
+            color: var(--secondary);
+        }
+
+        .sort-select {
+            padding: 8px 14px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            cursor: pointer;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238892a0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 34px;
+        }
+
+        .sort-select option { background: var(--dark); color: #fff; }
+
+        /* ===================== PRODUCT GRID ===================== */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .product-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-image .icon-placeholder {
+            font-size: 3.2rem;
+            color: rgba(233,196,106,0.25);
+            transition: var(--transition);
+        }
+
+        .product-card:hover .icon-placeholder {
+            color: rgba(233,196,106,0.45);
+            transform: scale(1.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(8px);
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .product-brand-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--accent);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .product-info {
+            padding: 1.1rem 1.1rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-meta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray);
+            font-size: 0.78rem;
+            margin-bottom: 12px;
+        }
+
+        .product-meta i {
+            font-size: 0.72rem;
+            color: var(--accent);
+        }
+
+        .product-desc {
+            font-size: 0.78rem;
+            color: var(--gray);
+            line-height: 1.5;
+            margin-bottom: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-bottom {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--secondary);
+            line-height: 1;
+        }
+
+        .product-price .currency {
+            font-size: 0.78rem;
+            font-weight: 600;
+            opacity: 0.7;
+        }
+
+        .btn-cotizar {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, var(--success), #1ebe5d);
+            color: #fff;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 25px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .btn-cotizar i { font-size: 0.85rem; }
+
+        .btn-cotizar:hover {
+            transform: scale(1.06);
+            box-shadow: 0 4px 18px rgba(37,211,102,0.4);
+        }
+
+        /* ===================== EMPTY STATE ===================== */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-state .empty-icon {
+            font-size: 4rem;
+            color: rgba(233,196,106,0.2);
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-state h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .empty-state p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* ===================== FOOTER ===================== */
+        .footer {
+            background: var(--darker);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 3rem 1.5rem 1.5rem;
+        }
+
+        .footer-inner {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-brand-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-brand p {
+            color: var(--gray);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .footer-social a {
+            width: 38px; height: 38px;
+            background: rgba(255,255,255,0.07);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .footer-col h4 {
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-col ul { list-style: none; }
+
+        .footer-col ul li { margin-bottom: 0.6rem; }
+
+        .footer-col ul li a {
+            color: var(--gray);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color var(--transition);
+        }
+
+        .footer-col ul li a:hover { color: #fff; }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 1.25rem;
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.78rem;
+        }
+
+        /* ===================== WHATSAPP FAB ===================== */
+        .whatsapp-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+        }
+
+        .whatsapp-fab a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px; height: 60px;
+            background: var(--success);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.8rem;
+            text-decoration: none;
+            box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+            transition: all 0.3s;
+            animation: fabPulse 2.5s infinite;
+        }
+
+        .whatsapp-fab a:hover {
+            transform: scale(1.12);
+        }
+
+        /* ===================== ANIMATIONS ===================== */
+        @keyframes fabPulse {
+            0%, 100% { box-shadow: 0 6px 28px rgba(37,211,102,0.5); }
+            50% { box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 0 0 14px rgba(37,211,102,0.12); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .product-card {
+            animation: fadeInUp 0.4s ease both;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.02s; }
+        .product-card:nth-child(2) { animation-delay: 0.06s; }
+        .product-card:nth-child(3) { animation-delay: 0.10s; }
+        .product-card:nth-child(4) { animation-delay: 0.14s; }
+        .product-card:nth-child(5) { animation-delay: 0.18s; }
+        .product-card:nth-child(6) { animation-delay: 0.22s; }
+        .product-card:nth-child(7) { animation-delay: 0.26s; }
+        .product-card:nth-child(8) { animation-delay: 0.30s; }
+        .product-card:nth-child(9) { animation-delay: 0.34s; }
+        .product-card:nth-child(10) { animation-delay: 0.38s; }
+
+        /* ===================== RESPONSIVE ===================== */
+        .mobile-categories {
+            display: none;
+            overflow-x: auto;
+            gap: 6px;
+            padding: 0 1.5rem 0.75rem;
+            max-width: 1440px;
+            margin: 0 auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .mobile-categories::-webkit-scrollbar { display: none; }
+
+        .mobile-cat-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 25px;
+            color: var(--gray-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .mobile-cat-btn.active {
+            background: rgba(233,196,106,0.15);
+            border-color: rgba(233,196,106,0.35);
+            color: var(--secondary);
+        }
+
+        .mobile-cat-btn .m-count {
+            background: rgba(255,255,255,0.1);
+            padding: 1px 6px;
+            border-radius: 8px;
+            font-size: 0.68rem;
+        }
+
+        .mobile-cat-btn.active .m-count {
+            background: rgba(233,196,106,0.2);
+            color: var(--secondary);
+        }
+
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .mobile-categories { display: flex; }
+            .main-layout { margin-top: 130px; }
+            .search-bar-wrap { top: 64px; }
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+        }
+
+        @media (max-width: 640px) {
+            .header-inner { padding: 0 1rem; height: 56px; }
+            .header-logo { width: 36px; height: 36px; }
+            .header-brand-name { font-size: 0.92rem; }
+            .back-link span { display: none; }
+            .back-link { padding: 6px 10px; }
+            .search-bar-wrap { top: 56px; padding: 0.6rem 1rem; }
+            .search-input { padding: 10px 14px 10px 40px; font-size: 0.85rem; }
+            .main-layout { margin-top: 110px; }
+            .content-area { padding: 1rem; }
+            .product-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+            .product-image { height: 130px; }
+            .product-image .icon-placeholder { font-size: 2.4rem; }
+            .product-info { padding: 0.8rem; }
+            .product-name { font-size: 0.82rem; }
+            .product-price { font-size: 1rem; }
+            .btn-cotizar { padding: 7px 12px; font-size: 0.72rem; }
+            .product-meta { font-size: 0.72rem; margin-bottom: 8px; }
+            .product-desc { display: none; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+            .footer-brand { grid-column: 1 / -1; }
+        }
+
+        @media (max-width: 400px) {
+            .product-grid { grid-template-columns: 1fr; }
+            .product-image { height: 170px; }
+        }
+
+        /* ===================== LOADING SKELETON ===================== */
+        .skeleton {
+            background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="../index.html" class="header-left">
+                <img src="../logos/logo-icon.svg" alt="FGF Logo" class="header-logo">
+                <div class="header-brand">
+                    <span class="header-brand-name">DESARMADURIA FGF</span>
+                    <span class="header-brand-sub">Repuestos Automotrices</span>
+                </div>
+            </a>
+            <a href="../index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                <span>Inicio</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- SEARCH BAR -->
+    <div class="search-bar-wrap">
+        <div class="search-bar-inner">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" id="searchInput" placeholder="Buscar por nombre, marca o categoria..." autocomplete="off">
+            <button class="search-clear" id="searchClear" onclick="clearSearch()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="search-results-count" id="searchResultsCount"></div>
+        </div>
+    </div>
+
+    <!-- MOBILE CATEGORIES -->
+    <div class="mobile-categories" id="mobileCategories"></div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="main-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-title">Categorias</div>
+            <ul class="category-list" id="categoryList"></ul>
+        </aside>
+
+        <!-- CONTENT -->
+        <main class="content-area">
+            <div class="content-header">
+                <h2 class="content-title" id="contentTitle">Todos los <span>repuestos</span></h2>
+                <select class="sort-select" id="sortSelect" onchange="applyFilters()">
+                    <option value="default">Destacados</option>
+                    <option value="price-asc">Precio: Menor a Mayor</option>
+                    <option value="price-desc">Precio: Mayor a Menor</option>
+                    <option value="name-asc">Nombre: A-Z</option>
+                    <option value="name-desc">Nombre: Z-A</option>
+                </select>
+            </div>
+            <div class="product-grid" id="productGrid">
+                <div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--gray);">
+                    <i class="fas fa-spinner fa-spin" style="font-size:24px; margin-bottom:10px; display:block;"></i>
+                    <span style="font-size:13px;">Cargando repuestos...</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-brand-name">DESARMADURIA FGF</div>
+                    <p>Tu fuente confiable de repuestos automotrices usados en Talagante. Entrega presencial y envios a todo Chile con garantia de calidad.</p>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/desarmaduria_fgf/" target="_blank" rel="noopener" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/desarmaduriafgf/" target="_blank" rel="noopener" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://wa.me/56961369782" target="_blank" rel="noopener" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="tel:+56961369782"><i class="fas fa-phone" style="width:16px;margin-right:6px;font-size:0.75rem;"></i>+56 9 6136 9782</a></li>
+                        <li><a href="https://wa.me/56961369782" target="_blank"><i class="fab fa-whatsapp" style="width:16px;margin-right:6px;font-size:0.75rem;"></i>WhatsApp</a></li>
+                        <li><a href="https://www.instagram.com/desarmaduria_fgf/" target="_blank"><i class="fab fa-instagram" style="width:16px;margin-right:6px;font-size:0.75rem;"></i>@desarmaduria_fgf</a></li>
+                        <li><a href="https://www.facebook.com/desarmaduriafgf/" target="_blank"><i class="fab fa-facebook-f" style="width:16px;margin-right:6px;font-size:0.75rem;"></i>/desarmaduriafgf</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Ubicacion</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-map-marker-alt" style="width:16px;margin-right:6px;font-size:0.75rem;"></i>Camino la Palma</a></li>
+                        <li><a href="#">Parcela 11, Lote 5</a></li>
+                        <li><a href="#">Talagante, RM</a></li>
+                        <li><a href="#"><i class="fas fa-clock" style="width:16px;margin-right:6px;font-size:0.75rem;"></i>Lun-Sab 9:00-18:00</a></li>
+                    </ul>
+                    <div style="display:flex;gap:0.5rem;margin-top:1rem;flex-wrap:wrap;">
+                        <a href="https://www.google.com/maps/dir/?api=1&destination=Camino+la+Palma+Parcela+11+Lote+5+Talagante+Chile" target="_blank" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 0.8rem;background:#0f3460;color:#fff;border-radius:6px;font-size:0.75rem;text-decoration:none;font-weight:600;">
+                            <i class="fas fa-map-marker-alt"></i> Maps
+                        </a>
+                        <a href="https://waze.com/ul?ll=-33.6630,-70.9320&navigate=yes&zoom=16" target="_blank" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.5rem 0.8rem;background:#33ccff;color:#000;border-radius:6px;font-size:0.75rem;text-decoration:none;font-weight:600;">
+                            <i class="fas fa-location-arrow"></i> Waze
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Categorias</h4>
+                    <ul>
+                        <li><a href="#" onclick="filterByCategory('Motor');return false;">Motor</a></li>
+                        <li><a href="#" onclick="filterByCategory('Cajas de Cambio');return false;">Cajas de Cambio</a></li>
+                        <li><a href="#" onclick="filterByCategory('Suspension');return false;">Suspension</a></li>
+                        <li><a href="#" onclick="filterByCategory('Frenos');return false;">Frenos</a></li>
+                        <li><a href="#" onclick="filterByCategory('Embrague');return false;">Embrague</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Desarmaduria FGF. Todos los derechos reservados. | Talagante, Chile</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FAB -->
+    <div class="whatsapp-fab">
+        <a href="https://wa.me/56961369782?text=Hola%20Desarmaduria%20FGF%2C%20quiero%20consultar%20por%20un%20repuesto" target="_blank" rel="noopener" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <script>
+        // ============================================
+        // CONFIGURATION
+        // ============================================
+        const WHATSAPP_NUMBER = '56961369782';
+
+        const CATEGORIES = [
+            { key: 'todos', label: 'Todos', icon: 'fas fa-th-large' },
+            { key: 'Motor', label: 'Motor', icon: 'fas fa-engine' },
+            { key: 'Cajas de Cambio', label: 'Cajas de Cambio', icon: 'fas fa-cogs' },
+            { key: 'Suspension', label: 'Suspension', icon: 'fas fa-arrows-alt-v' },
+            { key: 'Frenos', label: 'Frenos', icon: 'fas fa-compact-disc' },
+            { key: 'Embrague', label: 'Embrague', icon: 'fas fa-circle-notch' },
+            { key: 'Iluminacion', label: 'Iluminacion', icon: 'fas fa-lightbulb' },
+            { key: 'Electrico', label: 'Electrico', icon: 'fas fa-bolt' },
+            { key: 'Carroceria', label: 'Carroceria', icon: 'fas fa-car' },
+            { key: 'Refrigeracion', label: 'Refrigeracion', icon: 'fas fa-snowflake' },
+            { key: 'Otros', label: 'Otros', icon: 'fas fa-box-open' }
+        ];
+
+        const CATEGORY_ICONS = {
+            'Motor': 'fas fa-engine',
+            'Cajas de Cambio': 'fas fa-cogs',
+            'Suspension': 'fas fa-arrows-alt-v',
+            'Frenos': 'fas fa-compact-disc',
+            'Embrague': 'fas fa-circle-notch',
+            'Iluminacion': 'fas fa-lightbulb',
+            'Electrico': 'fas fa-bolt',
+            'Carroceria': 'fas fa-car',
+            'Refrigeracion': 'fas fa-snowflake',
+            'Otros': 'fas fa-box-open'
+        };
+
+        const CATEGORY_COLORS = {
+            'Motor': '#e76f51',
+            'Cajas de Cambio': '#e9c46a',
+            'Suspension': '#2a9d8f',
+            'Frenos': '#e63946',
+            'Embrague': '#f4a261',
+            'Iluminacion': '#f9c74f',
+            'Electrico': '#4895ef',
+            'Carroceria': '#6c757d',
+            'Refrigeracion': '#48bfe3',
+            'Otros': '#9b5de5'
+        };
+
+        // ============================================
+        // DEFAULT PRODUCTS
+        // ============================================
+        const defaultProducts = [
+            { id: 1, nombre: 'Motor Chevrolet Aveo 1.4', marca: 'Chevrolet', categoria: 'Motor', precio: 350000, descripcion: 'Motor completo en excelente estado, 120.000 km', foto: '', estado: 'disponible' },
+            { id: 2, nombre: 'Caja de Cambios Kia Cerato 1.6', marca: 'Kia', categoria: 'Cajas de Cambio', precio: 280000, descripcion: 'Caja manual 5 velocidades, compatible 2010-2015', foto: '', estado: 'disponible' },
+            { id: 3, nombre: 'Par Amortiguadores Hyundai Accent', marca: 'Hyundai', categoria: 'Suspension', precio: 85000, descripcion: 'Amortiguadores delanteros, par completo', foto: '', estado: 'disponible' },
+            { id: 4, nombre: 'Radiador Toyota Corolla', marca: 'Toyota', categoria: 'Refrigeracion', precio: 120000, descripcion: 'Radiador de aluminio, compatible Corolla 2008-2013', foto: '', estado: 'disponible' },
+            { id: 5, nombre: 'Kit Embrague Nissan Sentra', marca: 'Nissan', categoria: 'Embrague', precio: 150000, descripcion: 'Kit completo: disco, collarin y plato', foto: '', estado: 'disponible' },
+            { id: 6, nombre: 'Faros Delanteros Chevrolet Spark', marca: 'Chevrolet', categoria: 'Iluminacion', precio: 65000, descripcion: 'Par de faros delanteros halogenos', foto: '', estado: 'disponible' },
+            { id: 7, nombre: 'Motor Nissan Sentra 1.8', marca: 'Nissan', categoria: 'Motor', precio: 420000, descripcion: 'Motor completo, bajo kilometraje', foto: '', estado: 'disponible' },
+            { id: 8, nombre: 'Caja de Cambios Chevrolet Aveo', marca: 'Chevrolet', categoria: 'Cajas de Cambio', precio: 195000, descripcion: 'Caja manual, compatible Aveo 2010-2015', foto: '', estado: 'disponible' },
+            { id: 9, nombre: 'Par Bieletas Toyota Corolla', marca: 'Toyota', categoria: 'Suspension', precio: 45000, descripcion: 'Bieletas de direccion delanteras, par', foto: '', estado: 'disponible' },
+            { id: 10, nombre: 'Kit de Embrague Hyundai Accent', marca: 'Hyundai', categoria: 'Embrague', precio: 130000, descripcion: 'Kit embrague completo con collarin', foto: '', estado: 'disponible' },
+            { id: 11, nombre: 'Alternador Ford Focus 2.0', marca: 'Ford', categoria: 'Electrico', precio: 85000, descripcion: 'Alternador reconstruido, 6 meses garantia', foto: '', estado: 'disponible' },
+            { id: 12, nombre: 'Par de Espejos Kia Rio', marca: 'Kia', categoria: 'Carroceria', precio: 55000, descripcion: 'Espejos laterales con electricos', foto: '', estado: 'disponible' },
+            { id: 13, nombre: 'Compresor A/C Mazda 3', marca: 'Mazda', categoria: 'Refrigeracion', precio: 180000, descripcion: 'Compresor de aire acondicionado', foto: '', estado: 'disponible' },
+            { id: 14, nombre: 'Bomba de Direccion Chevrolet Sail', marca: 'Chevrolet', categoria: 'Electrico', precio: 95000, descripcion: 'Bomba de direccion asistida hidraulica', foto: '', estado: 'disponible' },
+            { id: 15, nombre: 'Par de Focos Delanteros Toyota Hilux', marca: 'Toyota', categoria: 'Iluminacion', precio: 75000, descripcion: 'Focos delanteros halogenos, par', foto: '', estado: 'disponible' },
+            { id: 16, nombre: 'Tambor de Freno Nissan March', marca: 'Nissan', categoria: 'Frenos', precio: 40000, descripcion: 'Tambor de freno trasero, buenas condiciones', foto: '', estado: 'disponible' }
+        ];
+
+        // ============================================
+        // STATE
+        // ============================================
+        let allProducts = [];
+        let activeCategory = 'todos';
+        let searchQuery = '';
+
+        // ============================================
+        // LOAD PRODUCTS
+        // ============================================
+        function loadProducts() {
+            try {
+                const stored = JSON.parse(localStorage.getItem('fgf_productos'));
+                if (Array.isArray(stored) && stored.length > 0) {
+                    allProducts = stored;
+                } else {
+                    allProducts = [...defaultProducts];
+                }
+            } catch (e) {
+                allProducts = [...defaultProducts];
+            }
+        }
+
+        // ============================================
+        // NORMALIZE CATEGORY (handle accents/spaces)
+        // ============================================
+        function normalizeCategory(cat) {
+            if (!cat) return 'Otros';
+            const c = cat.trim().toLowerCase()
+                .replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i')
+                .replace(/ó/g, 'o').replace(/ú/g, 'u').replace(/ñ/g, 'n');
+
+            const map = {
+                'motor': 'Motor',
+                'cajas de cambio': 'Cajas de Cambio',
+                'caja de cambios': 'Cajas de Cambio',
+                'transmision': 'Cajas de Cambio',
+                'transmisión': 'Cajas de Cambio',
+                'suspension': 'Suspension',
+                'suspensión': 'Suspension',
+                'frenos': 'Frenos',
+                'embrague': 'Embrague',
+                'iluminacion': 'Iluminacion',
+                'iluminación': 'Iluminacion',
+                'electrico': 'Electrico',
+                'eléctrico': 'Electrico',
+                'carroceria': 'Carroceria',
+                'carrocería': 'Carroceria',
+                'refrigeracion': 'Refrigeracion',
+                'refrigeración': 'Refrigeracion',
+                'otros': 'Otros'
+            };
+            return map[c] || 'Otros';
+        }
+
+        // ============================================
+        // FORMAT PRICE
+        // ============================================
+        function formatPrice(price) {
+            if (typeof price === 'string') {
+                price = parseInt(price.replace(/[^0-9]/g, ''));
+            }
+            if (isNaN(price)) return '$0';
+            return '$' + price.toLocaleString('es-CL');
+        }
+
+        // ============================================
+        // GET CATEGORY COUNTS
+        // ============================================
+        function getCategoryCounts() {
+            const counts = {};
+            CATEGORIES.forEach(c => counts[c.key] = 0);
+            allProducts.forEach(p => {
+                const cat = normalizeCategory(p.categoria);
+                if (counts[cat] !== undefined) {
+                    counts[cat]++;
+                } else {
+                    counts['Otros']++;
+                }
+            });
+            counts['todos'] = allProducts.length;
+            return counts;
+        }
+
+        // ============================================
+        // RENDER SIDEBAR
+        // ============================================
+        function renderSidebar() {
+            const counts = getCategoryCounts();
+
+            // Desktop sidebar
+            const list = document.getElementById('categoryList');
+            list.innerHTML = CATEGORIES.map(c => `
+                <li class="category-item">
+                    <button class="category-btn ${activeCategory === c.key ? 'active' : ''}"
+                            onclick="selectCategory('${c.key}')">
+                        <i class="${c.icon}"></i>
+                        <span class="cat-label">${c.label}</span>
+                        <span class="category-count">${counts[c.key]}</span>
+                    </button>
+                </li>
+            `).join('');
+
+            // Mobile categories
+            const mobile = document.getElementById('mobileCategories');
+            mobile.innerHTML = CATEGORIES.map(c => `
+                <button class="mobile-cat-btn ${activeCategory === c.key ? 'active' : ''}"
+                        onclick="selectCategory('${c.key}')">
+                    <i class="${c.icon}"></i>
+                    ${c.label}
+                    <span class="m-count">${counts[c.key]}</span>
+                </button>
+            `).join('');
+        }
+
+        // ============================================
+        // RENDER PRODUCTS
+        // ============================================
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            let filtered = [...allProducts];
+
+            // Filter by category
+            if (activeCategory !== 'todos') {
+                filtered = filtered.filter(p => normalizeCategory(p.categoria) === activeCategory);
+            }
+
+            // Filter by search
+            if (searchQuery) {
+                const q = searchQuery.toLowerCase();
+                filtered = filtered.filter(p => {
+                    const nombre = (p.nombre || '').toLowerCase();
+                    const marca = (p.marca || '').toLowerCase();
+                    const categoria = (p.categoria || '').toLowerCase();
+                    const desc = (p.descripcion || '').toLowerCase();
+                    return nombre.includes(q) || marca.includes(q) || categoria.includes(q) || desc.includes(q);
+                });
+            }
+
+            // Sort
+            const sort = document.getElementById('sortSelect').value;
+            switch (sort) {
+                case 'price-asc':
+                    filtered.sort((a, b) => (parseInt(a.precio) || 0) - (parseInt(b.precio) || 0));
+                    break;
+                case 'price-desc':
+                    filtered.sort((a, b) => (parseInt(b.precio) || 0) - (parseInt(a.precio) || 0));
+                    break;
+                case 'name-asc':
+                    filtered.sort((a, b) => (a.nombre || '').localeCompare(b.nombre || ''));
+                    break;
+                case 'name-desc':
+                    filtered.sort((a, b) => (b.nombre || '').localeCompare(a.nombre || ''));
+                    break;
+            }
+
+            // Update search count
+            const countEl = document.getElementById('searchResultsCount');
+            if (searchQuery) {
+                countEl.innerHTML = `<span>${filtered.length}</span> resultado${filtered.length !== 1 ? 's' : ''} para "${searchQuery}"`;
+            } else {
+                countEl.innerHTML = '';
+            }
+
+            // Update title
+            const titleEl = document.getElementById('contentTitle');
+            if (activeCategory === 'todos') {
+                titleEl.innerHTML = 'Todos los <span>repuestos</span>';
+            } else {
+                const catInfo = CATEGORIES.find(c => c.key === activeCategory);
+                titleEl.innerHTML = `${catInfo ? catInfo.label : activeCategory} <span>(${filtered.length})</span>`;
+            }
+
+            // Render
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="fas fa-search"></i></div>
+                        <h3>No se encontraron repuestos</h3>
+                        <p>Intenta con otra busqueda o categoria</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map((p, i) => {
+                const cat = normalizeCategory(p.categoria);
+                const iconClass = CATEGORY_ICONS[cat] || 'fas fa-cog';
+                const catColor = CATEGORY_COLORS[cat] || '#e9c46a';
+                const imgSrc = p.foto || '';
+                const price = formatPrice(p.precio);
+
+                return `
+                    <div class="product-card" style="animation-delay: ${Math.min(i * 0.04, 0.4)}s">
+                        <div class="product-image">
+                            ${imgSrc
+                                ? `<img src="${imgSrc}" alt="${p.nombre}" loading="lazy">`
+                                : `<i class="${iconClass} icon-placeholder"></i>`
+                            }
+                            <span class="product-brand-badge">${p.marca || 'N/A'}</span>
+                            <span class="product-badge">${cat}</span>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">${p.nombre || 'Repuesto'}</div>
+                            <div class="product-meta">
+                                <i class="fas fa-tag"></i>
+                                ${p.marca || 'N/A'} &middot; ${cat}
+                            </div>
+                            ${p.descripcion ? `<div class="product-desc">${p.descripcion}</div>` : ''}
+                            <div class="product-bottom">
+                                <div class="product-price">${price}</div>
+                                <button class="btn-cotizar" onclick="cotizarWhatsApp('${(p.nombre || '').replace(/'/g, "\\'")}', '${(p.marca || '').replace(/'/g, "\\'")}')">
+                                    <i class="fab fa-whatsapp"></i> Cotizar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ============================================
+        // FILTER FUNCTIONS
+        // ============================================
+        function selectCategory(key) {
+            activeCategory = key;
+            renderSidebar();
+            renderProducts();
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function filterByCategory(cat) {
+            activeCategory = cat;
+            renderSidebar();
+            renderProducts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function applyFilters() {
+            renderProducts();
+        }
+
+        // ============================================
+        // SEARCH
+        // ============================================
+        const searchInput = document.getElementById('searchInput');
+        const searchClear = document.getElementById('searchClear');
+        let searchTimeout;
+
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                searchQuery = this.value.trim();
+                searchClear.classList.toggle('visible', searchQuery.length > 0);
+                renderProducts();
+            }, 150);
+        });
+
+        function clearSearch() {
+            searchInput.value = '';
+            searchQuery = '';
+            searchClear.classList.remove('visible');
+            renderProducts();
+            searchInput.focus();
+        }
+
+        // ============================================
+        // WHATSAPP
+        // ============================================
+        function cotizarWhatsApp(productName, brand) {
+            const msg = encodeURIComponent(
+                `Hola, quiero cotizar un repuesto:\n\n` +
+                `Repuesto: ${productName}\n` +
+                `Marca: ${brand}\n\n` +
+                `Gracias!`
+            );
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+        }
+
+        // ============================================
+        // HEADER SCROLL
+        // ============================================
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            header.classList.toggle('scrolled', window.scrollY > 10);
+        }, { passive: true });
+
+        // ============================================
+        // SYNC WITH ADMIN (storage events)
+        // ============================================
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'fgf_productos') {
+                loadProducts();
+                renderSidebar();
+                renderProducts();
+            }
+        });
+
+        // Also poll for changes (same tab sync)
+        let lastStorageVersion = '';
+        setInterval(() => {
+            try {
+                const current = localStorage.getItem('fgf_productos') || '';
+                if (current !== lastStorageVersion) {
+                    lastStorageVersion = current;
+                    loadProducts();
+                    renderSidebar();
+                    renderProducts();
+                }
+            } catch (e) {}
+        }, 2000);
+
+        // ============================================
+        // INIT
+        // ============================================
+        lastStorageVersion = localStorage.getItem('fgf_productos') || '';
+        loadProducts();
+        renderSidebar();
+        renderProducts();
+    </script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Comercial - Soluciones Web para Negocios</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; }
+
+        /* Hero */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f3460 100%); padding: 40px 20px; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(233,196,106,0.1) 0%, transparent 70%); top: -100px; right: -100px; border-radius: 50%; }
+        .hero::after { content: ''; position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(231,111,81,0.08) 0%, transparent 70%); bottom: -100px; left: -100px; border-radius: 50%; }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; }
+        .hero-badge { display: inline-block; background: rgba(233,196,106,0.15); color: #e9c46a; padding: 8px 20px; border-radius: 50px; font-size: 13px; font-weight: 600; margin-bottom: 25px; border: 1px solid rgba(233,196,106,0.3); }
+        .hero h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+        .hero h1 span { color: #e9c46a; }
+        .hero p { font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 35px; }
+        .hero-cta { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        .btn { padding: 14px 32px; border-radius: 12px; font-weight: 600; font-size: 15px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s; border: none; cursor: pointer; }
+        .btn-primary { background: linear-gradient(135deg, #e9c46a, #e76f51); color: #0a0a0a; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(233,196,106,0.3); }
+        .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.3); }
+        .btn-outline:hover { border-color: #e9c46a; color: #e9c46a; }
+
+        /* Sections */
+        section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+        .section-tag { color: #e9c46a; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+        .section-title { font-size: clamp(28px, 4vw, 42px); font-weight: 800; margin-bottom: 15px; }
+        .section-title span { color: #e9c46a; }
+        .section-desc { color: rgba(255,255,255,0.6); font-size: 16px; line-height: 1.7; margin-bottom: 50px; max-width: 600px; }
+
+        /* Problem */
+        .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .problem-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 30px; transition: all 0.3s; }
+        .problem-card:hover { border-color: rgba(231,111,81,0.4); background: rgba(231,111,81,0.05); }
+        .problem-icon { font-size: 32px; margin-bottom: 15px; }
+        .problem-card h3 { font-size: 18px; margin-bottom: 8px; }
+        .problem-card p { color: rgba(255,255,255,0.5); font-size: 14px; line-height: 1.6; }
+
+        /* Solutions */
+        .solution-card { background: linear-gradient(135deg, rgba(15,52,96,0.3), rgba(26,26,46,0.5)); border: 1px solid rgba(233,196,106,0.2); border-radius: 20px; padding: 40px; margin-bottom: 25px; display: flex; gap: 30px; align-items: start; transition: all 0.3s; }
+        .solution-card:hover { border-color: rgba(233,196,106,0.5); transform: translateY(-3px); }
+        .solution-number { font-size: 48px; font-weight: 800; color: rgba(233,196,106,0.2); min-width: 70px; }
+        .solution-content h3 { font-size: 22px; margin-bottom: 10px; }
+        .solution-content p { color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 15px; }
+        .solution-features { display: flex; flex-wrap: wrap; gap: 8px; }
+        .feature-tag { background: rgba(37,211,102,0.1); color: #25d366; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+
+        /* Pricing */
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .price-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 40px 30px; text-align: center; transition: all 0.3s; position: relative; }
+        .price-card:hover { transform: translateY(-5px); }
+        .price-card.featured { border-color: #e9c46a; background: linear-gradient(135deg, rgba(233,196,106,0.08), rgba(231,111,81,0.05)); }
+        .price-card.featured::before { content: '⭐ MÁS VENDIDO'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #e9c46a, #e76f51); color: #0a0a0a; padding: 5px 20px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+        .price-name { font-size: 20px; font-weight: 700; margin-bottom: 5px; }
+        .price-desc { color: rgba(255,255,255,0.5); font-size: 13px; margin-bottom: 25px; }
+        .price-amount { font-size: 42px; font-weight: 800; color: #e9c46a; margin-bottom: 5px; }
+        .price-period { color: rgba(255,255,255,0.4); font-size: 13px; margin-bottom: 30px; }
+        .price-features { list-style: none; text-align: left; margin-bottom: 30px; }
+        .price-features li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: rgba(255,255,255,0.7); font-size: 14px; display: flex; align-items: center; gap: 10px; }
+        .price-features li i { color: #25d366; font-size: 12px; }
+        .price-btn { width: 100%; justify-content: center; }
+
+        /* Recurring */
+        .recurring-card { background: linear-gradient(135deg, rgba(37,211,102,0.1), rgba(15,52,96,0.3)); border: 1px solid rgba(37,211,102,0.3); border-radius: 20px; padding: 40px; text-align: center; margin-top: 40px; }
+        .recurring-card h3 { font-size: 24px; margin-bottom: 10px; }
+        .recurring-amount { font-size: 56px; font-weight: 800; color: #25d366; margin: 15px 0; }
+        .recurring-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 30px 0; }
+        .recurring-item { background: rgba(0,0,0,0.3); border-radius: 12px; padding: 20px; }
+        .recurring-item h4 { font-size: 16px; margin-bottom: 5px; }
+        .recurring-item p { color: rgba(255,255,255,0.5); font-size: 13px; }
+        .recurring-item .price { color: #25d366; font-size: 20px; font-weight: 700; margin-top: 8px; }
+
+        /* Demo */
+        .demo-section { text-align: center; padding: 80px 20px; background: linear-gradient(180deg, transparent, rgba(233,196,106,0.05)); }
+        .demo-link { display: inline-block; background: rgba(255,255,255,0.05); border: 2px solid rgba(233,196,106,0.3); border-radius: 16px; padding: 30px 50px; text-decoration: none; color: #fff; transition: all 0.3s; margin: 10px; }
+        .demo-link:hover { border-color: #e9c46a; background: rgba(233,196,106,0.1); transform: translateY(-3px); }
+        .demo-link i { font-size: 36px; color: #e9c46a; margin-bottom: 10px; display: block; }
+        .demo-link span { font-size: 14px; font-weight: 600; }
+
+        /* Footer */
+        .proposal-footer { text-align: center; padding: 60px 20px; border-top: 1px solid rgba(255,255,255,0.05); }
+        .proposal-footer h2 { font-size: 32px; margin-bottom: 15px; }
+        .proposal-footer h2 span { color: #e9c46a; }
+        .proposal-footer p { color: rgba(255,255,255,0.5); margin-bottom: 30px; }
+        .contact-grid { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+        .contact-item { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.05); padding: 12px 24px; border-radius: 12px; color: rgba(255,255,255,0.7); font-size: 14px; }
+        .contact-item i { color: #e9c46a; font-size: 18px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .solution-card { flex-direction: column; gap: 15px; }
+            .solution-number { font-size: 36px; }
+            .recurring-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Print */
+        @media print {
+            body { background: #fff; color: #000; }
+            .hero { min-height: auto; padding: 40px; background: #f5f5f5; }
+            .hero h1 { color: #0f3460; }
+            .hero h1 span { color: #e76f51; }
+            .hero p { color: #333; }
+            section { padding: 30px 20px; }
+            .price-card, .problem-card, .solution-card { border: 1px solid #ddd; background: #fff; }
+            .price-amount, .recurring-amount { color: #0f3460; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-content">
+        <div class="hero-badge">Propuesta Comercial 2026</div>
+        <h1>Tu Negocio <span>Online</span> en 7 Días</h1>
+        <p>Soluciones web profesionales para negocios locales. Web, catálogo, app móvil y panel de administración — todo sincronizado y listo para vender.</p>
+        <div class="hero-cta">
+            <a href="https://dvds-oldest-unit-warned.trycloudflare.com/" target="_blank" class="btn btn-primary">
+                <i class="fas fa-eye"></i> Ver Demo en Vivo
+            </a>
+            <a href="#precios" class="btn btn-outline">
+                <i class="fas fa-tag"></i> Ver Precios
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- PROBLEMA -->
+<section>
+    <div class="section-tag">El Problema</div>
+    <div class="section-title">¿Tu Negocio <span>Sufre</span> Esto?</div>
+    <div class="section-desc">La mayoría de los negocios locales pierden clientes todos los días por这些问题:</div>
+
+    <div class="problem-grid">
+        <div class="problem-card">
+            <div class="problem-icon">📵</div>
+            <h3>Sin Presencia Online</h3>
+            <p>Tus clientes no te encuentran en Google. Buscan "repuestos Talagante" y aparece tu competencia.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-icon">📸</div>
+            <h3>Solo Instagram</h3>
+            <p>Tu negocio vive de una cuenta de Instagram sin catálogo organizado, sin precios visibles, sin control.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-icon">📝</div>
+            <h3>Control con Cuadernos</h3>
+            <p>Ventas en cuaderno, inventario en la memoria. No sabes cuánto vendiste hoy, este mes, este año.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-icon">😴</div>
+            <h3>Clientes Perdidos</h3>
+            <p>Te escriben a las 11pm y tú duermes. El cliente busca otro y compra ahí.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SOLUCIÓN -->
+<section>
+    <div class="section-tag">La Solución</div>
+    <div class="section-title">Todo lo que Tu Negocio <span>Necesita</span></div>
+    <div class="section-desc">Un ecosistema completo que se ve profesional y funciona solo.</div>
+
+    <div class="solution-card">
+        <div class="solution-number">01</div>
+        <div class="solution-content">
+            <h3>🌐 Web Profesional</h3>
+            <p>Tu negocio en internet con diseño premium. Los clientes te encuentran en Google, ven tus productos, ubicación con Waze/Maps y te contactan por WhatsApp al instante.</p>
+            <div class="solution-features">
+                <span class="feature-tag">Diseño responsive</span>
+                <span class="feature-tag">Google Maps + Waze</span>
+                <span class="feature-tag">WhatsApp integrado</span>
+                <span class="feature-tag">SEO optimizado</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="solution-card">
+        <div class="solution-number">02</div>
+        <div class="solution-content">
+            <h3>📋 Catálogo con Buscador</h3>
+            <p>Tus productos organizados por categorías con buscador inteligente. El cliente busca "caja de cambios Cerato" y lo encuentra al instante. Con precios, fotos y botón de cotización.</p>
+            <div class="solution-features">
+                <span class="feature-tag">Buscador en tiempo real</span>
+                <span class="feature-tag">Filtros por categoría</span>
+                <span class="feature-tag">Cotización por WhatsApp</span>
+                <span class="feature-tag">Actualización instantánea</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="solution-card">
+        <div class="solution-number">03</div>
+        <div class="solution-content">
+            <h3>📱 App Móvil</h3>
+            <p>Tu tienda en el celular de tus clientes. Catálogo, ofertas, avisos — todo en una app que se ve profesional y se instala desde el navegador.</p>
+            <div class="solution-features">
+                <span class="feature-tag">Se ve como app nativa</span>
+                <span class="feature-tag">Cámara integrada</span>
+                <span class="feature-tag">Notificaciones</span>
+                <span class="feature-tag">Funciona sin internet</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="solution-card">
+        <div class="solution-number">04</div>
+        <div class="solution-content">
+            <h3>🛠️ Panel de Administración</h3>
+            <p>Control total de tu negocio desde el celular o computador. Registra ventas, gestiona inventario, crea ofertas, revisa estadísticas y exporta todo a Excel.</p>
+            <div class="solution-features">
+                <span class="feature-tag">Ventas diarias/mensuales</span>
+                <span class="feature-tag">Exportar a Excel</span>
+                <span class="feature-tag">Control de inventario</span>
+                <span class="feature-tag">Dashboard con stats</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- DEMO -->
+<div class="demo-section">
+    <div class="section-tag">En Vivo</div>
+    <div class="section-title">Mira lo que <span>Creamos</span></div>
+    <div class="section-desc" style="margin: 0 auto 40px;">Esto es exactamente lo que tu negocio tendría. Prueba cada sección:</div>
+    <div>
+        <a href="https://dvds-oldest-unit-warned.trycloudflare.com/" target="_blank" class="demo-link">
+            <i class="fas fa-globe"></i>
+            <span>Página Principal</span>
+        </a>
+        <a href="https://dvds-oldest-unit-warned.trycloudflare.com/catalogo/" target="_blank" class="demo-link">
+            <i class="fas fa-search"></i>
+            <span>Catálogo + Buscador</span>
+        </a>
+        <a href="https://dvds-oldest-unit-warned.trycloudflare.com/admin/" target="_blank" class="demo-link">
+            <i class="fas fa-cog"></i>
+            <span>Panel Admin</span>
+        </a>
+        <a href="https://dvds-oldest-unit-warned.trycloudflare.com/app-movil/" target="_blank" class="demo-link">
+            <i class="fas fa-mobile-alt"></i>
+            <span>App Móvil</span>
+        </a>
+    </div>
+</div>
+
+<!-- PRECIOS -->
+<section id="precios">
+    <div class="section-tag">Inversión</div>
+    <div class="section-title">Planes que <span>Caben</span> en tu Bolsillo</div>
+    <div class="section-desc">Elige el plan que mejor se adapte a tu negocio. Todos incluyen soporte.</div>
+
+    <div class="pricing-grid">
+        <div class="price-card">
+            <div class="price-name">Básico</div>
+            <div class="price-desc">Presencia online básica</div>
+            <div class="price-amount">$350K</div>
+            <div class="price-period">pago único</div>
+            <ul class="price-features">
+                <li><i class="fas fa-check"></i> Web profesional responsive</li>
+                <li><i class="fas fa-check"></i> WhatsApp integrado</li>
+                <li><i class="fas fa-check"></i> Google Maps + Waze</li>
+                <li><i class="fas fa-check"></i> Logo básico</li>
+                <li><i class="fas fa-check"></i> Hosting 3 meses gratis</li>
+            </ul>
+            <a href="https://wa.me/56961369782?text=Hola,%20quiero%20el%20plan%20Básico" target="_blank" class="btn btn-outline price-btn">
+                <i class="fab fa-whatsapp"></i> Contratar
+            </a>
+        </div>
+
+        <div class="price-card featured">
+            <div class="price-name">Profesional</div>
+            <div class="price-desc">Web + Catálogo + Admin</div>
+            <div class="price-amount">$750K</div>
+            <div class="price-period">pago único</div>
+            <ul class="price-features">
+                <li><i class="fas fa-check"></i> Todo lo del plan Básico</li>
+                <li><i class="fas fa-check"></i> Catálogo con buscador</li>
+                <li><i class="fas fa-check"></i> Panel de administración</li>
+                <li><i class="fas fa-check"></i> Control de ventas + Excel</li>
+                <li><i class="fas fa-check"></i> Logo profesional</li>
+                <li><i class="fas fa-check"></i> Hosting 6 meses gratis</li>
+            </ul>
+            <a href="https://wa.me/56961369782?text=Hola,%20quiero%20el%20plan%20Profesional" target="_blank" class="btn btn-primary price-btn">
+                <i class="fab fa-whatsapp"></i> Contratar
+            </a>
+        </div>
+
+        <div class="price-card">
+            <div class="price-name">Premium</div>
+            <div class="price-desc">Ecosistema completo</div>
+            <div class="price-amount">$1.2M</div>
+            <div class="price-period">pago único</div>
+            <ul class="price-features">
+                <li><i class="fas fa-check"></i> Todo lo del plan Profesional</li>
+                <li><i class="fas fa-check"></i> App móvil profesional</li>
+                <li><i class="fas fa-check"></i> Sincronización en tiempo real</li>
+                <li><i class="fas fa-check"></i> Stats públicos animados</li>
+                <li><i class="fas fa-check"></i> Link público permanente</li>
+                <li><i class="fas fa-check"></i> Hosting 12 meses gratis</li>
+            </ul>
+            <a href="https://wa.me/56961369782?text=Hola,%20quiero%20el%20plan%20Premium" target="_blank" class="btn btn-outline price-btn">
+                <i class="fab fa-whatsapp"></i> Contratar
+            </a>
+        </div>
+    </div>
+
+    <!-- Mantención mensual -->
+    <div class="recurring-card">
+        <h3>🔄 Mantención Mensual (Opcional)</h3>
+        <p style="color: rgba(255,255,255,0.6); margin-top: 5px;">Para que tu negocio siempre esté actualizado</p>
+        <div class="recurring-amount">$70K<span style="font-size: 18px; color: rgba(255,255,255,0.4);">/mes</span></div>
+        <div class="recurring-grid">
+            <div class="recurring-item">
+                <h4>🖥️ Hosting + Dominio</h4>
+                <p>Servidor siempre activo</p>
+                <div class="price">$25.000</div>
+            </div>
+            <div class="recurring-item">
+                <h4>📦 Actualización Inventario</h4>
+                <p>Agregamos nuevos productos</p>
+                <div class="price">$25.000</div>
+            </div>
+            <div class="recurring-item">
+                <h4>🛠️ Soporte Técnico</h4>
+                <p>Fixes y mejoras incluidas</p>
+                <div class="price">$20.000</div>
+            </div>
+        </div>
+        <a href="https://wa.me/56961369782?text=Hola,%20quiero%20mantención%20mensual" target="_blank" class="btn btn-primary" style="margin-top: 10px;">
+            <i class="fab fa-whatsapp"></i> Contratar Mantención
+        </a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<div class="proposal-footer">
+    <h2>¿Listo para <span>Crecer</span>?</h2>
+    <p>Tu negocio merece verse tan bien como lo que vendes.</p>
+    <a href="https://wa.me/56961369782?text=Hola,%20me%20interesa%20una%20propuesta%20web" target="_blank" class="btn btn-primary" style="font-size: 18px; padding: 18px 40px;">
+        <i class="fab fa-whatsapp"></i> Hablemos por WhatsApp
+    </a>
+    <div class="contact-grid">
+        <div class="contact-item">
+            <i class="fab fa-whatsapp"></i> +56 9 6136 9782
+        </div>
+        <div class="contact-item">
+            <i class="fab fa-instagram"></i> @desarmaduria_fgf
+        </div>
+        <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i> Talagante, Chile
+        </div>
+    </div>
+    <p style="margin-top: 40px; font-size: 12px; color: rgba(255,255,255,0.3);">© 2026 - Propuesta elaborada por Francisco Pardo</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FGF Digital — Portafolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a14;
+            --bg2: #0f0f23;
+            --card: rgba(21, 21, 48, 0.7);
+            --card-border: rgba(124, 58, 237, 0.15);
+            --purple: #7c3aed;
+            --purple2: #a855f7;
+            --purple3: #c084fc;
+            --purple-glow: rgba(124, 58, 237, 0.25);
+            --neon: #06b6d4;
+            --white: #ffffff;
+            --gray: #a1a1aa;
+            --lgray: #e4e4e7;
+            --gold: #fbbf24;
+            --dim: #333355;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--lgray);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ─── Background Effects ─── */
+        #particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 3px; height: 3px;
+            background: var(--purple2);
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: float linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.2; }
+            90% { opacity: 0.2; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+        .particle:nth-child(1) { left: 10%; width: 2px; height: 2px; animation-duration: 25s; }
+        .particle:nth-child(2) { left: 20%; width: 4px; height: 4px; animation-duration: 18s; animation-delay: 2s; }
+        .particle:nth-child(3) { left: 35%; width: 2px; height: 2px; animation-duration: 30s; animation-delay: 5s; }
+        .particle:nth-child(4) { left: 50%; width: 3px; height: 3px; animation-duration: 22s; animation-delay: 1s; }
+        .particle:nth-child(5) { left: 65%; width: 2px; height: 2px; animation-duration: 28s; animation-delay: 3s; }
+        .particle:nth-child(6) { left: 75%; width: 4px; height: 4px; animation-duration: 20s; animation-delay: 4s; }
+        .particle:nth-child(7) { left: 85%; width: 2px; height: 2px; animation-duration: 26s; animation-delay: 6s; }
+        .particle:nth-child(8) { left: 45%; width: 3px; height: 3px; animation-duration: 32s; animation-delay: 7s; }
+
+        .grid-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(124, 58, 237, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(124, 58, 237, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ─── Layout ─── */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ─── Header ─── */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(124, 58, 237, 0.1);
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 20, 0.8);
+            z-index: 100;
+        }
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+        .logo span { color: var(--purple2); }
+        .header-contact {
+            font-size: 13px;
+            color: var(--gray);
+        }
+        .header-contact strong {
+            color: var(--purple3);
+        }
+        .header-whatsapp {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--purple), var(--purple2));
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .header-whatsapp:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--purple-glow);
+        }
+
+        /* ─── Hero ─── */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.08), transparent 70%);
+            pointer-events: none;
+        }
+        .hero-tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--purple3);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            padding: 6px 18px;
+            border-radius: 50px;
+        }
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 16px;
+            letter-spacing: -1.5px;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--purple2), var(--purple3), var(--neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-contact {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .hero-btn-primary {
+            background: linear-gradient(135deg, var(--purple), var(--purple2));
+            color: white;
+        }
+        .hero-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px var(--purple-glow);
+        }
+        .hero-btn-secondary {
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            color: var(--lgray);
+            background: rgba(124, 58, 237, 0.05);
+        }
+        .hero-btn-secondary:hover {
+            border-color: var(--purple2);
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        /* ─── Stats ─── */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 60px 0 80px;
+        }
+        .stat-card {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 28px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.08);
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .stat-card:nth-child(1) .stat-number { color: var(--purple3); }
+        .stat-card:nth-child(2) .stat-number { color: var(--neon); }
+        .stat-card:nth-child(3) .stat-number { color: var(--gold); }
+
+        /* ─── Section Title ─── */
+        .section-tag {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--purple3);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+        .section-title {
+            font-size: 38px;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+        .section-desc {
+            font-size: 16px;
+            color: var(--gray);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        /* ─── About ─── */
+        .about {
+            padding: 80px 0;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .about-card {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 36px;
+        }
+        .about-card p {
+            font-size: 15px;
+            color: var(--lgray);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        .about-card .highlight {
+            color: var(--purple3);
+            font-weight: 600;
+        }
+        .about-features {
+            display: grid;
+            gap: 16px;
+        }
+        .about-feat {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            transition: all 0.3s ease;
+        }
+        .about-feat:hover {
+            border-color: rgba(124, 58, 237, 0.25);
+            transform: translateX(4px);
+        }
+        .about-feat-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .about-feat:nth-child(1) .about-feat-icon { background: rgba(124, 58, 237, 0.15); color: var(--purple3); }
+        .about-feat:nth-child(2) .about-feat-icon { background: rgba(6, 182, 212, 0.15); color: var(--neon); }
+        .about-feat:nth-child(3) .about-feat-icon { background: rgba(251, 191, 36, 0.15); color: var(--gold); }
+        .about-feat-text h4 { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+        .about-feat-text p { font-size: 12px; color: var(--gray); margin: 0; }
+
+        /* ─── Plans ─── */
+        .plans {
+            padding: 80px 0;
+        }
+        .plans-grid {
+            display: grid;
+            gap: 24px;
+        }
+        .plans-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .plan-card {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        .plan-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.1);
+        }
+        .plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--purple), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .plan-card:hover::before { opacity: 1; }
+
+        .plan-tag {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+        .plan-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .plan-price-label {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 12px;
+        }
+        .plan-price {
+            font-size: 32px;
+            font-weight: 800;
+            margin: 2px 0 16px;
+        }
+        .plan-price .currency { font-size: 18px; font-weight: 600; }
+        .plan-items {
+            list-style: none;
+            margin: 16px 0;
+        }
+        .plan-items li {
+            padding: 5px 0;
+            font-size: 13px;
+            color: var(--lgray);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .plan-items li::before {
+            content: '✓';
+            color: var(--purple3);
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .plan-ideal {
+            font-size: 11px;
+            color: var(--gray);
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        .plan-card.purple .plan-price { color: var(--purple3); }
+        .plan-card.purple-2 .plan-price { color: var(--purple2); }
+        .plan-card.neon .plan-price { color: var(--neon); }
+        .plan-card.gold .plan-price { color: var(--gold); }
+
+        .plan-card.full {
+            grid-column: 1 / -1;
+        }
+        .plan-card.full::before {
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        /* ─── Sercotec ─── */
+        .sercotec {
+            padding: 80px 0;
+        }
+        .sercotec-card {
+            background: linear-gradient(135deg, rgba(21, 21, 48, 0.8), rgba(124, 58, 237, 0.08));
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+        }
+        .sercotec-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+        .sercotec-card h3 span { color: var(--gold); }
+        .sercotec-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .sercotec-item {
+            padding: 16px;
+            background: rgba(124, 58, 237, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(124, 58, 237, 0.08);
+        }
+        .sercotec-item h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--purple3);
+            margin-bottom: 6px;
+        }
+        .sercotec-item p {
+            font-size: 13px;
+            color: var(--gray);
+        }
+        .sercotec-highlight {
+            margin-top: 20px;
+            text-align: center;
+            padding: 24px;
+            background: rgba(251, 191, 36, 0.06);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+            border-radius: 12px;
+        }
+        .sercotec-highlight .big {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--white);
+        }
+        .sercotec-highlight .big span { color: var(--purple3); }
+        .sercotec-highlight p { color: var(--gray); font-size: 14px; margin-top: 8px; }
+
+        /* ─── Benefits ─── */
+        .benefits {
+            padding: 80px 0;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .benefit-card {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 28px 24px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+        .benefit-card:hover {
+            border-color: rgba(124, 58, 237, 0.25);
+        }
+        .benefit-icon {
+            font-size: 24px;
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            background: rgba(124, 58, 237, 0.1);
+        }
+        .benefit-text h4 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .benefit-text p {
+            font-size: 12px;
+            color: var(--gray);
+            margin: 0;
+        }
+
+        /* ─── Footer / CTA ─── */
+        footer {
+            padding: 80px 0 40px;
+            text-align: center;
+            border-top: 1px solid rgba(124, 58, 237, 0.08);
+        }
+        .footer-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        footer h2 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        footer h2 span { color: var(--purple3); }
+        footer .subtitle {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        .footer-contact {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--card), rgba(124, 58, 237, 0.1));
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 20px;
+            padding: 28px 48px;
+            margin-bottom: 40px;
+        }
+        .footer-contact .phone {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--purple3);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .footer-contact .phone:hover { color: var(--purple2); }
+        .footer-contact .name {
+            font-size: 14px;
+            color: var(--lgray);
+        }
+        .footer-contact .addr {
+            font-size: 12px;
+            color: var(--gray);
+        }
+        .footer-copy {
+            font-size: 11px;
+            color: var(--dim);
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .hero p { font-size: 16px; }
+            .stats { grid-template-columns: 1fr; }
+            .about-grid { grid-template-columns: 1fr; }
+            .plans-row { grid-template-columns: 1fr; }
+            .sercotec-grid { grid-template-columns: 1fr; }
+            .section-title { font-size: 28px; }
+            header .container { flex-direction: column; gap: 12px; }
+            .footer-contact { padding: 20px; }
+            .hero { padding: 80px 0 40px; }
+        }
+
+        /* ─── Animations ─── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+
+    <!-- ─── Particles ─── -->
+    <div id="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    <div class="grid-bg"></div>
+
+    <!-- ─── Header ─── -->
+    <header>
+        <div class="container">
+            <div class="logo">FGF <span>Digital</span></div>
+            <div class="header-contact">
+                <strong>+56 9 4089 4579</strong> &nbsp;·&nbsp; Talagante &nbsp;·&nbsp;
+                <a href="https://wa.me/56940894579" class="header-whatsapp" target="_blank">
+                    ✦ WhatsApp
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ─── Hero ─── -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-tag fade-in">✦ Portafolio 2026</div>
+            <h1 class="fade-in">Transformación Digital<br/>para <span>Pymes Chilenas</span></h1>
+            <p class="fade-in">
+                Soluciones web profesionales, sistemas de pedidos, booking online y 
+                transformación digital para negocios que quieren crecer.
+            </p>
+            <div class="hero-contact fade-in">
+                <a href="https://wa.me/56940894579" class="hero-btn hero-btn-primary" target="_blank">
+                    ✦ Contáctame por WhatsApp
+                </a>
+                <a href="#plans" class="hero-btn hero-btn-secondary">
+                    Ver Planes ↓
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Stats ─── -->
+    <section class="container">
+        <div class="stats">
+            <div class="stat-card fade-in">
+                <div class="stat-number">+20</div>
+                <div class="stat-label">Prospectos Activos</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-number">77%</div>
+                <div class="stat-label">Pymes Chilenas Sin Web</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-number">$1.2M</div>
+                <div class="stat-label">Subsidio Sercotec</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── About ─── -->
+    <section class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-card fade-in">
+                    <div class="section-tag">✦ Quiénes Somos</div>
+                    <h2 class="section-title" style="font-size:28px; margin-bottom:16px;">Francisco Javier<br/>Pardo Jara</h2>
+                    <p>
+                        <span class="highlight">Freelancer experto en informática, publicidad y desarrollo web.</span>
+                        Desde Talagante, llevamos negocios tradicionales chilenos al mundo digital.
+                    </p>
+                    <p>
+                        Trabajamos con panaderías, talleres, almacenes, farmacias, restaurantes 
+                        y profesionales independientes que quieren crecer pero no saben por dónde empezar.
+                    </p>
+                    <p style="margin-bottom:0;">
+                        <span class="highlight">+60%</span> de las pymes que se digitalizan 
+                        aumentan sus ventas <span style="color:var(--gray); font-size:12px;">— Movistar 2024</span>
+                    </p>
+                </div>
+                <div class="about-features fade-in">
+                    <div class="about-feat">
+                        <div class="about-feat-icon">🖥️</div>
+                        <div class="about-feat-text">
+                            <h4>Informática</h4>
+                            <p>Desarrollo web, SEO, hosting, dominios, infraestructura digital</p>
+                        </div>
+                    </div>
+                    <div class="about-feat">
+                        <div class="about-feat-icon">📣</div>
+                        <div class="about-feat-text">
+                            <h4>Publicidad</h4>
+                            <p>Google My Business, SEO local, redes sociales, marketing digital</p>
+                        </div>
+                    </div>
+                    <div class="about-feat">
+                        <div class="about-feat-icon">🌐</div>
+                        <div class="about-feat-text">
+                            <h4>Páginas Web</h4>
+                            <p>Sitios profesionales, e-commerce, delivery, booking, landing pages</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Plans ─── -->
+    <section class="plans" id="plans">
+        <div class="container">
+            <div class="section-tag fade-in">✦ Servicios</div>
+            <h2 class="section-title fade-in">Planes Profesionales</h2>
+            <p class="section-desc fade-in">
+                Paga solo por lo que necesitas. Todos incluyen dominio, hosting y SSL por 1 año.
+            </p>
+
+            <div class="plans-row fade-in">
+                <!-- Plan 1 -->
+                <div class="plan-card purple">
+                    <div class="plan-tag">PLAN BÁSICO</div>
+                    <div class="plan-name">Web Profesional</div>
+                    <div class="plan-price-label">DESDE</div>
+                    <div class="plan-price"><span class="currency">$</span>490.000</div>
+                    <ul class="plan-items">
+                        <li>Sitio web 1 página (landing profesional)</li>
+                        <li>Dominio .cl + Hosting 1 año</li>
+                        <li>SSL / HTTPS</li>
+                        <li>Diseño responsive</li>
+                        <li>Google My Business optimizado</li>
+                        <li>WhatsApp Business integrado</li>
+                        <li>Formulario de contacto</li>
+                    </ul>
+                    <div class="plan-ideal">Ideal: profesionales, talleres, almacenes</div>
+                </div>
+
+                <!-- Plan 2 -->
+                <div class="plan-card purple-2">
+                    <div class="plan-tag">PLAN COMERCIAL</div>
+                    <div class="plan-name">Delivery Digital</div>
+                    <div class="plan-price-label">DESDE</div>
+                    <div class="plan-price"><span class="currency">$</span>790.000</div>
+                    <ul class="plan-items">
+                        <li>Sitio web multi-página</li>
+                        <li>Catálogo de productos online</li>
+                        <li>Sistema de pedidos por web 24/7</li>
+                        <li>Integración WhatsApp Business</li>
+                        <li>Dominio + Hosting + SSL</li>
+                        <li>SEO básico + Google Maps</li>
+                        <li>Panel de administración simple</li>
+                    </ul>
+                    <div class="plan-ideal">Ideal: restaurantes, almacenes, delivery</div>
+                </div>
+            </div>
+
+            <div class="plans-row fade-in">
+                <!-- Plan 3 -->
+                <div class="plan-card purple">
+                    <div class="plan-tag">PLAN PROFESIONAL</div>
+                    <div class="plan-name">Booking Online</div>
+                    <div class="plan-price-label">DESDE</div>
+                    <div class="plan-price"><span class="currency">$</span>690.000</div>
+                    <ul class="plan-items">
+                        <li>Sitio web profesional</li>
+                        <li>Sistema de turnos online 24/7</li>
+                        <li>Recordatorios automáticos</li>
+                        <li>Calendario integrado</li>
+                        <li>Dominio + Hosting + SSL</li>
+                        <li>Google My Business + reseñas</li>
+                    </ul>
+                    <div class="plan-ideal">Ideal: peluquerías, clínicas, talleres</div>
+                </div>
+
+                <!-- Plan 4 -->
+                <div class="plan-card neon">
+                    <div class="plan-tag">PLAN AVANZADO</div>
+                    <div class="plan-name">E-commerce</div>
+                    <div class="plan-price-label">DESDE</div>
+                    <div class="plan-price"><span class="currency">$</span>1.490.000</div>
+                    <ul class="plan-items">
+                        <li>Tienda online completa</li>
+                        <li>Catálogo + carrito de compras</li>
+                        <li>Pagos online (MercadoPago / Webpay)</li>
+                        <li>Panel de administración</li>
+                        <li>Integración envíos</li>
+                        <li>SEO avanzado + analytics</li>
+                    </ul>
+                    <div class="plan-ideal">Ideal: tiendas, marcas directo al consumidor</div>
+                </div>
+            </div>
+
+            <!-- Plan 5 Full -->
+            <div class="plan-card gold full fade-in">
+                <div class="plan-tag">✦ PLAN PREMIUM</div>
+                <div class="plan-name">Transformación Digital</div>
+                <div class="plan-price-label">DESDE</div>
+                <div class="plan-price"><span class="currency">$</span>1.990.000</div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                    <ul class="plan-items">
+                        <li>Todo lo anterior según necesidad</li>
+                        <li>Web + Delivery + Booking</li>
+                        <li>App delivery / socios (opcional)</li>
+                        <li>CRM básico + gestión clientes</li>
+                    </ul>
+                    <ul class="plan-items">
+                        <li>Estrategia contenido + redes</li>
+                        <li>Capacitación del equipo</li>
+                        <li>Soporte 30 días post-entrega</li>
+                        <li>Sin permanencia</li>
+                    </ul>
+                </div>
+                <div class="plan-ideal">Ideal: negocios listos para el salto digital completo</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Sercotec ─── -->
+    <section class="sercotec">
+        <div class="container">
+            <div class="sercotec-card fade-in">
+                <div class="section-tag" style="margin-bottom:12px;">✦ Financiamiento</div>
+                <h3>Subsidio <span>Sercotec</span> Kit Digital</h3>
+                <p style="color:var(--lgray); font-size:15px; max-width:700px;">
+                    El gobierno chileno subsidia con <strong style="color:var(--gold);">$1.200.000 CLP</strong> 
+                    a micro y pequeñas empresas para digitalizarse.
+                </p>
+                <div class="sercotec-grid">
+                    <div class="sercotec-item">
+                        <h4>✓ Sitio web profesional</h4>
+                        <p>Creación y habilitación de página web con dominio propio</p>
+                    </div>
+                    <div class="sercotec-item">
+                        <h4>✓ Software de gestión</h4>
+                        <p>Facturación electrónica, inventario, administración</p>
+                    </div>
+                    <div class="sercotec-item">
+                        <h4>✓ Marketing digital</h4>
+                        <p>Herramientas de posicionamiento web y publicidad online</p>
+                    </div>
+                    <div class="sercotec-item">
+                        <h4>✓ Equipamiento</h4>
+                        <p>Computador, POS, tablet para tu negocio</p>
+                    </div>
+                </div>
+                <div class="sercotec-highlight">
+                    <div class="big">$490.000 → <span>$0</span> para tu cliente</div>
+                    <p>Un Plan Web Profesional queda completamente cubierto por el subsidio Sercotec. 
+                    El cliente no paga nada.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Benefits ─── -->
+    <section class="benefits">
+        <div class="container">
+            <div class="section-tag fade-in">✦ Ventajas</div>
+            <h2 class="section-title fade-in">¿Por qué con nosotros?</h2>
+            <p class="section-desc fade-in">Trabajo profesional, sin ataduras y pensado en tu negocio.</p>
+            <div class="benefits-grid">
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon" style="background:rgba(124,58,237,0.12); color:var(--purple3);">✦</div>
+                    <div class="benefit-text">
+                        <h4>Sin enganche</h4>
+                        <p>Empezamos sin pago inicial. Pagas contra entrega, cuando veas el resultado.</p>
+                    </div>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon" style="background:rgba(6,182,212,0.12); color:var(--neon);">⬡</div>
+                    <div class="benefit-text">
+                        <h4>Soporte 30 días</h4>
+                        <p>Resolvemos cualquier incidencia en menos de 24 horas, sin costo.</p>
+                    </div>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon" style="background:rgba(251,191,36,0.12); color:var(--gold);">◆</div>
+                    <div class="benefit-text">
+                        <h4>Hosting 1 año incluido</h4>
+                        <p>Dominio .cl + hosting + SSL. Sin costos ocultos ni sorpresas.</p>
+                    </div>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon" style="background:rgba(124,58,237,0.12); color:var(--purple2);">◈</div>
+                    <div class="benefit-text">
+                        <h4>Capacitación incluida</h4>
+                        <p>Te enseñamos a usar tu panel de gestión. Sin depender de nadie.</p>
+                    </div>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon" style="background:rgba(168,85,247,0.12); color:var(--purple2);">◇</div>
+                    <div class="benefit-text">
+                        <h4>Sin permanencia</h4>
+                        <p>Quedas dueño de tu web. Sin contratos, sin ataduras, sin cláusulas abusivas.</p>
+                    </div>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon" style="background:rgba(192,132,252,0.12); color:var(--purple3);">⊚</div>
+                    <div class="benefit-text">
+                        <h4>Subsidio Sercotec</h4>
+                        <p>Te ayudamos con la postulación al Kit Digital. El trámite es gratis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── Footer ─── -->
+    <footer>
+        <div class="container">
+            <div class="footer-icon">✦</div>
+            <h2>¿Listo para digitalizar <span>tu negocio?</span></h2>
+            <p class="subtitle">Llámame o escríbeme por WhatsApp. Sin compromiso.</p>
+            <div class="footer-contact fade-in">
+                <a href="https://wa.me/56940894579" class="phone" target="_blank">
+                    +56 9 4089 4579
+                </a>
+                <div class="name">Francisco Javier Pardo Jara</div>
+                <div class="addr">Camino La Palma Parcela 11, Talagante</div>
+                <div class="addr" style="margin-top:4px;">Freelancer · Informática · Publicidad · Desarrollo Web</div>
+            </div>
+            <div class="footer-copy">
+                FGF Digital © 2026 — Talagante, Chile — Transformación Digital para Pymes
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

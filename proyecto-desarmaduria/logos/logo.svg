@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <!-- Gradiente metálico principal -->
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="25%" style="stop-color:#16213e"/>
+      <stop offset="50%" style="stop-color:#0f3460"/>
+      <stop offset="75%" style="stop-color:#16213e"/>
+      <stop offset="100%" style="stop-color:#1a1a2e"/>
+    </linearGradient>
+    
+    <!-- Gradiente dorado/bronce para acentos -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f4a261"/>
+      <stop offset="30%" style="stop-color:#e9c46a"/>
+      <stop offset="50%" style="stop-color:#f4a261"/>
+      <stop offset="70%" style="stop-color:#e9c46a"/>
+      <stop offset="100%" style="stop-color:#f4a261"/>
+    </linearGradient>
+    
+    <!-- Gradiente naranja vibrante -->
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e76f51"/>
+      <stop offset="50%" style="stop-color:#f4a261"/>
+      <stop offset="100%" style="stop-color:#e76f51"/>
+    </linearGradient>
+    
+    <!-- Sombra -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    
+    <!-- Sombra interior -->
+    <filter id="innerShadow">
+      <feOffset dx="0" dy="2"/>
+      <feGaussianBlur stdDeviation="2"/>
+      <feComposite operator="out" in="SourceGraphic"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+      <feComposite operator="over" in="SourceGraphic"/>
+    </filter>
+    
+    <!-- Brillo -->
+    <linearGradient id="shineGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fff;stop-opacity:0.3"/>
+      <stop offset="50%" style="stop-color:#fff;stop-opacity:0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Fondo circular exterior -->
+  <circle cx="200" cy="200" r="190" fill="url(#metalGrad)" stroke="url(#goldGrad)" stroke-width="4"/>
+  
+  <!-- Anillo decorativo exterior -->
+  <circle cx="200" cy="200" r="175" fill="none" stroke="url(#goldGrad)" stroke-width="2" opacity="0.6"/>
+  <circle cx="200" cy="200" r="170" fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Engranaje grande (fondo) -->
+  <g transform="translate(200,195)" opacity="0.15">
+    <!-- Dientes del engranaje -->
+    <path d="M0,-130 L10,-120 L10,-110 L-10,-110 L-10,-120 Z" fill="url(#goldGrad)"/>
+    <path d="M0,-130 L10,-120 L10,-110 L-10,-110 L-10,-120 Z" fill="url(#goldGrad)" transform="rotate(30)"/>
+    <path d="M0,-130 L10,-120 L10,-110 L-10,-110 L-10,-120 Z" fill="url(#goldGrad)" transform="rotate(60)"/>
+    <path d="M0,-130 L10,-120 L10,-110 L-10,-110 L-10,-120 Z" fill="url(#goldGrad)" transform="rotate(90)"/>
+    <path d="M0,-130 L10,-120 L10,-110 L-10,-110 L-10,-120 Z" fill="url(#goldGrad)" transform="rotate(120)"/>
+    <path d="M0,-130 L10,-120 L10,-110 L-10,-110 L-10,-120 Z" fill="url(#goldGrad)" transform="rotate(150)"/>
+    <path d="M0,-130 L10,-120 L10,-110 L-10,-110 L-10,-120 Z" fill="url(#goldGrad)" transform="rotate(180)"/>
+    <path d="M0,-130 L10,-120 L10,-110 L-10,-110 L-10,-120 Z" fill="url(#goldGrad)" transform="rotate(210)"/>
+    <path d="M0,-130 L10,-120 L10,-110 L-10,-110 L-10,-120 Z" fill="url(#goldGrad)" transform="rotate(240)"/>
+    <path d="M0,-130 L10,-120 L10,-110 L-10,-110 L-10,-120 Z" fill="url(#goldGrad)" transform="rotate(270)"/>
+    <path d="M0,-130 L10,-120 L10,-110 L-10,-110 L-10,-120 Z" fill="url(#goldGrad)" transform="rotate(300)"/>
+    <path d="M0,-130 L10,-120 L10,-110 L-10,-110 L-10,-120 Z" fill="url(#goldGrad)" transform="rotate(330)"/>
+    <circle cx="0" cy="0" r="100" fill="url(#goldGrad)"/>
+    <circle cx="0" cy="0" r="85" fill="url(#metalGrad)"/>
+    <circle cx="0" cy="0" r="60" fill="url(#goldGrad)" opacity="0.3"/>
+  </g>
+  
+  <!-- Engranaje pequeño decorativo superior derecha -->
+  <g transform="translate(290,120)" opacity="0.2">
+    <circle cx="0" cy="0" r="35" fill="url(#goldGrad)"/>
+    <circle cx="0" cy="0" r="28" fill="url(#metalGrad)"/>
+    <path d="M0,-40 L5,-35 L5,-30 L-5,-30 L-5,-35 Z" fill="url(#goldGrad)"/>
+    <path d="M0,-40 L5,-35 L5,-30 L-5,-30 L-5,-35 Z" fill="url(#goldGrad)" transform="rotate(45)"/>
+    <path d="M0,-40 L5,-35 L5,-30 L-5,-30 L-5,-35 Z" fill="url(#goldGrad)" transform="rotate(90)"/>
+    <path d="M0,-40 L5,-35 L5,-30 L-5,-30 L-5,-35 Z" fill="url(#goldGrad)" transform="rotate(135)"/>
+    <path d="M0,-40 L5,-35 L5,-30 L-5,-30 L-5,-35 Z" fill="url(#goldGrad)" transform="rotate(180)"/>
+    <path d="M0,-40 L5,-35 L5,-30 L-5,-30 L-5,-35 Z" fill="url(#goldGrad)" transform="rotate(225)"/>
+    <path d="M0,-40 L5,-35 L5,-30 L-5,-30 L-5,-35 Z" fill="url(#goldGrad)" transform="rotate(270)"/>
+    <path d="M0,-40 L5,-35 L5,-30 L-5,-30 L-5,-35 Z" fill="url(#goldGrad)" transform="rotate(315)"/>
+  </g>
+  
+  <!-- Llave inglesa estilizada -->
+  <g transform="translate(155,185) rotate(-30)" filter="url(#shadow)">
+    <rect x="-8" y="-80" width="16" height="100" rx="3" fill="url(#orangeGrad)"/>
+    <circle cx="0" cy="-85" r="22" fill="none" stroke="url(#orangeGrad)" stroke-width="8"/>
+    <circle cx="0" cy="-85" r="12" fill="url(#metalGrad)"/>
+    <rect x="-12" y="15" width="24" height="12" rx="2" fill="url(#orangeGrad)"/>
+    <rect x="-15" y="20" width="30" height="8" rx="2" fill="url(#orangeGrad)"/>
+  </g>
+  
+  <!-- Llave inglesa espejo -->
+  <g transform="translate(245,185) rotate(30)" filter="url(#shadow)">
+    <rect x="-8" y="-80" width="16" height="100" rx="3" fill="url(#goldGrad)"/>
+    <circle cx="0" cy="-85" r="22" fill="none" stroke="url(#goldGrad)" stroke-width="8"/>
+    <circle cx="0" cy="-85" r="12" fill="url(#metalGrad)"/>
+    <rect x="-12" y="15" width="24" height="12" rx="2" fill="url(#goldGrad)"/>
+    <rect x="-15" y="20" width="30" height="8" rx="2" fill="url(#goldGrad)"/>
+  </g>
+  
+  <!-- Texto "FGF" grande y profesional -->
+  <g filter="url(#shadow)">
+    <!-- Sombra del texto -->
+    <text x="200" y="220" font-family="'Arial Black', 'Impact', sans-serif" font-size="95" font-weight="900" text-anchor="middle" fill="#000" opacity="0.3" transform="translate(3,3)">FGF</text>
+    <!-- Texto principal con gradiente -->
+    <text x="200" y="220" font-family="'Arial Black', 'Impact', sans-serif" font-size="95" font-weight="900" text-anchor="middle" fill="url(#goldGrad)" stroke="url(#orangeGrad)" stroke-width="2">FGF</text>
+    <!-- Brillo del texto -->
+    <text x="200" y="220" font-family="'Arial Black', 'Impact', sans-serif" font-size="95" font-weight="900" text-anchor="middle" fill="url(#shineGrad)">FGF</text>
+  </g>
+  
+  <!-- Línea decorativa superior -->
+  <line x1="100" y1="235" x2="300" y2="235" stroke="url(#goldGrad)" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Texto "DESARMADURÍA" -->
+  <text x="200" y="260" font-family="'Arial', 'Helvetica', sans-serif" font-size="22" font-weight="700" text-anchor="middle" letter-spacing="8" fill="url(#goldGrad)">DESARMADURÍA</text>
+  
+  <!-- Línea decorativa inferior -->
+  <line x1="100" y1="270" x2="300" y2="270" stroke="url(#goldGrad)" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Texto "REPUESTOS AUTOMOTRICES" -->
+  <text x="200" y="295" font-family="'Arial', 'Helvetica', sans-serif" font-size="13" font-weight="400" text-anchor="middle" letter-spacing="4" fill="#aaa">REPUESTOS AUTOMOTRICES</text>
+  
+  <!-- Icono de ubicación -->
+  <g transform="translate(200,325)">
+    <path d="M0,-12 C-6.6,-12 -12,-6.6 -12,0 C-12,8.4 0,18 0,18 C0,18 12,8.4 12,0 C12,-6.6 6.6,-12 0,-12 Z" fill="url(#orangeGrad)"/>
+    <circle cx="0" cy="0" r="5" fill="url(#metalGrad)"/>
+  </g>
+  
+  <!-- Texto ubicación -->
+  <text x="200" y="350" font-family="'Arial', 'Helvetica', sans-serif" font-size="11" font-weight="400" text-anchor="middle" fill="#888">TALAGANTE • CHILE</text>
+  
+  <!-- Borde decorativo interior -->
+  <circle cx="200" cy="200" r="165" fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity="0.2" stroke-dasharray="5,5"/>
+</svg>

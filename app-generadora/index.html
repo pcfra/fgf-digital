@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>FGF Digital — Generador de Demos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        :root {
+            --bg:#0a0a14; --card:#14142a; --card2:#1a1a35; --border:rgba(139,92,246,0.15);
+            --primary:#8b5cf6; --primary-dark:#7c3aed; --accent:#ec4899; --success:#22c55e;
+            --warning:#f59e0b; --text:#f1f5f9; --muted:#94a3b8; --danger:#ef4444;
+        }
+        body {
+            font-family:'Inter',sans-serif; background:var(--bg); color:var(--text);
+            min-height:100vh; min-height:100dvh; overflow-x:hidden;
+            padding-bottom:env(safe-area-inset-bottom, 0);
+        }
+
+        /* === HEADER === */
+        .header {
+            background:linear-gradient(135deg, rgba(139,92,246,0.15), rgba(236,72,153,0.08));
+            border-bottom:1px solid var(--border); padding:20px 16px 16px;
+            text-align:center; position:sticky; top:0; z-index:100;
+            backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+        }
+        .logo { font-size:2.2em; margin-bottom:4px; filter:drop-shadow(0 0 15px rgba(139,92,246,0.4)); }
+        .header h1 { font-size:1.1em; font-weight:800; background:linear-gradient(135deg,#818cf8,#a855f7,#ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .header p { color:var(--muted); font-size:0.72em; margin-top:2px; }
+
+        /* === CONTENT === */
+        .content { padding:16px; max-width:500px; margin:0 auto; }
+
+        /* === CARDS === */
+        .card {
+            background:var(--card); border:1px solid var(--border); border-radius:16px;
+            padding:18px; margin-bottom:14px;
+        }
+        .card-title {
+            font-size:0.82em; font-weight:700; color:var(--primary); margin-bottom:12px;
+            display:flex; align-items:center; gap:8px;
+        }
+        .card-title i { font-size:1.1em; }
+
+        /* === FORM === */
+        .form-group { margin-bottom:14px; }
+        .form-group label {
+            display:block; font-size:0.72em; font-weight:600; color:var(--muted);
+            margin-bottom:5px; text-transform:uppercase; letter-spacing:0.04em;
+        }
+        .form-group input, .form-group select {
+            width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--border);
+            background:var(--card2); color:var(--text); font-size:0.9em; font-family:'Inter',sans-serif;
+            transition:0.2s; outline:none;
+        }
+        .form-group input:focus, .form-group select:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(139,92,246,0.15); }
+        .form-group select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; }
+
+        /* === COLOR PICKER === */
+        .colors { display:flex; gap:10px; flex-wrap:wrap; }
+        .color-btn {
+            width:40px; height:40px; border-radius:50%; border:3px solid transparent;
+            cursor:pointer; transition:0.2s; position:relative;
+        }
+        .color-btn.active { border-color:#fff; transform:scale(1.15); box-shadow:0 0 12px rgba(255,255,255,0.2); }
+        .color-btn::after {
+            content:'✓'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+            color:#fff; font-size:1em; font-weight:800; opacity:0; transition:0.2s;
+        }
+        .color-btn.active::after { opacity:1; }
+
+        /* === QUICK FILL === */
+        .quick-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px; }
+        .quick-btn {
+            padding:10px 8px; border-radius:10px; border:1px solid var(--border);
+            background:var(--card2); color:var(--text); font-size:0.72em; font-weight:600;
+            cursor:pointer; transition:0.2s; text-align:center;
+        }
+        .quick-btn:active { background:var(--primary); transform:scale(0.97); }
+
+        /* === GENERATE BUTTON === */
+        .btn-generate {
+            width:100%; padding:16px; border-radius:14px; border:none;
+            background:linear-gradient(135deg, var(--primary), var(--accent));
+            color:#fff; font-size:1em; font-weight:800; cursor:pointer;
+            transition:0.2s; display:flex; align-items:center; justify-content:center; gap:10px;
+            box-shadow:0 4px 20px rgba(139,92,246,0.3);
+        }
+        .btn-generate:active { transform:scale(0.97); box-shadow:0 2px 10px rgba(139,92,246,0.2); }
+        .btn-generate i { font-size:1.2em; }
+
+        /* === RESULTS === */
+        .results { display:none; margin-top:16px; }
+        .results.active { display:block; }
+
+        /* === LICENSE SCREEN === */
+        .license-screen {
+            position:fixed; top:0; left:0; right:0; bottom:0; z-index:9999;
+            background:var(--bg); display:flex; align-items:center; justify-content:center;
+            padding:24px;
+        }
+        .license-box {
+            width:100%; max-width:380px; background:var(--card); border:1px solid var(--border);
+            border-radius:20px; padding:32px 24px; text-align:center;
+            box-shadow:0 0 60px rgba(139,92,246,0.1);
+        }
+        .license-logo { font-size:3.5em; margin-bottom:8px; filter:drop-shadow(0 0 20px rgba(139,92,246,0.5)); animation:logoPulse 3s ease infinite; }
+        @keyframes logoPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+        .license-error { color:var(--danger); font-size:0.8em; margin-top:10px; display:none; }
+        .license-success { color:var(--success); font-size:0.8em; margin-top:10px; }
+        .fgf-watermark {
+            position:fixed; bottom:8px; right:8px; z-index:1;
+            font-size:0.6em; color:rgba(139,92,246,0.25); font-weight:700;
+            pointer-events:none; text-align:right; line-height:1.3;
+        }
+        .result-card {
+            background:var(--card); border:1px solid var(--border); border-radius:14px;
+            padding:14px; margin-bottom:10px;
+        }
+        .result-label { font-size:0.7em; font-weight:700; color:var(--muted); text-transform:uppercase; margin-bottom:6px; }
+        .result-url {
+            font-size:0.78em; font-family:monospace; color:var(--primary);
+            word-break:break-all; padding:8px 10px; background:var(--card2);
+            border-radius:8px; margin-bottom:8px; line-height:1.5;
+        }
+        .result-actions { display:flex; gap:8px; }
+        .btn-action {
+            flex:1; padding:10px; border-radius:10px; border:none;
+            font-size:0.78em; font-weight:700; cursor:pointer; transition:0.2s;
+            display:flex; align-items:center; justify-content:center; gap:6px;
+        }
+        .btn-action:active { transform:scale(0.95); }
+        .btn-copy { background:rgba(139,92,246,0.15); color:var(--primary); border:1px solid rgba(139,92,246,0.2); }
+        .btn-whatsapp { background:rgba(37,211,102,0.15); color:#25d366; border:1px solid rgba(37,211,102,0.2); }
+        .btn-open { background:rgba(34,197,94,0.15); color:var(--success); border:1px solid rgba(34,197,94,0.2); }
+
+        /* === TOAST === */
+        .toast {
+            position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(100px);
+            background:var(--success); color:#fff; padding:12px 24px; border-radius:12px;
+            font-size:0.82em; font-weight:600; z-index:999; transition:0.3s;
+            box-shadow:0 4px 20px rgba(34,197,94,0.3);
+        }
+        .toast.show { transform:translateX(-50%) translateY(0); }
+
+        /* === CLIENT LICENSE DISPLAY === */
+        .license-display-card {
+            background:linear-gradient(135deg, rgba(34,197,94,0.08), rgba(139,92,246,0.05));
+            border:1px solid rgba(34,197,94,0.25); border-radius:16px;
+            padding:18px; margin-bottom:14px; text-align:center;
+        }
+        .license-code-display {
+            font-family:monospace; font-size:1.4em; font-weight:800; letter-spacing:0.08em;
+            color:var(--success); background:rgba(34,197,94,0.1); padding:12px 18px;
+            border-radius:10px; display:inline-block; margin:10px 0;
+            border:1px dashed rgba(34,197,94,0.3);
+        }
+        .license-actions { display:flex; gap:8px; margin-top:12px; }
+
+        /* === MY CLIENTS SECTION === */
+        .clients-card {
+            background:var(--card); border:1px solid var(--border); border-radius:16px;
+            padding:18px; margin-bottom:14px;
+        }
+        .client-row {
+            display:flex; justify-content:space-between; align-items:center;
+            padding:10px 0; border-bottom:1px solid rgba(139,92,246,0.08);
+        }
+        .client-row:last-child { border-bottom:none; }
+        .client-name { font-size:0.85em; font-weight:600; color:var(--text); }
+        .client-meta { font-size:0.7em; color:var(--muted); margin-top:2px; }
+        .client-license { font-family:monospace; font-size:0.72em; color:var(--primary); font-weight:600; }
+        .client-premium-badge {
+            display:inline-block; font-size:0.6em; padding:2px 6px; border-radius:4px;
+            background:rgba(245,158,11,0.15); color:var(--warning); font-weight:700;
+        }
+        .client-actions { display:flex; gap:6px; margin-top:4px; }
+        .client-btn {
+            padding:4px 8px; border-radius:6px; border:1px solid var(--border);
+            background:var(--card2); color:var(--muted); font-size:0.68em; font-weight:600;
+            cursor:pointer; transition:0.2s;
+        }
+        .client-btn:active { transform:scale(0.95); }
+        .empty-clients { color:var(--muted); font-size:0.78em; text-align:center; padding:20px; }
+
+        /* === FOOTER === */
+        .footer { text-align:center; padding:20px; color:#334155; font-size:0.7em; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">⚡</div>
+    <h1>FGF Digital</h1>
+    <p>Generador de Demos</p>
+</div>
+
+    <!-- LICENSE SCREEN -->
+    <div class="license-screen" id="licenseScreen">
+        <div class="license-box">
+            <div class="license-logo">⚡</div>
+            <h2 style="font-size:1.3em; font-weight:800; background:linear-gradient(135deg,#818cf8,#a855f7); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">FGF DEMOS</h2>
+            <p style="color:var(--muted); font-size:0.78em; margin:8px 0 20px;">Sistema de Generación de Demos</p>
+            <div class="form-group">
+                <label>Código de Licencia</label>
+                <input type="text" id="licenseInput" placeholder="FGF-XXXX-XXXX-XXXX-XXXX-XXXX" style="text-align:center; font-family:monospace; font-size:1.1em; letter-spacing:0.05em;" maxlength="35" autocomplete="off" autocapitalize="characters" spellcheck="false">
+            </div>
+            <div id="licenseError" class="license-error" style="display:none;"></div>
+            <button class="btn-generate" onclick="validateLicense()" style="width:100%; margin-top:10px;">
+                <i class="fas fa-lock-open"></i> ACTIVAR
+            </button>
+            <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border); text-align:center;">
+                <div style="font-size:0.72em; color:var(--muted);">¿No tenés código de licencia?</div>
+                <a href="https://wa.me/56940894579?text=Hola%20Francisco%2C%20necesito%20un%20c%C3%B3digo%20de%20licencia%20para%20FGF%20Demos" target="_blank" style="display:inline-flex; align-items:center; gap:6px; margin-top:8px; padding:10px 20px; background:rgba(34,197,94,0.15); color:#22c55e; border-radius:10px; text-decoration:none; font-size:0.85em; font-weight:600;">
+                    <i class="fab fa-whatsapp"></i> Solicitar Licencia
+                </a>
+            </div>
+            <div style="margin-top:16px; font-size:0.65em; color:#475569; text-align:center;">
+                ⚡ FGF Digital — Soporte: +569 4089 4579<br>
+                Licencia protegida e intransferible © 2026
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div class="app-content" id="appContent" style="display:none;">
+    <div class="content">
+
+    <!-- MI REGISTRO -->
+    <div class="card" id="miRegistroCard" style="border:1px solid rgba(99,102,241,0.3); background:linear-gradient(135deg, rgba(99,102,241,0.08), rgba(236,72,153,0.05));">
+        <div class="card-title"><i class="fas fa-shield-halved"></i> Mi Registro <span style="margin-left:auto; font-size:0.7em; padding:3px 8px; background:rgba(34,197,94,0.15); color:var(--success); border-radius:20px;">✅ Activo</span></div>
+        <div id="registroInfo" style="font-size:0.82em;"></div>
+        <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border); display:flex; gap:8px; flex-wrap:wrap;">
+            <button onclick="copyMyCode()" style="flex:1; padding:8px; border-radius:8px; border:1px solid var(--border); background:rgba(139,92,246,0.1); color:var(--primary); font-size:0.78em; font-weight:600; cursor:pointer;">
+                <i class="fas fa-copy"></i> Copiar Mi Código
+            </button>
+            <a href="https://wa.me/56940894579?text=Hola%20Francisco%2C%20perdí%20mi%20celular%20y%20necesito%20recuperar%20mi%20licencia%20FGF%20Demos.%20Mi%20código%20es:%20" target="_blank" id="recoveryLink" style="flex:1; padding:8px; border-radius:8px; border:1px solid var(--border); background:rgba(34,197,94,0.1); color:#22c55e; font-size:0.78em; font-weight:600; cursor:pointer; text-decoration:none; text-align:center;">
+                <i class="fab fa-whatsapp"></i> Recuperar
+            </a>
+        </div>
+        <div style="margin-top:8px; font-size:0.65em; color:#475569; text-align:center;">
+            ⚡ Si perdés o te roban el celular, contactanos con tu código y te activamos en el nuevo<br>
+            Soporte: +569 4089 4579 — Licencia intransferible
+        </div>
+    </div>
+
+    <!-- HOSTING CONFIG -->
+    <div class="card" style="border:1px solid rgba(245,158,11,0.3); background:linear-gradient(135deg, rgba(245,158,11,0.08), rgba(239,68,68,0.05));">
+        <div class="card-title"><i class="fas fa-globe"></i> Hosting <span id="hostStatus" style="margin-left:auto; font-size:0.7em; padding:3px 8px; background:rgba(245,158,11,0.15); color:var(--warning); border-radius:20px;">⚙️ Configurar</span></div>
+        <div style="font-size:0.78em; color:var(--muted); margin-bottom:10px;">
+            URL de tu hosting (GitHub Pages, Cloudflare, etc.)<br>
+            <span style="color:var(--success);">Dejalo vacío para generar demos locales</span>
+        </div>
+        <div style="display:flex; gap:8px;">
+            <input type="url" id="hostUrl" placeholder="https://fgf-demos.vercel.app" style="flex:1; padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:var(--card2); color:var(--text); font-size:0.85em; font-family:monospace;">
+            <button onclick="saveHostUrl()" style="padding:10px 16px; border-radius:10px; border:none; background:var(--primary); color:#fff; font-size:0.85em; font-weight:600; cursor:pointer;">Guardar</button>
+        </div>
+        <div id="hostInfo" style="margin-top:8px; font-size:0.7em;"></div>
+    </div>
+
+    <!-- QUICK FILL -->
+    <div class="card">
+        <div class="card-title"><i class="fas fa-bolt"></i> Relleno Rápido</div>
+        <div class="quick-grid" id="quickGrid"></div>
+    </div>
+
+    <!-- FORM -->
+    <div class="card">
+        <div class="card-title"><i class="fas fa-store"></i> Datos del Negocio</div>
+
+        <div class="form-group">
+            <label>Nombre del Negocio</label>
+            <input type="text" id="bizName" placeholder="Ej: Desarmaduría FGF">
+        </div>
+
+        <div class="form-group">
+            <label>Tipo de Negocio</label>
+            <select id="bizType"></select>
+        </div>
+
+        <div class="form-group">
+            <label>Teléfono (sin +)</label>
+            <input type="tel" id="bizPhone" placeholder="56912345678">
+        </div>
+
+        <div class="form-group">
+            <label>Dirección</label>
+            <input type="text" id="bizAddress" placeholder="Ej: Av. Principal 123">
+        </div>
+
+        <div class="form-group">
+            <label>Horario</label>
+            <input type="text" id="bizSchedule" placeholder="Ej: Lun-Sáb 9:00-19:00">
+        </div>
+
+        <div class="form-group">
+            <label>Color</label>
+            <div class="colors" id="colorPicker"></div>
+        </div>
+    </div>
+
+    <!-- GENERATE -->
+    <button class="btn-generate" onclick="generate()">
+        <i class="fas fa-wand-magic-sparkles"></i> GENERAR DEMOS
+    </button>
+
+    <!-- RESULTS -->
+    <div class="results" id="results">
+        <div class="result-card">
+            <div class="result-label"><i class="fas fa-store"></i> Tienda (Cliente)</div>
+            <div class="result-url" id="urlTienda"></div>
+            <div class="result-actions">
+                <button class="btn-action btn-copy" onclick="copyUrl('tienda')"><i class="fas fa-copy"></i> Copiar</button>
+                <button class="btn-action btn-whatsapp" onclick="shareWhatsApp('tienda')"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                <button class="btn-action btn-open" onclick="openUrl('tienda')"><i class="fas fa-external-link"></i> Abrir</button>
+            </div>
+        </div>
+        <div class="result-card">
+            <div class="result-label"><i class="fas fa-chart-line"></i> Admin Panel</div>
+            <div class="result-url" id="urlAdmin"></div>
+            <div class="result-actions">
+                <button class="btn-action btn-copy" onclick="copyUrl('admin')"><i class="fas fa-copy"></i> Copiar</button>
+                <button class="btn-action btn-whatsapp" onclick="shareWhatsApp('admin')"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+                <button class="btn-action btn-open" onclick="openUrl('admin')"><i class="fas fa-external-link"></i> Abrir</button>
+            </div>
+        </div>
+
+        <button class="btn-action btn-copy" style="width:100%; margin-top:6px; padding:14px;" onclick="copyBoth()">
+            <i class="fas fa-copy"></i> Copiar Ambos Links
+        </button>
+
+        <!-- QR CODES -->
+        <div id="qrSection" style="display:none; margin-top:16px;">
+            <div style="display:flex; gap:12px;">
+                <div style="flex:1; background:#fff; border-radius:16px; padding:18px; text-align:center;">
+                    <div style="font-size:0.72em; font-weight:700; color:#475569; text-transform:uppercase; margin-bottom:10px;">QR Tienda (para imprimir)</div>
+                    <img id="qrTienda" style="width:180px; height:180px; border-radius:10px; margin-bottom:10px;" alt="QR Tienda">
+                    <div><a id="qrTiendaDownload" href="#" download="QR-Tienda.png" style="display:inline-block; padding:8px 16px; background:rgba(139,92,246,0.1); color:#8b5cf6; border-radius:8px; font-size:0.78em; font-weight:600; text-decoration:none;"><i class="fas fa-download"></i> Descargar QR</a></div>
+                </div>
+                <div style="flex:1; background:#fff; border-radius:16px; padding:18px; text-align:center;">
+                    <div style="font-size:0.72em; font-weight:700; color:#475569; text-transform:uppercase; margin-bottom:10px;">QR Admin (para el dueño)</div>
+                    <img id="qrAdmin" style="width:180px; height:180px; border-radius:10px; margin-bottom:10px;" alt="QR Admin">
+                    <div><a id="qrAdminDownload" href="#" download="QR-Admin.png" style="display:inline-block; padding:8px 16px; background:rgba(236,72,153,0.1); color:#ec4899; border-radius:8px; font-size:0.78em; font-weight:600; text-decoration:none;"><i class="fas fa-download"></i> Descargar QR</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CLIENT LICENSE DISPLAY -->
+    <div class="results" id="clientLicenseResult">
+        <div class="license-display-card">
+            <div style="font-size:0.72em; font-weight:700; color:var(--muted); text-transform:uppercase;">Licencia del Cliente</div>
+            <div class="license-code-display" id="clientLicenseCode"></div>
+            <div style="font-size:0.75em; color:var(--muted); margin-top:4px;">
+                Esta licencia se incluye en la URL de la demo del cliente
+            </div>
+            <div class="license-actions">
+                <button class="btn-action btn-copy" onclick="copyClientLicense()"><i class="fas fa-copy"></i> Copiar Licencia</button>
+                <button class="btn-action btn-whatsapp" onclick="shareClientLicenseWhatsApp()"><i class="fab fa-whatsapp"></i> Enviar por WhatsApp</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MY CLIENTS -->
+    <div class="clients-card" id="myClientsCard">
+        <div class="card-title"><i class="fas fa-users"></i> Mis Clientes <span style="margin-left:auto; font-size:0.7em; padding:3px 8px; background:rgba(139,92,246,0.15); color:var(--primary); border-radius:20px;" id="clientCount">0</span></div>
+        <div id="clientsList"></div>
+    </div>
+
+</div>
+</div>
+
+<div class="footer" style="padding:20px; text-align:center;">
+    <div style="font-size:0.85em; font-weight:700; color:var(--primary);">⚡ FGF Digital</div>
+    <div style="font-size:0.72em; color:var(--muted); margin-top:4px;">Generador de Demos v3.2</div>
+    <div style="font-size:0.65em; color:#475569; margin-top:6px;">Soporte: +569 4089 4579</div>
+    <div style="font-size:0.6em; color:#334155; margin-top:4px;">Licencia protegida e intransferible © 2026</div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="fgf-watermark">⚡ FGF Digital<br>+569 4089 4579<br>Licencia Protegida ©</div>
+
+<script>
+// ===== CONFIG =====
+const BASE_URL = localStorage.getItem('fgf_host_url') || 'https://pcfra.github.io/fgf-demos';
+const API_BASE = '';
+const APP_VERSION = '3.2';
+const MASTER_LICENSE = 'FGF-B0SS-0000-0000-FGF0';
+const MAX_OFFLINE_DAYS = 30;
+
+// ===== LICENSE SYSTEM =====
+function getDeviceId() {
+    let id = localStorage.getItem('fgf_device_id');
+    if (!id) {
+        id = 'DEV-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substring(2,8).toUpperCase();
+        localStorage.setItem('fgf_device_id', id);
+    }
+    return id;
+}
+
+function validateLicenseFormat(code) {
+    if (!code) return false;
+    const clean = code.toUpperCase().trim();
+    if (clean === MASTER_LICENSE) return true;
+    const parts = clean.split('-');
+    if (parts.length < 2 || parts.length > 6) return false;
+    if (parts[0] !== 'FGF') return false;
+    for (let i = 1; i < parts.length; i++) {
+        if (!/^[A-Z0-9]+$/i.test(parts[i])) return false;
+    }
+    return true;
+}
+
+function autoFormatLicenseInput() {
+    const input = document.getElementById('licenseInput');
+    if (!input) return;
+    input.addEventListener('input', function(e) {
+        let val = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+        if (val.length > 3) val = val.substring(0, 3) + '-' + val.substring(3);
+        if (val.length > 8) val = val.substring(0, 8) + '-' + val.substring(8);
+        if (val.length > 13) val = val.substring(0, 13) + '-' + val.substring(13);
+        if (val.length > 18) val = val.substring(0, 18) + '-' + val.substring(18);
+        this.value = val;
+    });
+}
+
+async function validateLicense() {
+    const rawCode = document.getElementById('licenseInput').value.trim();
+    const code = rawCode.toUpperCase();
+    const cleanCode = code.replace(/[^A-Z0-9]/g, '');
+    const masterClean = MASTER_LICENSE.replace(/[^A-Z0-9]/g, '');
+    if (!code) { showLicenseError('Ingresá tu código de licencia'); return; }
+    if (!validateLicenseFormat(code)) {
+        showLicenseError('Formato inválido. Usá: FGF-XXXX-XXXX-XXXX-XXXX-XXXX');
+        return;
+    }
+    if (cleanCode === masterClean) {
+        localStorage.setItem('fgf_license', code);
+        localStorage.setItem('fgf_license_type', 'master');
+        localStorage.setItem('fgf_activated_at', new Date().toISOString());
+        showLicenseSuccess('Licencia maestra activada ✓');
+        setTimeout(() => showApp(), 800);
+        return;
+    }
+    showLicenseError('Validando...');
+    try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000);
+        const res = await fetch(`${API_BASE}/api/validate-license`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                code: code,
+                device: getDeviceId(),
+                businessName: 'FGF Demos App'
+            }),
+            signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        const data = await res.json();
+        if (data.valid) {
+            localStorage.setItem('fgf_license', code);
+            localStorage.setItem('fgf_license_type', data.type || 'standard');
+            localStorage.setItem('fgf_activated_at', new Date().toISOString());
+            localStorage.setItem('fgf_last_validation', new Date().toISOString());
+            showLicenseSuccess(data.message + ' ✓');
+            setTimeout(() => showApp(), 800);
+        } else {
+            showLicenseError(data.message || 'Licencia inválida');
+        }
+    } catch (e) {
+        if (e.name === 'AbortError') {
+            showLicenseError('Tiempo de espera agotado. Verificá tu conexión.');
+        } else {
+            const saved = localStorage.getItem('fgf_license');
+            if (saved) {
+                showLicenseSuccess('Modo offline — licencia local verificada ✓');
+                setTimeout(() => showApp(), 800);
+            } else {
+                showLicenseError('Sin internet. Conectate una vez para activar.');
+            }
+        }
+    }
+}
+
+function showLicenseError(msg) {
+    const el = document.getElementById('licenseError');
+    if (!el) return;
+    el.textContent = '❌ ' + msg;
+    el.style.display = 'block';
+    el.className = 'license-error';
+    el.style.color = 'var(--danger)';
+}
+
+function showLicenseSuccess(msg) {
+    const el = document.getElementById('licenseError');
+    if (!el) return;
+    el.textContent = '✅ ' + msg;
+    el.style.display = 'block';
+    el.className = 'license-success';
+    el.style.color = 'var(--success)';
+}
+
+function showApp() {
+    document.getElementById('licenseScreen').style.display = 'none';
+    document.getElementById('appContent').style.display = 'block';
+    populateRegistration();
+}
+
+function populateRegistration() {
+    const code = localStorage.getItem('fgf_license') || 'N/A';
+    const deviceId = getDeviceId();
+    const activatedAt = localStorage.getItem('fgf_activated_at');
+    const activated = activatedAt ? new Date(activatedAt).toLocaleString('es-CL') : new Date().toLocaleString('es-CL');
+    if (!activatedAt) localStorage.setItem('fgf_activated_at', new Date().toISOString());
+    const isMaster = code === MASTER_LICENSE;
+
+    const el = document.getElementById('registroInfo');
+    if (el) {
+        el.innerHTML = `
+            <div style="display:grid; gap:8px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="color:var(--muted);">Tu Código:</span>
+                    <code style="font-family:monospace; color:var(--primary); font-weight:700; font-size:0.9em; background:rgba(139,92,246,0.1); padding:4px 10px; border-radius:6px;">${isMaster ? 'MASTER' : code}</code>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="color:var(--muted);">Dispositivo:</span>
+                    <span style="font-family:monospace; font-size:0.75em;">${deviceId}</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="color:var(--muted);">Activado:</span>
+                    <span style="font-size:0.82em;">${activated}</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="color:var(--muted);">Versión:</span>
+                    <span style="font-size:0.82em;">v${APP_VERSION}</span>
+                </div>
+            </div>
+        `;
+    }
+    const recLink = document.getElementById('recoveryLink');
+    if (recLink && code !== 'N/A') {
+        recLink.href = `https://wa.me/56940894579?text=${encodeURIComponent('Hola Francisco, necesito recuperar mi licencia FGF Demos.\n\nMi código: ' + code + '\nMotivo: Perdí o me robaron el celular')}`;
+    }
+}
+
+function copyMyCode() {
+    const code = localStorage.getItem('fgf_license');
+    if (code) {
+        const display = code === MASTER_LICENSE ? 'MASTER (FGF-B0SS-0000-0000-FGF0)' : code;
+        navigator.clipboard.writeText(code).then(() => {
+            showToast('📋 Código copiado');
+        }).catch(() => {
+            prompt('Tu código de licencia:', display);
+        });
+    }
+}
+
+function isOfflineGracePeriodValid() {
+    const lastValidation = localStorage.getItem('fgf_last_validation');
+    if (!lastValidation) return false;
+    const diff = Date.now() - new Date(lastValidation).getTime();
+    return diff < MAX_OFFLINE_DAYS * 24 * 60 * 60 * 1000;
+}
+
+function checkExistingLicense() {
+    const saved = localStorage.getItem('fgf_license');
+    if (!saved) return;
+    if (saved === MASTER_LICENSE) {
+        showApp();
+        return;
+    }
+    const lastValidation = localStorage.getItem('fgf_last_validation');
+    if (lastValidation && isOfflineGracePeriodValid()) {
+        showApp();
+    } else {
+        showApp();
+    }
+    fetch(`${API_BASE}/api/validate-license`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: saved, device: getDeviceId() })
+    }).then(r => r.json()).then(d => {
+        if (!d.valid) {
+            localStorage.setItem('fgf_last_validation', new Date().toISOString());
+        } else {
+            localStorage.setItem('fgf_last_validation', new Date().toISOString());
+        }
+    }).catch(() => {
+        if (!isOfflineGracePeriodValid()) {
+            document.getElementById('licenseScreen').style.display = 'flex';
+            document.getElementById('appContent').style.display = 'none';
+            showLicenseError('Sin conexión por mucho tiempo. Conectate a internet para revalidar.');
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const li = document.getElementById('licenseInput');
+    if (li) {
+        li.addEventListener('keypress', e => { if (e.key === 'Enter') validateLicense(); });
+        autoFormatLicenseInput();
+    }
+    checkExistingLicense();
+});
+
+const businessTypes = {
+    // 🛒 Productos
+    taller:'🔧 Taller Mecánico', desarmaduria:'🚗 Desarmaduría', ferreteria:'🔩 Ferretería',
+    panaderia:'🍪 Panadería', restaurante:'🍕 Restaurante', boutique:'👗 Boutique',
+    minimarket:'🛒 Minimarket', libreria:'📚 Librería',
+    // 📅 Servicios
+    peluqueria:'💇 Peluquería', barberia:'💈 Barbería', spa:'💆 Spa',
+    clinica:'🏥 Clínica', mascotas:'🐕 Mascotas/Veterinaria', gimnasio:'💪 Gimnasio',
+    psicologo:'🧠 Psicólogo', nutricionista:'🥗 Nutricionista', kinesiologo:'💆 Kinesiólogo',
+    tatuador:'🎨 Tatuador', profesor:'📚 Profesor', fotografo:'📸 Fotógrafo',
+    abogado:'⚖️ Abogado', otro:'📦 Otro'
+};
+
+const colors = [
+    {name:'purple', bg:'#8b5cf6'}, {name:'blue', bg:'#3b82f6'},
+    {name:'green', bg:'#22c55e'}, {name:'orange', bg:'#f59e0b'},
+    {name:'red', bg:'#ef4444'}, {name:'pink', bg:'#ec4899'},
+    {name:'cyan', bg:'#06b6d4'}, {name:'indigo', bg:'#6366f1'}
+];
+
+const quickBiz = [
+    {name:'Desarmaduría FGF', tipo:'desarmaduria', tel:'56912345678', dir:'Av. San Martín 456, Talagante', hor:'Lun-Vie 8:30-18:00', color:'purple'},
+    {name:'Panadería El Trigo', tipo:'panaderia', tel:'56955667788', dir:'Camino La Palma Parcela 11, Talagante', hor:'Lun-Dom 7:00-21:00', color:'orange'},
+    {name:'Don Carlo', tipo:'restaurante', tel:'56999887766', dir:'San Martín 654, Talagante', hor:'Mié-Dom 12:00-23:00', color:'red'},
+    {name:'Boutique Enkantos', tipo:'boutique', tel:'56944332211', dir:'Av. Providencia 987, Santiago', hor:'Lun-Sáb 10:00-20:00', color:'pink'},
+    {name:'Taller Automotriz Gómez', tipo:'taller', tel:'56912345678', dir:'Angol 636, Concepción', hor:'Lun-Sáb 8:30-19:00', color:'blue'},
+    {name:'Ferretería Los Andes', tipo:'ferreteria', tel:'56911223344', dir:"Calle O'Higgins 789, Talagante", hor:'Lun-Sáb 8:30-18:00', color:'green'},
+    {name:'Spa Nirvana', tipo:'spa', tel:'56981285000', dir:'Av. Los Leones 234, Santiago', hor:'Lun-Dom 9:00-21:00', color:'cyan'},
+    {name:'Barbería Old School', tipo:'barberia', tel:'56977665544', dir:'Calle Arauco 567, Talagante', hor:'Mar-Sáb 10:00-20:00', color:'indigo'},
+    {name:'Educa Total', tipo:'profesor', tel:'56962812877', dir:'Calle Isidora Goyenechea 206, San Ramón', hor:'Mar-Dom 8:00-19:00', color:'pink'},
+    {name:'Studio Foto', tipo:'fotografo', tel:'56933445566', dir:'Providencia 1234, Santiago', hor:'Lun-Sáb 9:00-19:00', color:'indigo'}
+];
+
+let selectedColor = 'purple';
+let generatedUrls = {};
+
+// ===== INIT =====
+// ===== MODELOS HTML (PENDIENTE INTEGRAR) =====
+// Se crearon 5 landing pages modelo en ~/vault/FGF-Digital/modelos/
+// Pendiente: integrarlas como templates generables desde la app
+//   - 🥖 panaderia-el-trigo.html  → tipo: panaderia
+//   - 👗 boutique-enkantos.html   → tipo: boutique
+//   - 🔧 taller-automotriz.html   → tipo: taller
+//   - 💈 barberia-oldschool.html  → tipo: barberia
+//   - 🍕 restaurant-don-carlo.html → tipo: restaurante
+// ===== HOSTING CONFIG =====
+function saveHostUrl() {
+    const url = document.getElementById('hostUrl').value.trim();
+    if (url) {
+        // Validate URL
+        try {
+            new URL(url);
+            localStorage.setItem('fgf_host_url', url);
+            updateHostStatus();
+            showToast('✅ Hosting configurado');
+        } catch(e) {
+            showToast('⚠️ URL inválida');
+        }
+    } else {
+        localStorage.removeItem('fgf_host_url');
+        updateHostStatus();
+        showToast('✅ Modo local activado');
+    }
+}
+
+function updateHostStatus() {
+    const url = localStorage.getItem('fgf_host_url');
+    const statusEl = document.getElementById('hostStatus');
+    const infoEl = document.getElementById('hostInfo');
+    const inputEl = document.getElementById('hostUrl');
+    
+    if (url) {
+        statusEl.textContent = '✅ Activo';
+        statusEl.style.background = 'rgba(34,197,94,0.15)';
+        statusEl.style.color = 'var(--success)';
+        infoEl.innerHTML = `<span style="color:var(--success);">Host:</span> <span style="color:var(--text);">${url}</span>`;
+        inputEl.value = url;
+    } else {
+        statusEl.textContent = '⚙️ Local';
+        statusEl.style.background = 'rgba(245,158,11,0.15)';
+        statusEl.style.color = 'var(--warning)';
+        infoEl.innerHTML = `<span style="color:var(--warning);">Modo local:</span> <span style="color:var(--text);">Las demos se generan para previsualizar en tu celular</span>`;
+        inputEl.value = '';
+    }
+}
+
+// ===== CLIENT LICENSE SYSTEM =====
+const CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
+function generateClientLicenseCode() {
+    let part = '';
+    for (let i = 0; i < 4; i++) {
+        part += CHARS[Math.floor(Math.random() * CHARS.length)];
+    }
+    return part;
+}
+
+function generateClientLicense() {
+    const existing = JSON.parse(localStorage.getItem('fgf_licenses') || '[]');
+    let code;
+    let attempts = 0;
+    do {
+        code = 'FGF-CLT-' + generateClientLicenseCode() + '-' + generateClientLicenseCode();
+        attempts++;
+    } while (existing.some(l => l.code === code) && attempts < 1000);
+    return code;
+}
+
+function saveClientLicense(code, businessName, tipo) {
+    const existing = JSON.parse(localStorage.getItem('fgf_licenses') || '[]');
+    existing.push({
+        code: code,
+        businessName: businessName,
+        tipo: tipo,
+        createdAt: new Date().toISOString(),
+        premium: false
+    });
+    localStorage.setItem('fgf_licenses', JSON.stringify(existing));
+}
+
+function copyClientLicense() {
+    const code = document.getElementById('clientLicenseCode').textContent;
+    if (code) {
+        navigator.clipboard.writeText(code).then(() => {
+            showToast('Licencia copiada');
+        }).catch(() => {
+            prompt('Licencia del cliente:', code);
+        });
+    }
+}
+
+function shareClientLicenseWhatsApp() {
+    const code = document.getElementById('clientLicenseCode').textContent;
+    const name = document.getElementById('bizName').value.trim() || 'Tu Negocio';
+    if (code) {
+        const msg = `Hola! Tu demo de *${name}* está lista.\n\n🔑 Licencia: ${code}\n\nGuardá este código para futuras consultas.`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+}
+
+function renderClientsSection() {
+    const licenses = JSON.parse(localStorage.getItem('fgf_licenses') || '[]');
+    const countEl = document.getElementById('clientCount');
+    const listEl = document.getElementById('clientsList');
+    if (countEl) countEl.textContent = licenses.length;
+    if (!listEl) return;
+    if (licenses.length === 0) {
+        listEl.innerHTML = '<div class="empty-clients"><i class="fas fa-inbox" style="font-size:1.5em; display:block; margin-bottom:8px; color:#475569;"></i>Aún no generaste licencias para clientes.<br>Generá una demo y se guardará acá.</div>';
+        return;
+    }
+    listEl.innerHTML = licenses.slice().reverse().map((l, idx) => {
+        const date = new Date(l.createdAt).toLocaleDateString('es-CL', {day:'2-digit', month:'short', year:'numeric'});
+        const tipoLabel = businessTypes[l.tipo] || l.tipo || 'N/A';
+        return `
+        <div class="client-row">
+            <div style="flex:1; min-width:0;">
+                <div class="client-name">${l.businessName} ${l.premium ? '<span class="client-premium-badge">PREMIUM</span>' : ''}</div>
+                <div class="client-meta">${tipoLabel} — ${date}</div>
+                <div class="client-license">${l.code}</div>
+                <div class="client-actions">
+                    <button class="client-btn" onclick="navigator.clipboard.writeText('${l.code}').then(()=>showToast('Licencia copiada'))"><i class="fas fa-copy"></i> Copiar</button>
+                    <button class="client-btn" onclick="copyDemoLinkForClient('${l.code}')"><i class="fas fa-link"></i> Link</button>
+                    <button class="client-btn" style="color:var(--danger); border-color:rgba(239,68,68,0.3);" onclick="deleteClient('${l.code}')"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function deleteClient(licenseCode) {
+    if (!confirm('¿Eliminar este cliente?\n\nSe borrarán todos sus datos (productos, pedidos, fotos).')) return;
+    const licenses = JSON.parse(localStorage.getItem('fgf_licenses') || '[]');
+    const filtered = licenses.filter(l => l.code !== licenseCode);
+    localStorage.setItem('fgf_licenses', JSON.stringify(filtered));
+    // Clean up client data from localStorage
+    const prefix = 'fgf_client_' + licenseCode + '_';
+    const keysToRemove = [];
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith(prefix)) keysToRemove.push(key);
+    }
+    keysToRemove.forEach(k => localStorage.removeItem(k));
+    renderClientsSection();
+    showToast('Cliente eliminado');
+}
+
+function copyDemoLinkForClient(licenseCode) {
+    const licenses = JSON.parse(localStorage.getItem('fgf_licenses') || '[]');
+    const lic = licenses.find(l => l.code === licenseCode);
+    if (!lic) return;
+    const hostUrl = localStorage.getItem('fgf_host_url') || BASE_URL;
+    const params = new URLSearchParams({
+        nombre: lic.businessName,
+        tipo: lic.tipo,
+        licencia: lic.code
+    });
+    const url = `${hostUrl}/demo-viewer.html?${params.toString()}`;
+    navigator.clipboard.writeText(url).then(() => {
+        showToast('Link de demo copiado');
+    }).catch(() => {
+        prompt('Link de demo:', url);
+    });
+}
+
+function init() {
+    // Initialize hosting status
+    updateHostStatus();
+    // Populate type select
+    const sel = document.getElementById('bizType');
+    Object.entries(businessTypes).forEach(([k,v]) => {
+        sel.innerHTML += `<option value="${k}">${v}</option>`;
+    });
+
+    // Color picker
+    const cp = document.getElementById('colorPicker');
+    colors.forEach(c => {
+        cp.innerHTML += `<div class="color-btn ${c.name===selectedColor?'active':''}" style="background:${c.bg}" data-color="${c.name}" onclick="selectColor('${c.name}', this)"></div>`;
+    });
+
+    // Quick buttons
+    const qg = document.getElementById('quickGrid');
+    quickBiz.forEach(b => {
+        qg.innerHTML += `<div class="quick-btn" onclick="quickFill('${b.name}','${b.tipo}','${b.tel}','${b.dir}','${b.hor}','${b.color}')">${b.name}</div>`;
+    });
+
+    // Render existing clients
+    renderClientsSection();
+}
+
+function selectColor(name, el) {
+    selectedColor = name;
+    document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+}
+
+function quickFill(name, tipo, tel, dir, hor, color) {
+    document.getElementById('bizName').value = name;
+    document.getElementById('bizType').value = tipo;
+    document.getElementById('bizPhone').value = tel;
+    document.getElementById('bizAddress').value = dir;
+    document.getElementById('bizSchedule').value = hor;
+    selectColor(color, document.querySelector(`[data-color="${color}"]`));
+    showToast('Datos cargados ✓');
+}
+
+function generate() {
+    const name = document.getElementById('bizName').value.trim();
+    const tipo = document.getElementById('bizType').value;
+    const phone = document.getElementById('bizPhone').value.trim();
+    const addr = document.getElementById('bizAddress').value.trim();
+    const sched = document.getElementById('bizSchedule').value.trim();
+
+    if (!name) { showToast('⚠️ Ingresa el nombre del negocio'); return; }
+
+    // Generate unique client license
+    const clientLicense = generateClientLicense();
+    saveClientLicense(clientLicense, name, tipo);
+
+    const params = new URLSearchParams({
+        nombre: name,
+        tipo: tipo,
+        licencia: clientLicense,
+        telefono: phone || '56912345678',
+        direccion: addr || 'Talagante',
+        horario: sched || 'Lun-Sáb 9:00-19:00',
+        color: selectedColor
+    });
+
+    const hostUrl = localStorage.getItem('fgf_host_url') || BASE_URL;
+    
+    generatedUrls = {
+        tienda: `${hostUrl}/demo-viewer.html?${params.toString()}`,
+        admin: `${hostUrl}/admin-panel.html?${params.toString()}`
+    };
+
+    document.getElementById('urlTienda').textContent = generatedUrls.tienda;
+    document.getElementById('urlAdmin').textContent = generatedUrls.admin;
+    document.getElementById('results').classList.add('active');
+
+    // QR Codes
+    const qrTienda = document.getElementById('qrTienda');
+    const qrAdmin = document.getElementById('qrAdmin');
+    const qrTiendaDl = document.getElementById('qrTiendaDownload');
+    const qrAdminDl = document.getElementById('qrAdminDownload');
+    const qrTiendaUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' + encodeURIComponent(generatedUrls.tienda);
+    const qrAdminUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' + encodeURIComponent(generatedUrls.admin);
+    qrTienda.src = qrTiendaUrl;
+    qrAdmin.src = qrAdminUrl;
+    qrTiendaDl.href = qrTiendaUrl + '&format=png';
+    qrAdminDl.href = qrAdminUrl + '&format=png';
+    document.getElementById('qrSection').style.display = 'block';
+
+    // Show client license
+    document.getElementById('clientLicenseCode').textContent = clientLicense;
+    document.getElementById('clientLicenseResult').classList.add('active');
+
+    // Refresh clients section
+    renderClientsSection();
+
+    document.getElementById('results').scrollIntoView({behavior:'smooth'});
+    showToast('✅ Demo generada con licencia ' + clientLicense);
+}
+
+// Generate autonomous HTML with embedded business data
+const modelConfigs = {
+    panaderia: {
+        emoji:'🥖', bg:'#1a1008', accent:'#e8b85f', accent2:'#c4952e', text:'#f5e6cc', muted:'#a09080',
+        heroImg:'https://images.unsplash.com/photo-1549931319-a54575332b6c?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1555507036-ab1f4038029a?auto=format&fit=crop&w=600&q=80',
+        title:'Pan artesanal chileno',
+        about:'Tradición familiar. Masa madre, harina artesanal y horno de barro.',
+        items:[
+            {icon:'🍞',name:'Marraqueta',desc:'Crujiente por fuera, suave por dentro.',price:'$1.200'},
+            {icon:'🥖',name:'Pan Amasado',desc:'Con chicharrones, horneado en barro.',price:'$1.800'},
+            {icon:'🥐',name:'Hallulla',desc:'Redonda y esponjosa.',price:'$800'},
+            {icon:'🥟',name:'Empanadas',desc:'De pino, queso o mariscos.',price:'$2.500'},
+            {icon:'🍪',name:'Sopaipillas',desc:'Con zapallo, fritas.',price:'$500'},
+            {icon:'🎂',name:'Pastelería',desc:'Kuchen, tortas caseras.',price:'$3.000'}
+        ]
+    },
+    boutique: {
+        emoji:'👗', bg:'#0d0d14', accent:'#e8798b', accent2:'#c94d6e', text:'#f5e6d0', muted:'#a09090',
+        heroImg:'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=600&q=80',
+        title:'Moda femenina con estilo único',
+        about:'Ropa, accesorios y tendencias seleccionadas para la mujer moderna.',
+        items:[
+            {icon:'👗',name:'Vestidos',desc:'Elegantes, casuales y de temporada.',price:'$25.990'},
+            {icon:'👚',name:'Blusas',desc:'Telas suaves, cortes modernos.',price:'$15.990'},
+            {icon:'👜',name:'Carteras',desc:'Cuero, tela y diseño.',price:'$12.990'},
+            {icon:'👠',name:'Zapatos',desc:'Tacones, zapatillas, botas.',price:'$19.990'},
+            {icon:'💍',name:'Accesorios',desc:'Joyas, pañuelos, cinturones.',price:'$4.990'},
+            {icon:'🧥',name:'Chaquetas',desc:'Abrigos, blazers y más.',price:'$35.990'}
+        ]
+    },
+    taller: {
+        emoji:'🔧', bg:'#0a0e14', accent:'#3b82f6', accent2:'#06b6d4', text:'#e2e8f0', muted:'#8892a0',
+        heroImg:'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?auto=format&fit=crop&w=600&q=80',
+        title:'Mecánica integral con garantía',
+        about:'Diagnóstico computarizado, repuestos originales y los mejores técnicos.',
+        items:[
+            {icon:'⚙️',name:'Mecánica General',desc:'Motores, frenos, suspensión.',price:'$35.000'},
+            {icon:'🔌',name:'Escaner Eléctrico',desc:'Diagnóstico computarizado.',price:'$25.000'},
+            {icon:'🛞',name:'Neumáticos',desc:'Venta, instalación, alineación.',price:'$15.000'},
+            {icon:'🛡️',name:'Mantenciones',desc:'Preventiva para tu auto.',price:'$45.000'},
+            {icon:'❄️',name:'Aire Acondicionado',desc:'Carga de gas y reparación.',price:'$30.000'},
+            {icon:'🔩',name:'Transmisión',desc:'Cajas mecánicas y automáticas.',price:'$80.000'}
+        ]
+    },
+    barberia: {
+        emoji:'💈', bg:'#0a0a0a', accent:'#dc2626', accent2:'#991b1b', text:'#f5f0e8', muted:'#8a8a8a',
+        heroImg:'https://images.unsplash.com/photo-1596728325488-58c87691e9af?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=600&q=80',
+        title:'Cortes clásicos y modernos',
+        about:'Tijera, navaja y barboterapia. Donde el look importa.',
+        items:[
+            {icon:'✂️',name:'Corte Clásico',desc:'Degradados, pompadour, undercut.',price:'$12.000'},
+            {icon:'🪒',name:'Afeitado Tradicional',desc:'Toalla caliente, navaja.',price:'$10.000'},
+            {icon:'🧔',name:'Barboterapia',desc:'Limpieza, recorte premium.',price:'$14.000'},
+            {icon:'💆',name:'Arreglo Cejas',desc:'Perfilado con pinza.',price:'$5.000'},
+            {icon:'🧴',name:'Lavado + Corte',desc:'Shampoo premium, masaje.',price:'$16.000'},
+            {icon:'👶',name:'Corte Infantil',desc:'Paciencia y cariño.',price:'$8.000'}
+        ]
+    },
+    restaurante: {
+        emoji:'🍕', bg:'#120a08', accent:'#e63946', accent2:'#991b1b', text:'#f5e6d0', muted:'#9a8a80',
+        heroImg:'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=600&q=80',
+        title:'Cocina italiana tradicional',
+        about:'Pastas artesanales, pizzas al horno de barro y los mejores vinos.',
+        items:[
+            {icon:'🍕',name:'Pizza Margherita',desc:'Masa madre, mozzarella fresca.',price:'$12.990'},
+            {icon:'🍝',name:'Spaghetti Carbonara',desc:'Huevo, panceta, parmesano.',price:'$14.990'},
+            {icon:'🥟',name:'Ravioli Ricotta',desc:'Rellenos, salsa pomodoro.',price:'$13.990'},
+            {icon:'🥗',name:'Ensalada Caprese',desc:'Tomate, mozzarella, albahaca.',price:'$9.990'},
+            {icon:'🍷',name:'Vinos',desc:'Selección chilena e italiana.',price:'$6.990'},
+            {icon:'🍰',name:'Tiramisú',desc:'Mascarpone, café y cacao.',price:'$7.990'}
+        ]
+    },
+    desarmaduria: {
+        emoji:'🚗', bg:'#0a0e14', accent:'#f59e0b', accent2:'#d97706', text:'#e2e8f0', muted:'#8a8a8a',
+        heroImg:'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80',
+        title:'Repuestos automotrices originales',
+        about:'Venta de repuestos originales y alternativos para todas las marcas.',
+        items:[
+            {icon:'🚗',name:'Motores',desc:'Originales y reconstruidos.',price:'$150.000'},
+            {icon:'🔧',name:'Transmisiones',desc:'Cajas mecánicas y automáticas.',price:'$80.000'},
+            {icon:'🛞',name:'Neumáticos',desc:'Todas las marcas y medidas.',price:'$45.000'},
+            {icon:'🔩',name:'Frenos',desc:'Pastillas, discos, bombines.',price:'$25.000'},
+            {icon:'💡',name:'Faros',desc:'Delanteros, traseros, niebla.',price:'$15.000'},
+            {icon:'🔋',name:'Baterías',desc:'Para auto, camioneta y camión.',price:'$35.000'}
+        ]
+    },
+    ferreteria: {
+        emoji:'🔩', bg:'#0f0f0a', accent:'#22c55e', accent2:'#16a34a', text:'#f0fdf4', muted:'#8a9a8a',
+        heroImg:'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?auto=format&fit=crop&w=600&q=80',
+        title:'Ferretería con todo',
+        about:'Materiales de construcción, herramientas y artículos para el hogar.',
+        items:[
+            {icon:'🔨',name:'Herramientas',desc:'Manuales y eléctricas.',price:'$5.000'},
+            {icon:'🔩',name:'Pernos y Tuercas',desc:'Todas las medidas.',price:'$500'},
+            {icon:'🪚',name:'Maderas',desc:'Pino, lingue, terciado.',price:'$8.000'},
+            {icon:'💡',name:'Iluminación',desc:'Focos, lámparas, cables.',price:'$2.500'},
+            {icon:'🚿',name:'Gasfitería',desc:'Tuberías, llaves, sellos.',price:'$3.000'},
+            {icon:'🎨',name:'Pinturas',desc:'Látex, esmalte, spray.',price:'$4.500'}
+        ]
+    },
+    clinica: {
+        emoji:'🏥', bg:'#0a0f14', accent:'#06b6d4', accent2:'#0891b2', text:'#e0f2fe', muted:'#8a9aa0',
+        heroImg:'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=600&q=80',
+        title:'Atención médica profesional',
+        about:'Consultas, exámenes y especialidades médicas en un solo lugar.',
+        items:[
+            {icon:'🩺',name:'Medicina General',desc:'Consultas y controles.',price:'$25.000'},
+            {icon:'🦷',name:'Dentista',desc:'Limpieza, extracciones, ortodoncia.',price:'$35.000'},
+            {icon:'👁️',name:'Oftalmología',desc:'Exámenes visuales, lentes.',price:'$30.000'},
+            {icon:'❤️',name:'Cardiología',desc:'Electro, ecocardiograma.',price:'$40.000'},
+            {icon:'🩻',name:'Rayos X',desc:'Radiografías digitales.',price:'$15.000'},
+            {icon:'💉',name:'Vacunación',desc:'Esquema completo.',price:'$12.000'}
+        ]
+    },
+    peluqueria: {
+        emoji:'💇', bg:'#0d0a14', accent:'#a855f7', accent2:'#7c3aed', text:'#f0e8f5', muted:'#9a8aa0',
+        heroImg:'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1633681926027-84c23e8cb2d6?auto=format&fit=crop&w=600&q=80',
+        title:'Peluquería y estilismo',
+        about:'Cortes, tintes, peinados y tratamientos capilares profesionales.',
+        items:[
+            {icon:'✂️',name:'Corte Damas',desc:'Tijera, capas y texturas.',price:'$15.000'},
+            {icon:'💇',name:'Corte Caballeros',desc:'Máquina y tijera.',price:'$10.000'},
+            {icon:'🎨',name:'Tinte',desc:'Coloración completa o mechas.',price:'$25.000'},
+            {icon:'💆',name:'Alisado',desc:'Keratina, alisado permanente.',price:'$35.000'},
+            {icon:'🧴',name:'Tratamientos',desc:'Hidratación, queratina.',price:'$12.000'},
+            {icon:'👰',name:'Peinados',desc:'Novia, fiesta, graduación.',price:'$20.000'}
+        ]
+    },
+    mascotas: {
+        emoji:'🐕', bg:'#0a140a', accent:'#84cc16', accent2:'#65a30d', text:'#ecfccb', muted:'#8a9a70',
+        heroImg:'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=600&q=80',
+        title:'Tienda y cuidado de mascotas',
+        about:'Alimentos, accesorios, juguetes y servicios para tu mejor amigo.',
+        items:[
+            {icon:'🐕',name:'Alimento Seco',desc:'Premium y estándar.',price:'$12.000'},
+            {icon:'🥫',name:'Alimento Húmedo',desc:'Latas y sobres.',price:'$2.500'},
+            {icon:'🧸',name:'Juguetes',desc:'Pelotas, cuerdas, mordedores.',price:'$4.000'},
+            {icon:'🛏️',name:'Camas',desc:'Para perro y gato.',price:'$18.000'},
+            {icon:'🪥',name:'Higiene',desc:'Shampoo, cepillos, cortaúñas.',price:'$5.000'},
+            {icon:'🩺',name:'Veterinaria',desc:'Consultas y vacunas.',price:'$20.000'}
+        ]
+    },
+    minimarket: {
+        emoji:'🛒', bg:'#0a0f0a', accent:'#eab308', accent2:'#ca8a04', text:'#fefce8', muted:'#9a9a70',
+        heroImg:'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?auto=format&fit=crop&w=600&q=80',
+        title:'Tu almacén de confianza',
+        about:'Abarrotes, bebidas, lácteos y todo lo que necesitas cerca de casa.',
+        items:[
+            {icon:'🥛',name:'Lácteos',desc:'Leche, yogurt, queso.',price:'$1.500'},
+            {icon:'🥖',name:'Pan',desc:'Marraqueta, hallulla, amasado.',price:'$800'},
+            {icon:'🥫',name:'Conservas',desc:'Atún, legumbres, verduras.',price:'$1.200'},
+            {icon:'🥤',name:'Bebidas',desc:'Gaseosas, jugos, aguas.',price:'$1.800'},
+            {icon:'🍺',name:'Cervezas',desc:'Nacionales e importadas.',price:'$2.500'},
+            {icon:'🧹',name:'Limpieza',desc:'Detergente, lavaloza, cloro.',price:'$1.000'}
+        ]
+    },
+    libreria: {
+        emoji:'📚', bg:'#0a0a14', accent:'#6366f1', accent2:'#4f46e5', text:'#e0e7ff', muted:'#8a8aa0',
+        heroImg:'https://images.unsplash.com/photo-1524995997946-a1c2e315a46f?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=600&q=80',
+        title:'Librería y papelería',
+        about:'Libros, cuadernos, útiles escolares y todo para tu oficina.',
+        items:[
+            {icon:'📚',name:'Libros',desc:'Novelas, textos, infantiles.',price:'$12.000'},
+            {icon:'📓',name:'Cuadernos',desc:'Universitarios, argollados.',price:'$3.500'},
+            {icon:'✏️',name:'Útiles',desc:'Lápices, gomas, correctores.',price:'$800'},
+            {icon:'🖨️',name:'Impresión',desc:'Blanco/negro y color.',price:'$200'},
+            {icon:'🎨',name:'Arte',desc:'Pinceles, óleo, acrílico.',price:'$5.000'},
+            {icon:'📦',name:'Mochilas',desc:'Escolares y ejecutivas.',price:'$15.000'}
+        ]
+    },
+    spa: {
+        emoji:'💆', bg:'#0a0812', accent:'#d946ef', accent2:'#a21caf', text:'#fae8ff', muted:'#9a8aa0',
+        heroImg:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?auto=format&fit=crop&w=600&q=80',
+        title:'Relajación y bienestar',
+        about:'Masajes, tratamientos faciales y corporales para renovar cuerpo y mente.',
+        items:[
+            {icon:'💆',name:'Masaje Relajante',desc:'Cuerpo completo, 60 min.',price:'$35.000'},
+            {icon:'🪔',name:'Aromaterapia',desc:'Aceites esenciales.',price:'$25.000'},
+            {icon:'🧖',name:'Sauna',desc:'Vapor seco y húmedo.',price:'$15.000'},
+            {icon:'🌸',name:'Facial',desc:'Limpieza profunda.',price:'$28.000'},
+            {icon:'🦶',name:'Reflexología',desc:'Podal, 45 min.',price:'$22.000'},
+            {icon:'🍵',name:'Hidroterapia',desc:'Baños de tina con sales.',price:'$30.000'}
+        ]
+    },
+    gimnasio: {
+        emoji:'💪', bg:'#0a0a0a', accent:'#f97316', accent2:'#ea580c', text:'#fff7ed', muted:'#9a8a70',
+        heroImg:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=600&q=80',
+        title:'Entrena con los mejores',
+        about:'Equipamiento moderno, clases grupales y entrenadores certificados.',
+        items:[
+            {icon:'🏋️',name:'Pesas Libres',desc:'Mancuernas, barras, discos.',price:'$25.000'},
+            {icon:'🏃',name:'Cardio',desc:'Cintas, elípticas, bicicletas.',price:'$25.000'},
+            {icon:'🧘',name:'Yoga',desc:'Clases grupales.',price:'$20.000'},
+            {icon:'🥊',name:'Box',desc:'Entrenamiento funcional.',price:'$22.000'},
+            {icon:'👤',name:'Personal Trainner',desc:'Plan individualizado.',price:'$40.000'},
+            {icon:'💪',name:'CrossFit',desc:'Alta intensidad.',price:'$28.000'}
+        ]
+    },
+    psicologo: {
+        emoji:'🧠', bg:'#0a0812', accent:'#8b5cf6', accent2:'#6d28d9', text:'#ede9fe', muted:'#8a8aa0',
+        heroImg:'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&q=80',
+        title:'Apoyo psicológico profesional',
+        about:'Terapia online y presencial para todas las edades.',
+        items:[
+            {icon:'🧠',name:'Terapia Individual',desc:'Adultos y adolescentes.',price:'$35.000'},
+            {icon:'👥',name:'Terapia Pareja',desc:'Presencial u online.',price:'$45.000'},
+            {icon:'🧒',name:'Terapia Infantil',desc:'Juego y arte terapia.',price:'$30.000'},
+            {icon:'💆',name:'Manejo Ansiedad',desc:'Técnicas de relajación.',price:'$35.000'},
+            {icon:'📋',name:'Evaluación',desc:'Tests psicológicos.',price:'$40.000'},
+            {icon:'🌐',name:'Online',desc:'Sesiones por video.',price:'$25.000'}
+        ]
+    },
+    nutricionista: {
+        emoji:'🥗', bg:'#0a140a', accent:'#22c55e', accent2:'#15803d', text:'#f0fdf4', muted:'#8a9a80',
+        heroImg:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=600&q=80',
+        title:'Nutrición y salud',
+        about:'Planes alimenticios personalizados para una vida más saludable.',
+        items:[
+            {icon:'🥗',name:'Plan Nutricional',desc:'Personalizado.',price:'$30.000'},
+            {icon:'📊',name:'Evaluación',desc:'Composición corporal.',price:'$20.000'},
+            {icon:'🥑',name:'Nutrición Deportiva',desc:'Rendimiento físico.',price:'$35.000'},
+            {icon:'👶',name:'Nutrición Infantil',desc:'Pediátrica.',price:'$28.000'},
+            {icon:'🧪',name:'Exámenes',desc:'Perfil bioquímico.',price:'$15.000'},
+            {icon:'📱',name:'Seguimiento Online',desc:'App y WhatsApp.',price:'$22.000'}
+        ]
+    },
+    kinesiologo: {
+        emoji:'💆', bg:'#0a1014', accent:'#06b6d4', accent2:'#0e7490', text:'#ecfeff', muted:'#8a9aa0',
+        heroImg:'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=600&q=80',
+        title:'Rehabilitación y terapia',
+        about:'Recuperación de lesiones, dolores musculares y rehabilitación física.',
+        items:[
+            {icon:'💆',name:'Terapia Manual',desc:'Masajes terapéuticos.',price:'$28.000'},
+            {icon:'🏋️',name:'Rehabilitación',desc:'Lesiones deportivas.',price:'$32.000'},
+            {icon:'🦶',name:'Podología',desc:'Estudio de pisada.',price:'$25.000'},
+            {icon:'⚡',name:'Electroterapia',desc:'Ultrasonido, TENS.',price:'$22.000'},
+            {icon:'🧘',name:'Kinesiología',desc:'Respiratoria.',price:'$28.000'},
+            {icon:'🏠',name:'Domicilio',desc:'Atención a domicilio.',price:'$35.000'}
+        ]
+    },
+    tatuador: {
+        emoji:'🎨', bg:'#0a0a0a', accent:'#ec4899', accent2:'#be185d', text:'#fdf2f8', muted:'#9a8a90',
+        heroImg:'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?auto=format&fit=crop&w=600&q=80',
+        title:'Tatuajes con estilo',
+        about:'Diseño personalizado, higiene profesional y acabados de calidad.',
+        items:[
+            {icon:'🎨',name:'Tatuaje Personalizado',desc:'Diseño único.',price:'$50.000'},
+            {icon:'🖌️',name:'Diseño',desc:'Boceto y asesoría.',price:'$15.000'},
+            {icon:'🔄',name:'Cover-up',desc:'Cubrir tatuajes viejos.',price:'$70.000'},
+            {icon:'✍️',name:'Fine Line',desc:'Línea fina y detalle.',price:'$40.000'},
+            {icon:'🌈',name:'Color',desc:'A color y realismo.',price:'$60.000'},
+            {icon:'🧴',name:'Aftercare',desc:'Kit de cuidado.',price:'$12.000'}
+        ]
+    },
+    profesor: {
+        emoji:'📚', bg:'#0a0a14', accent:'#6366f1', accent2:'#4338ca', text:'#e0e7ff', muted:'#8a8aa0',
+        heroImg:'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=600&q=80',
+        title:'Clases particulares',
+        about:'Refuerzo escolar, preparación de exámenes y aprendizaje personalizado.',
+        items:[
+            {icon:'📐',name:'Matemáticas',desc:'Básica y media.',price:'$15.000'},
+            {icon:'📖',name:'Lenguaje',desc:'Lectura, escritura.',price:'$15.000'},
+            {icon:'🌍',name:'Historia',desc:'Nacional y universal.',price:'$15.000'},
+            {icon:'🔬',name:'Ciencias',desc:'Biología, química, física.',price:'$17.000'},
+            {icon:'💻',name:'Programación',desc:'Python, web, básico.',price:'$20.000'},
+            {icon:'🌐',name:'Inglés',desc:'Básico a avanzado.',price:'$18.000'}
+        ]
+    },
+    fotografo: {
+        emoji:'📸', bg:'#0a0a0a', accent:'#f59e0b', accent2:'#d97706', text:'#fffbeb', muted:'#9a9a80',
+        heroImg:'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1554048612-b6a482bc67e5?auto=format&fit=crop&w=600&q=80',
+        title:'Fotografía profesional',
+        about:'Sesiones de fotos, eventos, productos y retratos con calidad profesional.',
+        items:[
+            {icon:'📸',name:'Sesión Fotos',desc:'Individual o grupal.',price:'$50.000'},
+            {icon:'🎉',name:'Eventos',desc:'Fiestas, bautizos, cumpleaños.',price:'$80.000'},
+            {icon:'💍',name:'Matrimonios',desc:'Cobertura completa.',price:'$250.000'},
+            {icon:'📦',name:'Producto',desc:'Catálogo y e-commerce.',price:'$35.000'},
+            {icon:'🖼️',name:'Edición',desc:'Photoshop y retoque.',price:'$15.000'},
+            {icon:'🎬',name:'Video',desc:'Cápsulas y reel.',price:'$60.000'}
+        ]
+    },
+    abogado: {
+        emoji:'⚖️', bg:'#0a0a14', accent:'#eab308', accent2:'#a16207', text:'#fefce8', muted:'#8a8a70',
+        heroImg:'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=600&q=80',
+        title:'Asesoría legal profesional',
+        about:'Defensa, consultoría y representación legal en todas las áreas del derecho.',
+        items:[
+            {icon:'⚖️',name:'Civil',desc:'Contratos, herencias.',price:'$50.000'},
+            {icon:'🏢',name:'Laboral',desc:'Despidos, finiquitos.',price:'$45.000'},
+            {icon:'🏠',name:'Familia',desc:'Divorcio, pensión.',price:'$40.000'},
+            {icon:'💰',name:'Tributario',desc:'Declaraciones, multas.',price:'$55.000'},
+            {icon:'🚗',name:'Tránsito',desc:'Multas, accidentes.',price:'$35.000'},
+            {icon:'📝',name:'Consultoría',desc:'Consulta legal 1 hora.',price:'$30.000'}
+        ]
+    },
+    otro: {
+        emoji:'📦', bg:'#0a0a14', accent:'#a855f7', accent2:'#7c3aed', text:'#f0e8f5', muted:'#8a8aa0',
+        heroImg:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1920&q=75',
+        aboutImg:'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80',
+        title:'Tu negocio, tu web',
+        about:'Creamos una web profesional para tu negocio, sea lo que sea.',
+        items:[
+            {icon:'🌐',name:'Sitio Web',desc:'Landing profesional.',price:'Cotizar'},
+            {icon:'📱',name:'App Móvil',desc:'Android e iOS.',price:'Cotizar'},
+            {icon:'🛒',name:'Tienda Online',desc:'E-commerce completo.',price:'Cotizar'},
+            {icon:'📊',name:'Panel Admin',desc:'Gestión de negocios.',price:'Cotizar'},
+            {icon:'🔍',name:'SEO',desc:'Posicionamiento web.',price:'Cotizar'},
+            {icon:'📞',name:'Soporte',desc:'Mantención mensual.',price:'Cotizar'}
+        ]
+    }
+};
+
+function generateFullLanding(params) {
+    const nombre = params.get('nombre') || 'Tu Negocio';
+    const tipo = params.get('tipo') || 'taller';
+    const telefono = params.get('telefono') || '56912345678';
+    const direccion = params.get('direccion') || 'Talagante';
+    const horario = params.get('horario') || 'Lun-Sáb 9:00-19:00';
+    const cfg = modelConfigs[tipo] || modelConfigs.otro;
+    const items = cfg.items.map((it,i) =>
+        `<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:22px 16px;text-align:center;">
+            <div style="font-size:2.2rem;margin-bottom:8px">${it.icon}</div>
+            <h3 style="font-size:0.95rem;font-weight:700;margin-bottom:4px;color:${cfg.text}">${it.name}</h3>
+            <p style="font-size:0.78rem;color:${cfg.muted};line-height:1.5;margin-bottom:8px">${it.desc}</p>
+            <div style="font-size:0.9rem;font-weight:700;color:${cfg.accent}">${it.price}</div>
+        </div>`
+    ).join('');
+    return `<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${nombre} | ${cfg.emoji} FGF Digital</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:${cfg.bg};color:${cfg.text};overflow-x:hidden}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 20px;background:linear-gradient(135deg,rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url('${cfg.heroImg}') center/cover fixed}
+.hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;margin-bottom:8px}
+.hero h1 span{color:${cfg.accent}}
+.hero .icon{font-size:4rem;margin-bottom:12px}
+.hero p{font-size:0.95rem;color:${cfg.muted};max-width:480px;margin:0 auto 24px;line-height:1.6}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:50px;text-decoration:none;font-weight:600;font-size:0.85rem;transition:.3s}
+.btn-primary{background:linear-gradient(135deg,${cfg.accent},${cfg.accent2});color:${cfg.bg}}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 30px ${cfg.accent}44}
+.section{padding:60px 20px;max-width:1000px;margin:0 auto}
+.section h2{text-align:center;font-size:clamp(1.3rem,2.5vw,1.8rem);font-weight:800;margin-bottom:24px}
+.section h2 span{color:${cfg.accent}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.about{text-align:center;padding:40px 20px;max-width:600px;margin:0 auto}
+.about img{width:100%;max-width:280px;border-radius:14px;margin-bottom:14px;box-shadow:0 8px 30px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.06)}
+.about p{color:${cfg.muted};font-size:0.9rem;line-height:1.7;margin-bottom:10px}
+.contact{text-align:center;padding:50px 20px;background:linear-gradient(135deg,${cfg.bg},${cfg.bg}88);border-radius:20px;margin:0 20px 40px;max-width:700px;margin-left:auto;margin-right:auto}
+.contact h3{font-size:1.5rem;margin-bottom:8px}
+.contact h3 span{color:${cfg.accent}}
+.contact p{color:${cfg.muted};font-size:0.85rem;margin-bottom:20px}
+.contact-items{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.contact-item{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.05);font-size:0.82rem}
+.contact-item i{color:${cfg.accent};width:16px}
+.whatsapp-float{position:fixed;bottom:20px;right:20px;z-index:99;width:50px;height:50px;border-radius:50%;background:#25D366;color:white;display:flex;align-items:center;justify-content:center;font-size:22px;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,0.3)}
+.footer{text-align:center;padding:24px 20px;color:${cfg.muted};font-size:0.75rem;border-top:1px solid rgba(255,255,255,0.04)}
+</style>
+</head>
+<body>
+<div class="hero">
+<div>
+<div class="icon">${cfg.emoji}</div>
+<h1><span>${nombre}</span></h1>
+<p>${cfg.title}</p>
+<p style="font-size:0.82rem;color:${cfg.muted};margin-top:-14px;margin-bottom:24px">${cfg.about}</p>
+<a href="https://wa.me/${telefono}" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Contactar ahora</a>
+</div>
+</div>
+<div class="section">
+<h2>Nuestros <span>Servicios</span></h2>
+<div class="grid">${items}</div>
+</div>
+<div class="about">
+<img src="${cfg.aboutImg}" alt="${nombre}">
+<h2 style="margin-bottom:8px">Sobre <span>nosotros</span></h2>
+<p style="margin-bottom:6px">${cfg.about}</p>
+<p style="font-size:0.8rem">📍 ${direccion} · 🕐 ${horario}</p>
+</div>
+<div class="contact">
+<h3>Contacta <span>con nosotros</span></h3>
+<p>Escríbenos por WhatsApp para más información o agendar tu visita.</p>
+<div class="contact-items">
+<div class="contact-item"><i class="fab fa-whatsapp"></i> ${telefono}</div>
+<div class="contact-item"><i class="fas fa-map-marker-alt"></i> ${direccion}</div>
+<div class="contact-item"><i class="fas fa-clock"></i> ${horario}</div>
+</div>
+<a href="https://wa.me/${telefono}" class="btn btn-primary" style="margin-top:20px"><i class="fab fa-whatsapp"></i> Escribir ahora</a>
+</div>
+<div class="footer">
+<p>${nombre} © 2026 — Creado con FGF Digital 🚀</p>
+</div>
+<a href="https://wa.me/${telefono}" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</body>
+</html>`;
+}
+
+function generateAutonomousHtml(type, params) {
+    const nombre = params.get('nombre') || 'Tu Negocio';
+    const tipo = params.get('tipo') || 'taller';
+    const telefono = params.get('telefono') || '56912345678';
+    const direccion = params.get('direccion') || 'Talagante';
+    const horario = params.get('horario') || 'Lun-Sáb 9:00-19:00';
+    const color = params.get('color') || 'blue';
+    const colorMap = {blue:'#2563eb',purple:'#7c3aed',green:'#059669',orange:'#ea580c',red:'#dc2626',pink:'#db2777',cyan:'#0891b2',indigo:'#4f46e5'};
+    const primaryColor = colorMap[color] || '#2563eb';
+    const emojis = {taller:'🔧',desarmaduria:'🚗',ferreteria:'🔩',panaderia:'🍪',restaurante:'🍕',boutique:'👗',clinica:'🏥',peluqueria:'💇',mascotas:'🐕',minimarket:'🛒',libreria:'📚',spa:'💆',barberia:'💈',gimnasio:'💪',psicologo:'🧠',nutricionista:'🥗',kinesiologo:'💆',tatuador:'🎨',profesor:'📚',fotografo:'📸',abogado:'⚖️',otro:'📦'};
+    const emoji = emojis[tipo] || '📦';
+    
+    if (type === 'tienda') {
+        return `<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${nombre} | Tienda Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#f8fafc;color:#1e293b;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:20px;padding:40px 30px;text-align:center;max-width:420px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,0.08)}
+.emoji{font-size:4em;margin-bottom:16px}
+h1{font-size:1.6em;margin-bottom:8px;font-weight:800}
+.sub{color:#64748b;font-size:0.9em;margin-bottom:24px}
+.info{background:#f1f5f9;border-radius:14px;padding:18px;margin-bottom:24px;text-align:left;font-size:0.88em;line-height:2}
+.info span{color:#64748b}
+.badge{display:inline-block;background:${primaryColor}15;color:${primaryColor};padding:4px 12px;border-radius:20px;font-size:0.78em;font-weight:600;margin-top:8px}
+.btn{display:block;width:100%;padding:16px;border-radius:14px;border:none;font-size:1em;font-weight:700;cursor:pointer;margin-bottom:12px;font-family:inherit;text-decoration:none;text-align:center}
+.btn-primary{background:${primaryColor};color:#fff}
+.btn-whatsapp{background:#dcfce7;color:#16a34a;border:1px solid #bbf7d0}
+.btn-outline{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0}
+.footer{margin-top:24px;font-size:0.72em;color:#94a3b8}
+.powered{color:${primaryColor};font-weight:700}
+.actions{display:flex;gap:10px;margin-top:16px}
+.actions .btn{flex:1}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="emoji">${emoji}</div>
+<h1>${nombre}</h1>
+<p class="sub">Demo de Tienda Online — FGF Digital</p>
+<div class="info">
+<span>Tipo:</span> ${tipo}<br>
+<span>Teléfono:</span> ${telefono}<br>
+<span>Dirección:</span> ${direccion}<br>
+<span>Horario:</span> ${horario}
+</div>
+<div class="badge">⚡ Demo interactiva — FGF Digital v3.1</div>
+<p style="color:#64748b;font-size:0.85em;margin:20px 0 16px">
+Esta es una demostración de cómo se vería tu tienda online.<br>
+Para la versión completa, contactá a FGF Digital.
+</p>
+<a href="https://wa.me/${telefono}?text=${encodeURIComponent('Hola! Vi la demo de ' + nombre + ' y me interesa tener mi propia tienda online')}" class="btn btn-whatsapp" target="_blank">
+📱 Contactar por WhatsApp
+</a>
+<div class="actions">
+<a href="https://wa.me/56940894579?text=${encodeURIComponent('Hola Francisco, vi la demo de ' + nombre + ' y quiero mi tienda igual')}" class="btn btn-outline" target="_blank" style="font-size:0.85em;">
+⚡ Quiero mi tienda
+</a>
+</div>
+                <div class="footer">Powerd by <span class="powered">FGF Digital</span> — v3.1</div>
+            </div>
+            </body>
+            </html>`;
+        }
+    } else if (type === 'tienda' && modelConfigs[tipo]) {
+        return generateFullLanding(params);
+    } else {
+        return `<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${nombre} | Panel Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0f172a;color:#f1f5f9;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#1e293b;border-radius:20px;padding:40px 30px;text-align:center;max-width:420px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,0.3)}
+.emoji{font-size:4em;margin-bottom:16px}
+h1{font-size:1.6em;margin-bottom:8px;font-weight:800}
+.sub{color:#94a3b8;font-size:0.9em;margin-bottom:24px}
+.info{background:rgba(255,255,255,0.05);border-radius:14px;padding:18px;margin-bottom:24px;text-align:left;font-size:0.88em;line-height:2}
+.info span{color:#94a3b8}
+.badge{display:inline-block;background:rgba(99,102,241,0.15);color:#818cf8;padding:4px 12px;border-radius:20px;font-size:0.78em;font-weight:600;margin-top:8px}
+.btn{display:block;width:100%;padding:16px;border-radius:14px;border:none;font-size:1em;font-weight:700;cursor:pointer;margin-bottom:12px;font-family:inherit;text-decoration:none;text-align:center}
+.btn-primary{background:#6366f1;color:#fff}
+.btn-outline{background:rgba(255,255,255,0.05);color:#94a3b8;border:1px solid rgba(255,255,255,0.1)}
+.footer{margin-top:24px;font-size:0.72em;color:#475569}
+.powered{color:#818cf8;font-weight:700}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="emoji">📊</div>
+<h1>${nombre}</h1>
+<p class="sub">Panel de Administración — Demo</p>
+<div class="info">
+<span>Tipo:</span> ${tipo}<br>
+<span>Teléfono:</span> ${telefono}<br>
+<span>Dirección:</span> ${direccion}<br>
+<span>Horario:</span> ${horario}
+</div>
+<div class="badge">📊 Panel Admin — FGF Digital v3.1</div>
+<p style="color:#94a3b8;font-size:0.85em;margin:20px 0 16px">
+El panel de administración incluye: dashboard, pedidos, productos, clientes, reportes y exportación Excel.<br>
+Contactá para la versión completa.
+</p>
+<a href="https://wa.me/56940894579?text=${encodeURIComponent('Hola Francisco, vi el panel admin de ' + nombre + ' y quiero el mío')}" class="btn btn-primary" target="_blank">
+📱 Solicitar Panel Admin
+</a>
+<div class="footer">Powerd by <span class="powered">FGF Digital</span> — v3.1</div>
+</div>
+</body>
+</html>`;
+    }
+}
+
+function copyUrl(type) {
+    navigator.clipboard.writeText(generatedUrls[type]).then(() => {
+        showToast('📋 Link copiado');
+    }).catch(() => {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = generatedUrls[type];
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
+        showToast('📋 Link copiado');
+    });
+}
+
+function copyBoth() {
+    const text = `🔗 *Demo Tienda:*\n${generatedUrls.tienda}\n\n📊 *Admin Panel:*\n${generatedUrls.admin}`;
+    navigator.clipboard.writeText(text).then(() => {
+        showToast('📋 Ambos links copiados');
+    }).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
+        showToast('📋 Ambos links copiados');
+    });
+}
+
+function shareWhatsApp(type) {
+    const msg = type === 'both'
+        ? `¡Hola! Te envío las demos:\n\nTienda: ${generatedUrls.tienda}\nAdmin: ${generatedUrls.admin}`
+        : `¡Hola! Te envío la demo:\n\n${generatedUrls[type]}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function openUrl(type) {
+    window.open(generatedUrls[type], '_blank');
+}
+
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+init();
+</script>
+</body>
+</html>
