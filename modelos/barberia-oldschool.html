@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbería Old School — Cortes clásicos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root { --bg:#0a0a0a; --bg2:#1a0f0a; --card:rgba(20,15,10,0.85); --red:#dc2626; --red2:#991b1b; --gold:#f59e0b; --cream:#f5f0e8; --gray:#8a8a8a; --lgray:#c8c0b8; }
+        html { scroll-behavior:smooth; }
+        body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--cream); overflow-x:hidden; }
+        .nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:14px 24px; background:rgba(10,10,10,0.9); backdrop-filter:blur(12px); border-bottom:1px solid rgba(220,38,38,0.06); display:flex; justify-content:space-between; align-items:center; }
+        .nav-logo { font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:800; text-transform:uppercase; text-decoration:none; color:var(--cream); }
+        .nav-logo span { color:var(--red); }
+        .nav-links { display:flex; gap:18px; }
+        .nav-links a { color:var(--gray); text-decoration:none; font-size:12px; font-weight:500; transition:color .3s; letter-spacing:0.3px; text-transform:uppercase; }
+        .nav-links a:hover { color:var(--red); }
+        .hero { min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:120px 20px 60px; background:linear-gradient(135deg,#0a0a0a,#1a0f0a,#0a0a0a); position:relative; }
+        .hero { background:linear-gradient(135deg,rgba(10,10,10,0.85),rgba(26,15,10,0.85),rgba(10,10,10,0.85)), url('https://images.unsplash.com/photo-1596728325488-58c87691e9af?auto=format&fit=crop&w=1920&q=75') center/cover fixed; }
+        .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 30%, rgba(220,38,38,0.1) 0%, transparent 50%); }
+        .hero-content { position:relative; z-index:1; max-width:800px; }
+        .hero-icon { font-size:4rem; margin-bottom:16px; display:block; }
+        .hero h1 { font-family:'Outfit',sans-serif; font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; margin-bottom:10px; text-transform:uppercase; }
+        .hero h1 span { color:var(--red); }
+        .hero p { font-size:1.05rem; color:var(--gray); margin-bottom:28px; max-width:540px; margin-left:auto; margin-right:auto; line-height:1.7; }
+        .btn { display:inline-flex; align-items:center; gap:10px; padding:14px 28px; border-radius:50px; text-decoration:none; font-weight:600; font-size:14px; transition:all .3s; border:none; cursor:pointer; }
+        .btn-primary { background:linear-gradient(135deg,var(--red),var(--red2)); color:white; }
+        .btn-primary:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(220,38,38,0.3); }
+        .btn-secondary { background:transparent; color:var(--cream); border:1px solid rgba(245,240,232,0.12); }
+        .btn-secondary:hover { border-color:var(--red); }
+        .hero-stats { display:flex; gap:30px; justify-content:center; margin-top:36px; flex-wrap:wrap; }
+        .hero-stat { text-align:center; }
+        .hero-stat .num { font-family:'Outfit',sans-serif; font-size:1.8rem; font-weight:800; color:var(--red); }
+        .hero-stat .label { font-size:10px; color:var(--gray); text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
+        .section { padding:80px 20px; max-width:1100px; margin:0 auto; }
+        .section-header { text-align:center; margin-bottom:36px; }
+        .section-tag { display:inline-block; font-size:10px; text-transform:uppercase; letter-spacing:2px; color:var(--red); background:rgba(220,38,38,0.08); padding:4px 12px; border-radius:20px; margin-bottom:10px; border:1px solid rgba(220,38,38,0.1); }
+        .section-header h2 { font-family:'Outfit',sans-serif; font-size:clamp(1.6rem,3vw,2.3rem); font-weight:700; }
+        .section-header h2 span { color:var(--red); }
+        .section-header p { color:var(--gray); margin-top:8px; font-size:14px; max-width:600px; margin-left:auto; margin-right:auto; }
+        .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+        .card { background:var(--card); border:1px solid rgba(220,38,38,0.08); border-radius:16px; padding:28px 22px; text-align:center; transition:all .4s; }
+        .card:hover { transform:translateY(-6px); border-color:rgba(220,38,38,0.2); box-shadow:0 12px 40px rgba(0,0,0,0.3); }
+        .card .icon { font-size:2.5rem; margin-bottom:10px; display:block; }
+        .card h3 { font-size:1rem; font-weight:700; margin-bottom:6px; color:var(--lgray); }
+        .card p { font-size:12px; color:var(--gray); line-height:1.6; }
+        .card .price { font-size:13px; color:var(--gold); font-weight:700; margin-top:8px; }
+        .about-wrap { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center; }
+        .about-text h3 { font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:700; margin-bottom:12px; }
+        .about-text h3 span { color:var(--red); }
+        .about-text p { color:var(--gray); line-height:1.7; font-size:13px; margin-bottom:10px; }
+        .about-feat { display:flex; gap:10px; align-items:center; margin-top:6px; }
+        .about-feat i { color:var(--red); font-size:14px; width:20px; }
+        .about-feat span { font-size:12px; color:var(--lgray); }
+        .testimonios { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+        .testi-card { background:var(--card); border:1px solid rgba(220,38,38,0.06); border-radius:16px; padding:20px; }
+        .testi-card .stars { color:var(--gold); font-size:12px; margin-bottom:6px; }
+        .testi-card p { font-size:12px; color:var(--gray); line-height:1.6; font-style:italic; }
+        .testi-card .author { font-size:11px; font-weight:600; color:var(--lgray); margin-top:8px; }
+        .contact-section { text-align:center; background:linear-gradient(135deg,#0a0a0a,#1a0f0a); border-radius:20px; padding:48px 24px; }
+        .contact-section h3 { font-family:'Outfit',sans-serif; font-size:1.8rem; margin-bottom:8px; }
+        .contact-section h3 span { color:var(--red); }
+        .contact-section p { color:var(--gray); font-size:13px; margin-bottom:20px; }
+        .contact-items { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; }
+        .contact-item { display:flex; align-items:center; gap:10px; background:rgba(220,38,38,0.04); padding:12px 16px; border-radius:12px; border:1px solid rgba(220,38,38,0.06); }
+        .contact-item i { color:var(--red); font-size:16px; }
+        .contact-item span { font-size:13px; color:var(--lgray); }
+        .whatsapp-float { position:fixed; bottom:20px; right:20px; z-index:99; width:52px; height:52px; border-radius:50%; background:#25D366; color:white; display:flex; align-items:center; justify-content:center; font-size:24px; text-decoration:none; box-shadow:0 4px 20px rgba(37,211,102,0.3); transition:all .3s; }
+        .whatsapp-float:hover { transform:scale(1.1); box-shadow:0 6px 30px rgba(37,211,102,0.4); }
+        .reveal { opacity:0; transform:translateY(30px); transition:all .7s cubic-bezier(0.22,1,0.36,1); }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+        .footer { text-align:center; padding:30px 20px; border-top:1px solid rgba(220,38,38,0.06); color:var(--gray); font-size:12px; max-width:1100px; margin:0 auto; }
+        .footer .social { display:flex; gap:14px; justify-content:center; margin-bottom:12px; }
+        .footer .social a { color:var(--gray); font-size:18px; transition:color .3s; }
+        .footer .social a:hover { color:var(--red); }
+        @media(max-width:700px) { .about-wrap { grid-template-columns:1fr; } .nav-links { display:none; } .hero-stats { gap:16px; } .contact-items { flex-direction:column; align-items:center; } }
+        @media(max-width:600px) { .hero h1 { font-size:2.2rem; } }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="#" class="nav-logo">Old <span>School</span></a>
+        <div class="nav-links">
+            <a href="#about">Nosotros</a>
+            <a href="#services">Servicios</a>
+            <a href="#testimonios">Opiniones</a>
+            <a href="#contact">Contacto</a>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-icon">💈</span>
+            <h1>Barbería <span>Old School</span></h1>
+            <p>Cortes clásicos y modernos. Barboterapia, afeitado tradicional y estilo. Donde el look importa.</p>
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+                <a href="https://wa.me/56940894579" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Agendar hora</a>
+                <a href="#services" class="btn btn-secondary">Ver servicios</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat"><div class="num">+10</div><div class="label">Años de tradición</div></div>
+                <div class="hero-stat"><div class="num">★ 4.8</div><div class="label">Valoración</div></div>
+                <div class="hero-stat"><div class="num">15mil+</div><div class="label">Cortes realizados</div></div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="about">
+        <div class="reveal">
+            <div class="section-tag">Nuestra historia</div>
+            <div class="about-wrap">
+                <div class="about-text">
+                    <h3>Donde el <span>estilo</span> nunca pasa de moda</h3>
+                    <p>Old School abrió sus puertas en 2015 con una idea clara: recuperar el arte de la barbería tradicional pero con un toque moderno. Tijera, navaja y mucha conversa buena.</p>
+                    <p>Usamos productos premium, máquinas profesionales y tenemos la experiencia que habla. No somos una peluquería, somos una barbería de verdad.</p>
+                    <div class="about-feat"><i class="fas fa-check-circle"></i><span>Productos importados premium</span></div>
+                    <div class="about-feat"><i class="fas fa-check-circle"></i><span>Tijera y navaja tradicional</span></div>
+                    <div class="about-feat"><i class="fas fa-check-circle"></i><span>Barboterapia con toalla caliente</span></div>
+                    <div class="about-feat"><i class="fas fa-check-circle"></i><span>Ambiente de barbería clásica</span></div>
+                </div>
+                <div class="about-text" style="text-align:center;">
+                    <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=600&q=80" alt="Barbería herramientas" style="width:100%;max-width:320px;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.3);border:1px solid rgba(220,38,38,0.1);">
+                    <p style="font-style:italic; color:var(--gray); font-size:14px; margin-top:14px;">"Un hombre bien arreglado no tiene precio"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="services">
+        <div class="section-header reveal">
+            <div class="section-tag">💈 Servicios</div>
+            <h2>Nuestros <span>Servicios</span></h2>
+            <p>Estilo clásico con un toque moderno. Todo lo que necesitas para verte bien.</p>
+        </div>
+        <div class="grid">
+            <div class="card reveal"><span class="icon">✂️</span><h3>Corte Clásico</h3><p>Tijera y máquina. Los cortes de siempre, bien hechos. Degradados, pompadour, undercut.</p><div class="price">$12.000</div></div>
+            <div class="card reveal"><span class="icon">🪒</span><h3>Afeitado Tradicional</h3><p>Con toalla caliente, bálsamo y navaja. Experiencia de barbería de verdad.</p><div class="price">$10.000</div></div>
+            <div class="card reveal"><span class="icon">🧔</span><h3>Barboterapia</h3><p>Limpieza profunda, recorte, perfilado y productos premium. Dejamos tu barba impecable.</p><div class="price">$14.000</div></div>
+            <div class="card reveal"><span class="icon">💆</span><h3>Arreglo de Cejas</h3><p>Perfilado con pinza para un look impecable. También trabajamos diseño de cejas.</p><div class="price">$5.000</div></div>
+            <div class="card reveal"><span class="icon">🧴</span><h3>Lavado + Corte</h3><p>Lavado con shampoo premium, masaje capilar y corte completo. Pura relajación.</p><div class="price">$16.000</div></div>
+            <div class="card reveal"><span class="icon">👶</span><h3>Corte Infantil</h3><p>Para los más pequeños. Paciencia, cariño y un corte que les va a encantar.</p><div class="price">$8.000</div></div>
+        </div>
+    </section>
+    <section class="section" id="testimonios">
+        <div class="section-header reveal">
+            <div class="section-tag">⭐ Opiniones</div>
+            <h2>Lo que dicen <span>nuestros clientes</span></h2>
+        </div>
+        <div class="testimonios">
+            <div class="testi-card reveal"><div class="stars">★★★★★</div><p>"El mejor corte que me han hecho. El ambiente es genial y te van conversando mientras trabajan."</p><div class="author">— Diego S.</div></div>
+            <div class="testi-card reveal"><div class="stars">★★★★★</div><p>"Llevo a mi hijo desde los 5 años. Siempre sale feliz y con un corte espectacular."</p><div class="author">— Pamela G.</div></div>
+            <div class="testi-card reveal"><div class="stars">★★★★★</div><p>"La barboterapia es otro nivel. Toalla caliente, productos premium, sales renovado."</p><div class="author">— Francisco M.</div></div>
+        </div>
+    </section>
+    <section class="section" id="contact">
+        <div class="contact-section reveal">
+            <h3>Agenda tu <span>hora</span></h3>
+            <p>Escíbenos por WhatsApp y te agendamos. No necesitas esperar, solo llegar.</p>
+            <div class="contact-items">
+                <div class="contact-item"><i class="fab fa-whatsapp"></i><span>+56 9 4089 4579</span></div>
+                <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Cal. Arauco 567, Talagante</span></div>
+                <div class="contact-item"><i class="fas fa-clock"></i><span>Mar-Sáb 10:00 - 20:00</span></div>
+            </div>
+            <div style="margin-top:20px;">
+                <a href="https://wa.me/56940894579" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Agendar ahora</a>
+            </div>
+        </div>
+    </section>
+    <a href="https://wa.me/56940894579" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <footer class="footer">
+        <div class="social">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p>📍 Calle Arauco 567, Talagante · 🕐 Mar-Sáb 10:00-20:00<br>Barbería Old School © 2026 — Donde el estilo nunca pasa de moda</p>
+    </footer>
+    <script>
+        (function() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+            }, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+            reveals.forEach(el => observer.observe(el));
+        })();
+    </script>
+</body>
+</html>

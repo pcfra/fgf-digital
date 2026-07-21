@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FGF Digital — Presentación Comercial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a14;
+            --bg2: #0f0f23;
+            --card: rgba(21, 21, 48, 0.85);
+            --card-border: rgba(124, 58, 237, 0.15);
+            --purple: #7c3aed;
+            --purple2: #a855f7;
+            --purple3: #c084fc;
+            --neon: #06b6d4;
+            --cyan: #22d3ee;
+            --white: #ffffff;
+            --gray: #a1a1aa;
+            --lgray: #e4e4e7;
+            --gold: #fbbf24;
+            --dim: #52525b;
+            --gradient: linear-gradient(135deg, #7c3aed, #a855f7, #06b6d4);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--lgray);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* ═══ SLIDE CONTAINER ═══ */
+        .slides-container {
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 60px 100px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: scale(0.95);
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+            z-index: 10;
+        }
+
+        .slide-content {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* ═══ PARTICLES BG ═══ */
+        .particle-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none; overflow: hidden;
+        }
+        .particle-bg::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: 100%;
+            background: radial-gradient(ellipse at center, rgba(124,58,237,0.06) 0%, transparent 60%);
+        }
+        .dot-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(circle, rgba(124,58,237,0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0; pointer-events: none;
+        }
+
+        /* ═══ SLIDE NUMBER ═══ */
+        .slide-number {
+            position: fixed;
+            bottom: 30px;
+            right: 40px;
+            z-index: 100;
+            font-size: 12px;
+            color: var(--dim);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        .slide-number span { color: var(--purple3); }
+
+        /* ═══ NAVIGATION ═══ */
+        .nav-arrows {
+            position: fixed;
+            bottom: 30px;
+            left: 40px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+        }
+        .nav-arrow {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            color: var(--lgray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            backdrop-filter: blur(10px);
+        }
+        .nav-arrow:hover {
+            border-color: var(--purple2);
+            color: var(--purple3);
+            transform: scale(1.05);
+        }
+        .nav-arrow:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .nav-arrow:disabled:hover {
+            border-color: var(--card-border);
+            color: var(--lgray);
+            transform: none;
+        }
+
+        /* ═══ DOTS ═══ */
+        .slide-dots {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .slide-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .slide-dot.active {
+            background: var(--purple2);
+            box-shadow: 0 0 12px rgba(168,85,247,0.4);
+            transform: scale(1.2);
+        }
+        .slide-dot:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* ═══ TOP BAR ═══ */
+        .top-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 50;
+            background: rgba(10, 10, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.08);
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-bar .logo {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .top-bar .logo .dot {
+            display: inline-block;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--purple2);
+            animation: pulse-dot 2s ease infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        .top-bar .logo span { color: var(--purple2); }
+        .top-bar .status {
+            font-size: 12px;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .top-bar .status .online {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            display: inline-block;
+        }
+
+        /* ═══ SLIDE 1: PORTADA ═══ */
+        .slide-portada {
+            background: radial-gradient(ellipse at 30% 50%, rgba(124,58,237,0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 50%, rgba(6,182,212,0.06) 0%, transparent 50%),
+                        var(--bg);
+        }
+        .portada-content {
+            text-align: center;
+        }
+        .portada-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(124,58,237,0.12);
+            border: 1px solid rgba(124,58,237,0.2);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: var(--purple3);
+            margin-bottom: 30px;
+            animation: fadeUp 0.8s ease forwards;
+        }
+        .portada-badge i {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .portada-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 12px;
+            animation: fadeUp 0.8s ease 0.1s forwards;
+            opacity: 0;
+        }
+        .portada-title .gradient {
+            background: linear-gradient(135deg, #7c3aed, #a855f7, #06b6d4, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .portada-sub {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: var(--gray);
+            margin-bottom: 10px;
+            animation: fadeUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+        .portada-meta {
+            font-size: 13px;
+            color: var(--dim);
+            margin-bottom: 40px;
+            animation: fadeUp 0.8s ease 0.3s forwards;
+            opacity: 0;
+        }
+        .portada-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--purple), var(--purple2));
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            animation: fadeUp 0.8s ease 0.4s forwards;
+            opacity: 0;
+            box-shadow: 0 8px 30px rgba(124,58,237,0.3);
+        }
+        .portada-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(124,58,237,0.4);
+        }
+        .portada-stats {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            margin-top: 50px;
+            animation: fadeUp 0.8s ease 0.5s forwards;
+            opacity: 0;
+        }
+        .portada-stat {
+            text-align: center;
+        }
+        .portada-stat .num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .portada-stat .label {
+            font-size: 11px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* ═══ SLIDE: GENERIC ═══ */
+        .slide-header {
+            margin-bottom: 40px;
+        }
+        .slide-header .number {
+            font-size: 12px;
+            color: var(--dim);
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .slide-header .number span { color: var(--purple3); }
+        .slide-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 12px;
+        }
+        .slide-header h2 .highlight {
+            background: linear-gradient(135deg, var(--purple3), var(--neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .slide-header p {
+            font-size: 16px;
+            color: var(--gray);
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        /* ═══ PROBLEM CARDS ═══ */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .problem-card {
+            background: linear-gradient(145deg, rgba(21,21,48,0.8), rgba(124,58,237,0.03));
+            border: 1px solid rgba(124,58,237,0.08);
+            border-radius: 20px;
+            padding: 32px 28px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--purple), var(--neon));
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+        .problem-card:hover::before {
+            transform: scaleX(1);
+        }
+        .problem-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(124,58,237,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .problem-icon {
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.1));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+        .problem-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .problem-card p {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* ═══ SOLUTION FEATURES ═══ */
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+        .solution-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 20px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        .solution-item:hover {
+            border-color: rgba(124,58,237,0.25);
+            transform: translateX(5px);
+        }
+        .solution-icon {
+            width: 44px; height: 44px;
+            min-width: 44px;
+            background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(6,182,212,0.08));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        .solution-text h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .solution-text p {
+            font-size: 12px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* ═══ SERCOTEC SLIDE ═══ */
+        .sercotec-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .sercotec-main {
+            background: linear-gradient(145deg, rgba(21,21,48,0.9), rgba(124,58,237,0.04));
+            border: 1px solid rgba(124,58,237,0.12);
+            border-radius: 24px;
+            padding: 36px 32px;
+        }
+        .sercotec-main .big-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .sercotec-main .big-number small {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--gray);
+        }
+        .sercotec-main h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .sercotec-main p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .sercotec-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .sercotec-feat {
+            padding: 12px;
+            background: rgba(124,58,237,0.04);
+            border-radius: 10px;
+            border: 1px solid rgba(124,58,237,0.06);
+        }
+        .sercotec-feat h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--purple3);
+            margin-bottom: 2px;
+        }
+        .sercotec-feat p {
+            font-size: 11px;
+            color: var(--gray);
+            margin: 0;
+        }
+        .sercotec-zero {
+            background: linear-gradient(135deg, rgba(251,191,36,0.06), rgba(124,58,237,0.04));
+            border: 1px solid rgba(251,191,36,0.15);
+            border-radius: 24px;
+            padding: 36px 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .sercotec-zero .big {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+        .sercotec-zero .big span { color: var(--gold); }
+        .sercotec-zero p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        /* ═══ PROJECT SHOWCASE ═══ */
+        .project-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+        .project-info .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--purple3);
+            background: rgba(124,58,237,0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(124,58,237,0.15);
+            margin-bottom: 12px;
+        }
+        .project-info h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .project-info .desc {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .project-tech span {
+            font-size: 11px;
+            padding: 5px 14px;
+            background: rgba(124,58,237,0.06);
+            border: 1px solid rgba(124,58,237,0.1);
+            border-radius: 20px;
+            color: var(--purple3);
+        }
+        .project-links {
+            display: flex;
+            gap: 12px;
+        }
+        .project-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .project-links .btn-primary {
+            background: linear-gradient(135deg, #0f3460, #1a1a2e);
+            color: #e9c46a;
+            border: 1px solid rgba(233,196,106,0.2);
+        }
+        .project-links .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(15,52,96,0.4);
+        }
+        .project-links .btn-secondary {
+            background: var(--card);
+            color: var(--lgray);
+            border: 1px solid var(--card-border);
+        }
+        .project-links .btn-secondary:hover {
+            border-color: var(--purple2);
+        }
+
+        .project-preview {
+            background: linear-gradient(145deg, rgba(26,26,46,0.8), rgba(15,52,96,0.3));
+            border: 1px solid rgba(233,196,106,0.1);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-preview::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(233,196,106,0.03) 0%, transparent 50%);
+            animation: rotate 30s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .project-preview .mockup {
+            position: relative;
+            z-index: 1;
+        }
+        .project-preview .mockup-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+        .project-preview .mockup h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e9c46a;
+            margin-bottom: 6px;
+        }
+        .project-preview .mockup p {
+            font-size: 12px;
+            color: var(--gray);
+        }
+        .project-preview .mockup-screens {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .mockup-screen {
+            width: 60px; height: 90px;
+            background: rgba(15,52,96,0.5);
+            border: 1px solid rgba(233,196,106,0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+        .mockup-screen:hover {
+            border-color: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        /* ═══ PLANS ═══ */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .plan-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 24px 20px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .plan-card:hover {
+            border-color: rgba(124,58,237,0.25);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+        .plan-card .tag {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray);
+            margin-bottom: 4px;
+        }
+        .plan-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .plan-card .price {
+            font-family: 'Outfit', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .plan-card ul {
+            list-style: none;
+            margin: 0;
+        }
+        .plan-card ul li {
+            font-size: 11px;
+            color: var(--lgray);
+            padding: 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .plan-card ul li::before {
+            content: '✓';
+            color: var(--purple3);
+            font-weight: 700;
+        }
+        .plan-card.purple .price { color: var(--purple3); }
+        .plan-card.neon .price { color: var(--neon); }
+        .plan-card.gold {
+            border-color: rgba(251,191,36,0.2);
+            background: linear-gradient(135deg, rgba(21,21,48,0.9), rgba(251,191,36,0.04));
+        }
+        .plan-card.gold .price { color: var(--gold); }
+
+        /* ═══ CONTACT SLIDE ═══ */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .contact-info h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .contact-info h3 span { color: var(--purple3); }
+        .contact-info p {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .contact-method:hover {
+            border-color: var(--purple2);
+            transform: translateX(5px);
+        }
+        .contact-method .icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .contact-method .text { flex: 1; }
+        .contact-method .text h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--white);
+        }
+        .contact-method .text p {
+            font-size: 11px;
+            color: var(--gray);
+            margin: 0;
+        }
+        .contact-method .arrow {
+            font-size: 14px;
+            color: var(--dim);
+        }
+        .contact-cta {
+            background: linear-gradient(145deg, rgba(21,21,48,0.9), rgba(124,58,237,0.04));
+            border: 1px solid rgba(124,58,237,0.12);
+            border-radius: 24px;
+            padding: 36px 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .contact-cta .big {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .contact-cta .big span { color: var(--purple3); }
+        .contact-cta p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        .contact-cta .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #25d366, #128C7E);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s;
+            align-self: flex-start;
+        }
+        .contact-cta .btn-whatsapp:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 30px rgba(37,211,102,0.3);
+        }
+
+        /* ═══ ANIMATIONS ═══ */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .slide.active .anim-slide { animation: fadeUp 0.7s ease forwards; }
+        .slide.active .anim-d1 { animation-delay: 0.1s; }
+        .slide.active .anim-d2 { animation-delay: 0.2s; }
+        .slide.active .anim-d3 { animation-delay: 0.3s; }
+        .slide.active .anim-d4 { animation-delay: 0.4s; }
+        .slide.active .anim-d5 { animation-delay: 0.5s; }
+        .slide.active .anim-d6 { animation-delay: 0.6s; }
+        .slide.active .anim-d7 { animation-delay: 0.7s; }
+
+        /* ═══ RESPONSIVE ═══ */
+        @media (max-width: 768px) {
+            .slide { padding: 70px 20px 90px; }
+            .slide-dots { display: none; }
+            .sercotec-grid { grid-template-columns: 1fr; }
+            .project-showcase { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .nav-arrows { left: 20px; }
+            .slide-number { right: 20px; }
+            .portada-stats { flex-wrap: wrap; gap: 20px; }
+            .plans-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .plans-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ═══ SCROLLBAR ═══ */
+        .slide::-webkit-scrollbar { width: 4px; }
+        .slide::-webkit-scrollbar-track { background: transparent; }
+        .slide::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 4px; }
+
+        /* ═══ KBD HINT ═══ */
+        .kbd-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            font-size: 11px;
+            color: var(--dim);
+            background: rgba(10,10,20,0.8);
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── Particle Background ─── -->
+    <div class="particle-bg"></div>
+    <div class="dot-grid"></div>
+
+    <!-- ─── Top Bar ─── -->
+    <div class="top-bar">
+        <div class="logo">
+            <span class="dot"></span>
+            FGF <span>Digital</span>
+        </div>
+        <div class="status">
+            <span class="online"></span>
+            Presentación Comercial
+        </div>
+    </div>
+
+    <!-- ─── Slide Dots ─── -->
+    <div class="slide-dots" id="slideDots"></div>
+
+    <!-- ─── Navigation Arrows ─── -->
+    <div class="nav-arrows">
+        <button class="nav-arrow" id="prevSlide" disabled>
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="nav-arrow" id="nextSlide">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- ─── Slide Number ─── -->
+    <div class="slide-number">
+        <span id="currentSlideNum">01</span> / <span id="totalSlidesNum">08</span>
+    </div>
+
+    <!-- ─── Keyboard Hint ─── -->
+    <div class="kbd-hint" id="kbdHint">
+        ← → o teclas para navegar
+    </div>
+
+    <!-- ─── SLIDES CONTAINER ─── -->
+    <div class="slides-container" id="slidesContainer">
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- SLIDE 1: PORTADA -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="slide slide-portada active" data-index="0">
+            <div class="slide-content portada-content">
+                <div class="portada-badge">
+                    <i class="fas fa-bolt"></i>
+                    Transformación Digital para Pymes Chilenas
+                </div>
+                <h1 class="portada-title">
+                    <span class="gradient">FGF Digital</span>
+                </h1>
+                <p class="portada-sub">
+                    Informática · Publicidad · Desarrollo Web
+                </p>
+                <p class="portada-meta">
+                    Francisco Javier Pardo Jara — Talagante, Chile
+                </p>
+                <a href="https://wa.me/56940894579" class="portada-cta" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    Agendar llamada
+                </a>
+                <div class="portada-stats">
+                    <div class="portada-stat">
+                        <div class="num">77%</div>
+                        <div class="label">Pymes sin web</div>
+                    </div>
+                    <div class="portada-stat">
+                        <div class="num">+60%</div>
+                        <div class="label">Más ventas al digitalizarse</div>
+                    </div>
+                    <div class="portada-stat">
+                        <div class="num">$1.2M</div>
+                        <div class="label">Subsidio Sercotec</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- SLIDE 2: EL PROBLEMA -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="slide" data-index="1">
+            <div class="slide-content">
+                <div class="slide-header anim-slide">
+                    <div class="number"><span>●</span> 01 · EL PROBLEMA</div>
+                    <h2>Tu negocio está <span class="highlight">invisible</span> para miles de clientes</h2>
+                    <p>El 77% de las pymes chilenas aún no tiene sitio web. Mientras tanto, tus competidores ya están capturando esos clientes en Google.</p>
+                </div>
+                <div class="problem-grid anim-slide anim-d2">
+                    <div class="problem-card">
+                        <div class="problem-icon">📉</div>
+                        <h3>Sin web ni redes</h3>
+                        <p>Dependes 100% del boca a boca y del tráfico peatonal. Si no estás en Google, no existes para el 93% de las personas que buscan servicios online.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-icon">📱</div>
+                        <h3>Clientes perdidos</h3>
+                        <p>Sin catálogo online ni WhatsApp Business, pierdes ventas fuera del horario laboral. Tus clientes se van con quien tenga un botón de "Pedir ahora".</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-icon">🏪</div>
+                        <h3>Competencia digitalizada</h3>
+                        <p>Mientras tú lees esto, otro negocio del mismo rubro está apareciendo en Google, recibiendo pedidos por web y facturando mientras duermes.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-icon">📊</div>
+                        <h3>Sin datos ni control</h3>
+                        <p>No sabes cuántos clientes buscan tus productos, de dónde vienen ni qué prefieren. Sin datos, cualquier decisión es un tiro al aire.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- SLIDE 3: LA SOLUCIÓN -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="slide" data-index="2">
+            <div class="slide-content">
+                <div class="slide-header anim-slide">
+                    <div class="number"><span>●</span> 02 · LA SOLUCIÓN</div>
+                    <h2>Tu negocio en digital, <span class="highlight">profesional y funcionando</span></h2>
+                    <p>Te llevamos de lo tradicional a lo digital con una web hecha a la medida de tu negocio, sin vueltas ni tecnicismos.</p>
+                </div>
+                <div class="solution-grid anim-slide anim-d2">
+                    <div class="solution-item">
+                        <div class="solution-icon">🌐</div>
+                        <div class="solution-text">
+                            <h4>Web Profesional</h4>
+                            <p>Sitio responsive con dominio .cl, hosting, SSL. Diseñado para convertir visitas en clientes.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="solution-icon">📱</div>
+                        <div class="solution-text">
+                            <h4>Catálogo Online</h4>
+                            <p>Tus productos o servicios visibles 24/7. Con precios, fotos y botón de consulta directa.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="solution-icon">✉️</div>
+                        <div class="solution-text">
+                            <h4>WhatsApp Integrado</h4>
+                            <p>Cada visita puede contactarte al toque. Sin apps raras, solo su WhatsApp.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="solution-icon">🔍</div>
+                        <div class="solution-text">
+                            <h4>SEO Local</h4>
+                            <p>Google My Business + optimización para que te encuentren en tu barrio y comuna.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="solution-icon">⚙️</div>
+                        <div class="solution-text">
+                            <h4>Panel Admin</h4>
+                            <p>Actualiza productos, precios y promociones tú mismo. Sin programadores, sin depender.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="solution-icon">📊</div>
+                        <div class="solution-text">
+                            <h4>Analytics</h4>
+                            <p>Sepas cuánta gente te visita, de dónde vienen y qué buscan. Decisiones con datos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- SLIDE 4: PROYECTO → DESARMADURÍA FGF -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="slide" data-index="3">
+            <div class="slide-content">
+                <div class="slide-header anim-slide">
+                    <div class="number"><span>●</span> 03 · CASO REAL</div>
+                    <h2>Desarmaduría FGF — <span class="highlight">Web profesional</span></h2>
+                    <p>Proyecto completo: landing, catálogo, panel admin y app móvil para un negocio automotriz en Talagante.</p>
+                </div>
+                <div class="project-showcase anim-slide anim-d2">
+                    <div class="project-info">
+                        <div class="tag">🚗 PROYECTO ENTREGADO</div>
+                        <h3 style="color:#e9c46a;">Desarmaduría FGF</h3>
+                        <p class="desc">
+                            Sitio web completo con identidad visual oscura azul/dorado, 
+                            animaciones fluidas, catálogo de repuestos, panel de administración 
+                            y página de propuesta comercial integrada.
+                        </p>
+                        <div class="project-tech">
+                            <span>HTML/CSS</span>
+                            <span>JavaScript</span>
+                            <span>Responsive</span>
+                            <span>Admin Panel</span>
+                            <span>Catálogo</span>
+                            <span>App Móvil</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="file:///home/lordfra/FGF-RESCATE/desarmaduria-fgf/index.html" target="_blank" class="btn-primary">
+                                🌐 Ver sitio
+                            </a>
+                            <a href="file:///home/lordfra/FGF-RESCATE/desarmaduria-fgf/catalogo/index.html" target="_blank" class="btn-secondary">
+                                🛒 Catálogo
+                            </a>
+                            <a href="file:///home/lordfra/FGF-RESCATE/desarmaduria-fgf/admin/index.html" target="_blank" class="btn-secondary">
+                                ⚙️ Admin
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-preview">
+                        <div class="mockup">
+                            <div class="mockup-icon">🚗</div>
+                            <h4>Desarmaduría FGF</h4>
+                            <p>Repuestos originales al mejor precio</p>
+                            <div class="mockup-screens">
+                                <div class="mockup-screen">🏠</div>
+                                <div class="mockup-screen">📋</div>
+                                <div class="mockup-screen">📞</div>
+                                <div class="mockup-screen">⚙️</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- SLIDE 5: SERCOTEC -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="slide" data-index="4">
+            <div class="slide-content">
+                <div class="slide-header anim-slide">
+                    <div class="number"><span>●</span> 04 · FINANCIAMIENTO</div>
+                    <h2>Subsidio <span class="highlight">Kit Digital Sercotec</span></h2>
+                    <p class="anim-slide anim-d1">El gobierno subsidia a micro y pequeñas empresas para digitalizarse. <strong style="color:var(--gold);">$1.200.000 CLP</strong> para tu web.</p>
+                </div>
+                <div class="sercotec-grid anim-slide anim-d2">
+                    <div class="sercotec-main">
+                        <div class="big-number">$1.200.000 <small>CLP</small></div>
+                        <h3>Subsidio completo</h3>
+                        <p>
+                            El Kit Digital de Sercotec cubre hasta $1.200.000 en soluciones digitales 
+                            para tu negocio. Nosotros te ayudamos con la postulación y ejecución.
+                        </p>
+                        <div class="sercotec-features">
+                            <div class="sercotec-feat">
+                                <h4>✓ Web Profesional</h4>
+                                <p>Sitio con dominio y hosting</p>
+                            </div>
+                            <div class="sercotec-feat">
+                                <h4>✓ Software Gestión</h4>
+                                <p>Administra tus ventas</p>
+                            </div>
+                            <div class="sercotec-feat">
+                                <h4>✓ Marketing Digital</h4>
+                                <p>SEO y publicidad online</p>
+                            </div>
+                            <div class="sercotec-feat">
+                                <h4>✓ Equipamiento</h4>
+                                <p>PC, POS, tablet</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sercotec-zero">
+                        <div class="big">$490.000 → <span>$0</span></div>
+                        <p>
+                            El Plan Web Profesional queda <strong style="color:var(--gold);">100% cubierto</strong>. 
+                            Tu cliente no paga nada.
+                        </p>
+                        <div style="margin-top:24px; padding:14px 20px; background:rgba(251,191,36,0.06); border-radius:14px; border:1px solid rgba(251,191,36,0.1);">
+                            <p style="font-size:12px; margin:0;">
+                                <strong style="color:var(--white);">Solo el 23%</strong> de las pymes tiene web. 
+                                <strong style="color:var(--white);">98% planea invertir</strong> en digitalización. 
+                                El momento es ahora.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- SLIDE 6: PLANES -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="slide" data-index="5">
+            <div class="slide-content">
+                <div class="slide-header anim-slide">
+                    <div class="number"><span>●</span> 05 · PLANES</div>
+                    <h2>Soluciones para <span class="highlight">cada negocio</span></h2>
+                    <p>Desde una web simple hasta transformación digital completa. Todo con soporte y sin sorpresas.</p>
+                </div>
+                <div class="plans-grid anim-slide anim-d2">
+                    <div class="plan-card purple">
+                        <div class="tag">✦ PLAN BÁSICO</div>
+                        <h4>Web Profesional</h4>
+                        <div class="price">$490.000</div>
+                        <ul>
+                            <li>Landing profesional</li>
+                            <li>Dominio .cl + Hosting</li>
+                            <li>SSL / HTTPS</li>
+                            <li>Diseño responsive</li>
+                            <li>Google My Business</li>
+                            <li>WhatsApp Business</li>
+                            <li>Formulario contacto</li>
+                        </ul>
+                    </div>
+                    <div class="plan-card purple">
+                        <div class="tag">✦ PLAN COMERCIAL</div>
+                        <h4>Delivery Digital</h4>
+                        <div class="price">$790.000</div>
+                        <ul>
+                            <li>Sitio multi-página</li>
+                            <li>Catálogo productos</li>
+                            <li>Pedidos web 24/7</li>
+                            <li>WhatsApp integrado</li>
+                            <li>SEO básico</li>
+                            <li>Google Maps</li>
+                            <li>Panel administración</li>
+                        </ul>
+                    </div>
+                    <div class="plan-card neon">
+                        <div class="tag">✦ PLAN AVANZADO</div>
+                        <h4>E-commerce</h4>
+                        <div class="price">$1.490.000</div>
+                        <ul>
+                            <li>Tienda completa</li>
+                            <li>Carrito compras</li>
+                            <li>MercadoPago/Webpay</li>
+                            <li>Panel admin</li>
+                            <li>Integración envíos</li>
+                            <li>SEO + analytics</li>
+                        </ul>
+                    </div>
+                    <div class="plan-card gold">
+                        <div class="tag">✦ PLAN PREMIUM</div>
+                        <h4>Transformación Digital</h4>
+                        <div class="price">$1.990.000</div>
+                        <ul>
+                            <li>Todo lo anterior</li>
+                            <li>App delivery/socios</li>
+                            <li>CRM básico</li>
+                            <li>Estrategia contenido</li>
+                            <li>Capacitación</li>
+                            <li>Soporte 30 días</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- SLIDE 7: BENEFICIOS -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="slide" data-index="6">
+            <div class="slide-content">
+                <div class="slide-header anim-slide">
+                    <div class="number"><span>●</span> 06 · POR QUÉ NOSOTROS</div>
+                    <h2>Trabajar con FGF Digital es <span class="highlight">tranquilidad</span></h2>
+                    <p>Sin letra chica, sin costos ocultos, sin dependencias. Solo una web que funciona y te deja dormir tranquilo.</p>
+                </div>
+                <div class="solution-grid anim-slide anim-d2">
+                    <div class="solution-item">
+                        <div class="solution-icon" style="color:var(--purple3);">✦</div>
+                        <div class="solution-text">
+                            <h4>Sin enganche</h4>
+                            <p>Pagas contra entrega. Nada por adelantado. Sin riesgos.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="solution-icon" style="color:var(--neon);">⬡</div>
+                        <div class="solution-text">
+                            <h4>Soporte 30 días</h4>
+                            <p>Cualquier incidencia resuelta en menos de 24 horas. Sin costo.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="solution-icon" style="color:var(--gold);">◆</div>
+                        <div class="solution-text">
+                            <h4>Hosting 1 año incluido</h4>
+                            <p>Dominio .cl, hosting y SSL. Sin costos ocultos el primer año.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="solution-icon" style="color:var(--purple2);">◈</div>
+                        <div class="solution-text">
+                            <h4>Capacitación incluida</h4>
+                            <p>Te enseñamos a usar tu panel. Sin depender de nadie para actualizar.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="solution-icon" style="color:var(--purple3);">◇</div>
+                        <div class="solution-text">
+                            <h4>Sin permanencia</h4>
+                            <p>Eres dueño de tu web. Sin contratos de largo plazo ni ataduras.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="solution-icon" style="color:var(--cyan);">○</div>
+                        <div class="solution-text">
+                            <h4>Diseño exclusivo</h4>
+                            <p>Nada de plantillas genéricas. Tu web con la cara de tu negocio.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ════════════════════════════════════════════ -->
+        <!-- SLIDE 8: CONTACTO -->
+        <!-- ════════════════════════════════════════════ -->
+        <div class="slide" data-index="7">
+            <div class="slide-content">
+                <div class="slide-header anim-slide">
+                    <div class="number"><span>●</span> 07 · CONTACTO</div>
+                    <h2>Hablemos. <span class="highlight">Sin compromiso</span></h2>
+                    <p>Una llamada de 10 minutos y vemos si podemos trabajar juntos. Sin presiones, sin venta agresiva.</p>
+                </div>
+                <div class="contact-grid anim-slide anim-d2">
+                    <div class="contact-info">
+                        <h3>Francisco <span>Pardo</span></h3>
+                        <p>
+                            Freelancer en informática, publicidad y desarrollo web. Desde Talagante, 
+                            ayudando a negocios chilenos a dar el salto digital. Si tu negocio existe, 
+                            merece estar en internet.
+                        </p>
+                        <div class="contact-methods">
+                            <a href="https://wa.me/56940894579" target="_blank" class="contact-method">
+                                <div class="icon" style="background:rgba(37,211,102,0.12);color:#25d366;">
+                                    <i class="fab fa-whatsapp"></i>
+                                </div>
+                                <div class="text">
+                                    <h4>WhatsApp</h4>
+                                    <p>+56 9 4089 4579</p>
+                                </div>
+                                <span class="arrow"><i class="fas fa-arrow-right"></i></span>
+                            </a>
+                            <a href="tel:+56940894579" class="contact-method">
+                                <div class="icon" style="background:rgba(124,58,237,0.12);color:var(--purple3);">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="text">
+                                    <h4>Llamada directa</h4>
+                                    <p>+56 9 4089 4579</p>
+                                </div>
+                                <span class="arrow"><i class="fas fa-arrow-right"></i></span>
+                            </a>
+                            <a href="mailto:pcfra_@hotmail.es" class="contact-method">
+                                <div class="icon" style="background:rgba(6,182,212,0.12);color:var(--neon);">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="text">
+                                    <h4>Email</h4>
+                                    <p>pcfra_@hotmail.es</p>
+                                </div>
+                                <span class="arrow"><i class="fas fa-arrow-right"></i></span>
+                            </a>
+                            <div class="contact-method" style="cursor:default;">
+                                <div class="icon" style="background:rgba(251,191,36,0.12);color:var(--gold);">
+                                    <i class="fas fa-location-dot"></i>
+                                </div>
+                                <div class="text">
+                                    <h4>Ubicación</h4>
+                                    <p>Camino La Palma Parcela 11, Talagante</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-cta">
+                        <div class="big">¿Listo para <span>digitalizar</span> tu negocio?</div>
+                        <p>
+                            Escríbeme por WhatsApp y coordinamos una llamada de 10 minutos. 
+                            Te explico el proceso, revisamos si aplicas al subsidio Sercotec 
+                            y te doy un presupuesto sin compromiso.
+                        </p>
+                        <a href="https://wa.me/56940894579?text=Hola%20Francisco%2C%20vi%20tu%20presentaci%C3%B3n%20de%20FGF%20Digital%20y%20quiero%20saber%20m%C3%A1s" target="_blank" class="btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+            Escribir por WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        (function() {
+            const slides = document.querySelectorAll('.slide');
+            const total = slides.length;
+            const prevBtn = document.getElementById('prevSlide');
+            const nextBtn = document.getElementById('nextSlide');
+            const dotsContainer = document.getElementById('slideDots');
+            const currentNum = document.getElementById('currentSlideNum');
+            const totalNum = document.getElementById('totalSlidesNum');
+            const kbdHint = document.getElementById('kbdHint');
+            let current = 0;
+
+            totalNum.textContent = String(total).padStart(2, '0');
+
+            // Create dots
+            for (let i = 0; i < total; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
+                dot.addEventListener('click', () => goTo(i));
+                dotsContainer.appendChild(dot);
+            }
+
+            function goTo(index) {
+                if (index < 0 || index >= total) return;
+                slides.forEach(s => s.classList.remove('active'));
+                slides[index].classList.add('active');
+                current = index;
+
+                // Update dots
+                document.querySelectorAll('.slide-dot').forEach((d, i) => {
+                    d.classList.toggle('active', i === index);
+                });
+
+                // Update buttons
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === total - 1;
+
+                // Update number
+                currentNum.textContent = String(index + 1).padStart(2, '0');
+
+                // Hide hint after first navigation
+                if (kbdHint) {
+                    kbdHint.style.opacity = '0';
+                    setTimeout(() => { if(kbdHint) kbdHint.style.display = 'none'; }, 500);
+                }
+            }
+
+            prevBtn.addEventListener('click', () => goTo(current - 1));
+            nextBtn.addEventListener('click', () => goTo(current + 1));
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(current - 1);
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                    e.preventDefault();
+                    goTo(current + 1);
+                }
+                if (e.key === 'Home') goTo(0);
+                if (e.key === 'End') goTo(total - 1);
+            });
+
+            // Touch support
+            let touchStartX = 0;
+            let touchEndX = 0;
+            document.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            document.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) goTo(current + 1);
+                    else goTo(current - 1);
+                }
+            }, { passive: true });
+
+            // Hide hint after 5s anyway
+            setTimeout(() => {
+                if (kbdHint) {
+                    kbdHint.style.opacity = '0';
+                    setTimeout(() => { if(kbdHint) kbdHint.style.display = 'none'; }, 500);
+                }
+            }, 8000);
+        })();
+    </script>
+
+</body>
+</html>

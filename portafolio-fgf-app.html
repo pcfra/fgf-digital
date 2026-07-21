@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FGF Digital — App</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a14;
+            --bg2: #0f0f23;
+            --card: rgba(21, 21, 48, 0.85);
+            --card-border: rgba(124, 58, 237, 0.15);
+            --purple: #7c3aed;
+            --purple2: #a855f7;
+            --purple3: #c084fc;
+            --neon: #06b6d4;
+            --white: #ffffff;
+            --gray: #a1a1aa;
+            --lgray: #e4e4e7;
+            --gold: #fbbf24;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--lgray);
+            line-height: 1.6;
+            padding-bottom: 80px;
+        }
+
+        /* ─── Particles Background ─── */
+        .particle-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0; pointer-events: none; overflow: hidden;
+        }
+        .particle-bg::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; height: 100%;
+            background: radial-gradient(ellipse at center, rgba(124,58,237,0.06) 0%, transparent 60%);
+        }
+        .dot-grid {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(circle, rgba(124,58,237,0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0; pointer-events: none;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ═══ TOP BAR (app-like) ═══ */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 20, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(124, 58, 237, 0.08);
+            padding: 12px 0;
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .app-logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .app-logo .dot {
+            display: inline-block;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--purple2);
+            animation: pulse-dot 2s ease infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        .app-logo span { color: var(--purple2); }
+        .top-status {
+            font-size: 12px;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .top-status .online {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            display: inline-block;
+        }
+
+        /* ═══ HERO / PROFILE ═══ */
+        .profile {
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+        .profile-avatar {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple), var(--purple2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 32px;
+            color: white;
+            box-shadow: 0 8px 32px rgba(124, 58, 237, 0.25);
+        }
+        .profile h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+        .profile .title {
+            font-size: 13px;
+            color: var(--purple3);
+            font-weight: 500;
+        }
+        .profile .location {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+        .profile-badges {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            font-size: 10px;
+            padding: 5px 14px;
+            border-radius: 50px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+        .badge-purple { background: rgba(124,58,237,0.12); color: var(--purple3); border: 1px solid rgba(124,58,237,0.15); }
+        .badge-cyan { background: rgba(6,182,212,0.12); color: var(--neon); border: 1px solid rgba(6,182,212,0.15); }
+        .badge-gold { background: rgba(251,191,36,0.12); color: var(--gold); border: 1px solid rgba(251,191,36,0.15); }
+
+        /* ═══ QUICK ACTIONS ═══ */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .qa-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .qa-primary {
+            background: linear-gradient(135deg, var(--purple), var(--purple2));
+            color: white;
+            grid-column: 1 / -1;
+        }
+        .qa-primary:hover { transform: scale(1.02); box-shadow: 0 8px 30px rgba(124,58,237,0.3); }
+        .qa-secondary {
+            background: var(--card);
+            color: var(--lgray);
+            border: 1px solid var(--card-border);
+        }
+        .qa-secondary:hover { border-color: var(--purple2); }
+
+        /* ═══ STATS APP ═══ */
+        .stats-app {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .stat-app-item {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 16px 12px;
+            text-align: center;
+        }
+        .stat-app-num {
+            font-size: 22px;
+            font-weight: 800;
+        }
+        .stat-app-label {
+            font-size: 9px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+        .stat-app-item:nth-child(1) .stat-app-num { color: var(--purple3); }
+        .stat-app-item:nth-child(2) .stat-app-num { color: var(--neon); }
+        .stat-app-item:nth-child(3) .stat-app-num { color: var(--gold); }
+
+        /* ═══ SECTION HEADER ═══ */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 32px 0 16px;
+        }
+        .section-header .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(124,58,237,0.2), transparent);
+        }
+        .section-header h2 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--purple3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            white-space: nowrap;
+        }
+
+        /* ═══ PLAN CARDS (app style) ═══ */
+        .plan-app {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 14px;
+            transition: all 0.3s ease;
+        }
+        .plan-app:active { transform: scale(0.99); }
+        .plan-app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .plan-app-info { flex: 1; }
+        .plan-app-tag {
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray);
+        }
+        .plan-app-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--white);
+            margin-top: 2px;
+        }
+        .plan-app-price {
+            text-align: right;
+            flex-shrink: 0;
+        }
+        .plan-app-price .label {
+            font-size: 9px;
+            color: var(--gray);
+        }
+        .plan-app-price .amount {
+            font-size: 20px;
+            font-weight: 800;
+        }
+        .plan-app-items {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 16px;
+            margin: 8px 0;
+        }
+        .plan-app-items span {
+            font-size: 12px;
+            color: var(--lgray);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .plan-app-items span::before {
+            content: '✓';
+            color: var(--purple3);
+            font-weight: 700;
+            font-size: 11px;
+        }
+        .plan-app-ideal {
+            font-size: 10px;
+            color: var(--gray);
+            font-style: italic;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(124,58,237,0.06);
+        }
+
+        .plan-app.purple .plan-app-price .amount { color: var(--purple3); }
+        .plan-app.purple-2 .plan-app-price .amount { color: var(--purple2); }
+        .plan-app.neon .plan-app-price .amount { color: var(--neon); }
+        .plan-app.gold {
+            border-color: rgba(251,191,36,0.2);
+            background: linear-gradient(135deg, rgba(21,21,48,0.9), rgba(251,191,36,0.04));
+        }
+        .plan-app.gold .plan-app-price .amount { color: var(--gold); }
+        .plan-app.gold .plan-app-tag { color: var(--gold); }
+
+        /* ═══ MISSION ═══ */
+        .mission-card {
+            background: linear-gradient(145deg, var(--card), rgba(124,58,237,0.04));
+            border: 1px solid rgba(124,58,237,0.1);
+            border-radius: 20px;
+            padding: 28px 24px;
+            margin: 16px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at 20% 50%, rgba(124,58,237,0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .mission-card .stat-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .mission-stat {
+            text-align: center;
+            padding: 14px 10px;
+            background: rgba(124,58,237,0.04);
+            border-radius: 14px;
+            border: 1px solid rgba(124,58,237,0.06);
+        }
+        .mission-stat .num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--purple3), var(--neon));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .mission-stat .label {
+            font-size: 10px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+        .mission-card .quote {
+            font-size: 13px;
+            color: var(--lgray);
+            line-height: 1.7;
+            font-style: italic;
+            padding: 12px 16px;
+            background: rgba(124,58,237,0.04);
+            border-radius: 12px;
+            border-left: 3px solid var(--purple2);
+            margin: 12px 0;
+        }
+
+        /* ═══ TOOLS ═══ */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .tool-item {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 16px 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .tool-item:hover {
+            border-color: rgba(124,58,237,0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .tool-item .tool-icon {
+            font-size: 28px;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .tool-item .tool-name {
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .tool-item .tool-desc {
+            font-size: 8px;
+            color: var(--dim);
+            margin-top: 2px;
+        }
+
+        /* ═══ MARKET PRICE TAG ═══ */
+        .market-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            color: var(--gray);
+            padding: 10px 14px;
+            background: rgba(124,58,237,0.03);
+            border-radius: 10px;
+            border: 1px solid rgba(124,58,237,0.06);
+            margin: 8px 0;
+        }
+        .market-note i { color: var(--purple3); font-size: 12px; }
+
+        /* ═══ SERCOTEC ═══ */
+        .sercotec-card {
+            background: linear-gradient(135deg, var(--card), rgba(124,58,237,0.06));
+            border: 1px solid rgba(124,58,237,0.15);
+            border-radius: 16px;
+            padding: 24px 20px;
+            margin: 20px 0;
+        }
+        .sercotec-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .sercotec-card h3 span { color: var(--gold); }
+        .sercotec-card > p {
+            font-size: 13px;
+            color: var(--lgray);
+            margin-bottom: 14px;
+        }
+        .sercotec-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .sercotec-item {
+            padding: 12px;
+            background: rgba(124,58,237,0.04);
+            border-radius: 10px;
+            border: 1px solid rgba(124,58,237,0.06);
+        }
+        .sercotec-item h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--purple3);
+            margin-bottom: 2px;
+        }
+        .sercotec-item p {
+            font-size: 11px;
+            color: var(--gray);
+        }
+        .sercotec-feat {
+            text-align: center;
+            padding: 16px;
+            background: rgba(251,191,36,0.05);
+            border: 1px solid rgba(251,191,36,0.12);
+            border-radius: 12px;
+        }
+        .sercotec-feat .big {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--white);
+        }
+        .sercotec-feat .big span { color: var(--purple3); }
+        .sercotec-feat p {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 4px;
+        }
+
+        /* ═══ BENEFITS ═══ */
+        .benefit-app {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+        .benefit-app:active { background: rgba(21,21,48,0.95); }
+        .benefit-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .benefit-text h4 { font-size: 13px; font-weight: 600; color: var(--white); }
+        .benefit-text p { font-size: 11px; color: var(--gray); margin: 0; }
+
+        /* ═══ BOTTOM NAV (app-like) ═══ */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 10, 20, 0.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(124, 58, 237, 0.08);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            padding-bottom: max(8px, env(safe-area-inset-bottom));
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 9px;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+        .nav-item .icon {
+            font-size: 20px;
+            line-height: 1;
+        }
+        .nav-item.active {
+            color: var(--purple3);
+        }
+        .nav-item.active .icon {
+            color: var(--purple2);
+        }
+        .nav-whatsapp {
+            background: linear-gradient(135deg, var(--purple), var(--purple2));
+            color: white !important;
+            padding: 8px 20px;
+            border-radius: 50px;
+            flex-direction: row;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .nav-whatsapp .icon { font-size: 16px; color: white !important; }
+
+        /* ═══ FOOTER ═══ */
+        .app-footer {
+            text-align: center;
+            padding: 40px 0 20px;
+            border-top: 1px solid rgba(124,58,237,0.06);
+            margin-top: 20px;
+        }
+        .app-footer .copy {
+            font-size: 10px;
+            color: var(--dim);
+        }
+
+        /* ═══ SECTIONS (for nav) ═══ */
+        .section { scroll-margin-top: 70px; }
+
+        /* ═══ ANIMATIONS ═══ */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .anim { animation: fadeUp 0.6s ease forwards; }
+        .anim-d1 { animation-delay: 0.1s; }
+        .anim-d2 { animation-delay: 0.15s; }
+        .anim-d3 { animation-delay: 0.2s; }
+        .anim-d4 { animation-delay: 0.25s; }
+
+        /* ═══ RESPONSIVE ═══ */
+        @media (min-width: 768px) {
+            .container { padding: 0 32px; }
+            .stats-app { gap: 14px; }
+            .stat-app-item { padding: 24px; }
+            .stat-app-num { font-size: 28px; }
+            .plan-app { padding: 28px; }
+            .plan-app-name { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── Background ─── -->
+    <div class="particle-bg"></div>
+    <div class="dot-grid"></div>
+
+    <!-- ─── Top Bar ─── -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="app-logo">
+                <span class="dot"></span>
+                FGF <span>Digital</span>
+            </div>
+            <div class="top-status">
+                <span class="online"></span>
+                Web FGF Digital · Hecha con ❤️
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- ═══ PROFILE ═══ -->
+        <div class="profile anim anim-d1">
+            <div class="profile-avatar" style="background:linear-gradient(135deg, var(--purple), #0f3460);"><img src="logo-gorila-morado.png" alt="FGF" style="width:70px;height:70px;border-radius:50%;object-fit:cover;"></div>
+            <h1>Francisco Javier Pardo Jara</h1>
+            <div class="title">✦ Freelancer · Informática · Publicidad · Web</div>
+            <div class="location">📍 Camino La Palma Parcela 11, Talagante</div>
+            <div class="profile-badges">
+                <span class="badge badge-purple">🖥️ Informática</span>
+                <span class="badge badge-cyan">📣 Publicidad</span>
+                <span class="badge badge-gold">🌐 Desarrollo Web</span>
+            </div>
+        </div>
+
+        <!-- ═══ QUICK ACTIONS ═══ -->
+        <div class="quick-actions anim anim-d2">
+            <a href="https://wa.me/56940894579" class="qa-btn qa-primary" target="_blank">
+                ✦ Contáctame por WhatsApp
+            </a>
+            <a href="tel:+56940894579" class="qa-btn qa-secondary">📞 Llamar</a>
+            <a href="mailto:pcfra_@hotmail.es" class="qa-btn qa-secondary">✉️ Email</a>
+        </div>
+
+        <!-- ═══ STATS ═══ -->
+        <div class="stats-app anim anim-d3">
+            <div class="stat-app-item">
+                <div class="stat-app-num">77%</div>
+                <div class="stat-app-label">Pymes chilenas sin web</div>
+            </div>
+            <div class="stat-app-item">
+                <div class="stat-app-num">+60%</div>
+                <div class="stat-app-label">Más ventas al digitalizarse</div>
+            </div>
+            <div class="stat-app-item">
+                <div class="stat-app-num">$1.2M</div>
+                <div class="stat-app-label">Subsidio Sercotec</div>
+            </div>
+        </div>
+
+        <!-- ═══ ABOUT ═══ -->
+        <div class="section" id="about">
+            <div class="section-header anim">
+                <div class="line"></div>
+                <h2>✦ Sobre mí</h2>
+                <div class="line"></div>
+            </div>
+            <div class="plan-app anim" style="border-color:rgba(124,58,237,0.1);">
+                <p style="font-size:13px; color:var(--lgray); line-height:1.8; margin-bottom:10px;">
+                    <strong style="color:var(--purple3);">Freelancer experto en informática, publicidad 
+                    y desarrollo web.</strong> Desde Talagante, ayudo a negocios tradicionales chilenos 
+                    a dar el salto digital con webs profesionales, catálogos online, SEO local 
+                    y herramientas modernas.
+                </p>
+                <p style="font-size:12px; color:var(--gray);">
+                    Trabajo con panaderías, talleres, almacenes, farmacias, desarmadurías y 
+                    profesionales independientes. <strong style="color:var(--purple3);">Cada web 
+                    que entrego</strong> es un negocio que empieza a aparecer en Google, recibir 
+                    pedidos por WhatsApp y vender 24/7.
+                </p>
+            </div>
+        </div>
+
+        <!-- ═══ MISIÓN / IMPACTO ═══ -->
+        <div class="section" id="impact">
+            <div class="section-header anim">
+                <div class="line"></div>
+                <h2>✦ Impacto</h2>
+                <div class="line"></div>
+            </div>
+            <div class="mission-card anim">
+                <p style="font-size:13px; color:var(--lgray); line-height:1.7; margin-bottom:4px; position:relative; z-index:1;">
+                    <strong style="color:var(--purple3);">Ayudar a las pymes chilenas a dar el salto digital</strong> 
+                    no es solo hacer webs — es abrirles las puertas a miles de clientes que hoy no las encuentran.
+                </p>
+                <div class="stat-row" style="position:relative; z-index:1;">
+                    <div class="mission-stat">
+                        <div class="num">77%</div>
+                        <div class="label">Pymes sin web</div>
+                    </div>
+                    <div class="mission-stat">
+                        <div class="num">+60%</div>
+                        <div class="label">Más ventas al digitalizarse</div>
+                    </div>
+                    <div class="mission-stat">
+                        <div class="num">98%</div>
+                        <div class="label">Planea invertir en digitalización</div>
+                    </div>
+                </div>
+                <div class="quote" style="position:relative; z-index:1;">
+                    "El 60% de las pymes que se digitalizan aumentan sus ventas. 
+                    En Chile, solo el 23% tiene sitio web. Hay 1.2 millones de pymes 
+                    esperando su oportunidad digital."
+                    <div style="font-size:10px; color:var(--dim); margin-top:6px; font-style:normal;">
+                        — Fuentes: CCS 2024, Movistar 2024, Sercotec 2025
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ TOOLS / HERRAMIENTAS ═══ -->
+        <div class="section" id="tools">
+            <div class="section-header anim">
+                <div class="line"></div>
+                <h2>✦ Tecnología</h2>
+                <div class="line"></div>
+            </div>
+            <p style="font-size:12px; color:var(--gray); margin-bottom:12px; text-align:center;">
+                Usamos las mejores herramientas del mercado para dar un servicio profesional de primer nivel.
+            </p>
+            <div class="tools-grid anim anim-d1">
+                <div class="tool-item">
+                    <span class="tool-icon"><i class="fab fa-google" style="color:#4285F4;"></i></span>
+                    <span class="tool-name">Google Business</span>
+                    <span class="tool-desc">Perfil de empresa</span>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon"><i class="fab fa-whatsapp" style="color:#25D366;"></i></span>
+                    <span class="tool-name">WhatsApp Business</span>
+                    <span class="tool-desc">Catálogo y chat</span>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon"><i class="fab fa-google" style="color:#4285F4;"></i></span>
+                    <span class="tool-name">Google Analytics</span>
+                    <span class="tool-desc">Métricas y datos</span>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon"><i class="fas fa-credit-card" style="color:#4A90D9;"></i></span>
+                    <span class="tool-name">Webpay Plus</span>
+                    <span class="tool-desc">Pagos online</span>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon"><i class="fas fa-credit-card" style="color:#00B5E2;"></i></span>
+                    <span class="tool-name">MercadoPago</span>
+                    <span class="tool-desc">Pasarela de pago</span>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon"><i class="fas fa-chart-line" style="color:#E37400;"></i></span>
+                    <span class="tool-name">Google Search Console</span>
+                    <span class="tool-desc">SEO técnico</span>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon"><i class="fas fa-envelope" style="color:#EA4335;"></i></span>
+                    <span class="tool-name">Email Profesional</span>
+                    <span class="tool-desc">@tudominio.cl</span>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon"><i class="fas fa-shield-alt" style="color:#34A853;"></i></span>
+                    <span class="tool-name">SSL / HTTPS</span>
+                    <span class="tool-desc">Seguridad</span>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon"><i class="fas fa-mobile-alt" style="color:#A855F7;"></i></span>
+                    <span class="tool-name">Responsive Design</span>
+                    <span class="tool-desc">Mobile first</span>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon"><i class="fas fa-code" style="color:#7C3AED;"></i></span>
+                    <span class="tool-name">HTML / CSS / JS</span>
+                    <span class="tool-desc">Desarrollo vanilla</span>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon"><i class="fas fa-database" style="color:#F7DF1E;"></i></span>
+                    <span class="tool-name">Hosting Profesional</span>
+                    <span class="tool-desc">Rendimiento</span>
+                </div>
+                <div class="tool-item">
+                    <span class="tool-icon"><i class="fas fa-robot" style="color:#06B6D4;"></i></span>
+                    <span class="tool-name">SEO Optimizado</span>
+                    <span class="tool-desc">Posicionamiento</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ PLANS ═══ -->
+        <div class="section" id="plans">
+            <div class="section-header anim">
+                <div class="line"></div>
+                <h2>✦ Planes</h2>
+                <div class="line"></div>
+            </div>
+
+            <div class="market-note anim anim-d1">
+                <i class="fas fa-check-circle"></i>
+                Precios basados en estudio de mercado Chile 2026 — landing pages desde $150K, sitios corporativos $500K–$2.5M, e-commerce $400K–$3M+
+            </div>
+
+            <div class="plan-app purple anim anim-d1">
+                <div class="plan-app-header">
+                    <div class="plan-app-info">
+                        <div class="plan-app-tag">PLAN BÁSICO</div>
+                        <div class="plan-app-name">Web Profesional</div>
+                    </div>
+                    <div class="plan-app-price">
+                        <div class="label">DESDE</div>
+                        <div class="amount">$490.000</div>
+                    </div>
+                </div>
+                <div class="plan-app-items">
+                    <span>Landing profesional</span>
+                    <span>Dominio .cl + Hosting</span>
+                    <span>SSL / HTTPS</span>
+                    <span>Diseño responsive</span>
+                    <span>Google My Business</span>
+                    <span>WhatsApp Business</span>
+                    <span>Formulario contacto</span>
+                </div>
+                <div class="plan-app-ideal">Ideal: profesionales, talleres, almacenes</div>
+            </div>
+
+            <div class="plan-app purple-2 anim anim-d2">
+                <div class="plan-app-header">
+                    <div class="plan-app-info">
+                        <div class="plan-app-tag">PLAN COMERCIAL</div>
+                        <div class="plan-app-name">Delivery Digital</div>
+                    </div>
+                    <div class="plan-app-price">
+                        <div class="label">DESDE</div>
+                        <div class="amount">$790.000</div>
+                    </div>
+                </div>
+                <div class="plan-app-items">
+                    <span>Sitio multi-página</span>
+                    <span>Catálogo productos</span>
+                    <span>Pedidos web 24/7</span>
+                    <span>WhatsApp integrado</span>
+                    <span>SEO básico</span>
+                    <span>Google Maps</span>
+                    <span>Panel administración</span>
+                </div>
+                <div class="plan-app-ideal">Ideal: restaurantes, almacenes, delivery</div>
+            </div>
+
+            <div class="plan-app purple anim anim-d3">
+                <div class="plan-app-header">
+                    <div class="plan-app-info">
+                        <div class="plan-app-tag">PLAN PROFESIONAL</div>
+                        <div class="plan-app-name">Booking Online</div>
+                    </div>
+                    <div class="plan-app-price">
+                        <div class="label">DESDE</div>
+                        <div class="amount">$690.000</div>
+                    </div>
+                </div>
+                <div class="plan-app-items">
+                    <span>Sitio profesional</span>
+                    <span>Turnos online 24/7</span>
+                    <span>Recordatorios auto</span>
+                    <span>Calendario integrado</span>
+                    <span>Google My Business</span>
+                    <span>Hosting + SSL</span>
+                </div>
+                <div class="plan-app-ideal">Ideal: peluquerías, clínicas, talleres</div>
+            </div>
+
+            <div class="plan-app neon anim anim-d4">
+                <div class="plan-app-header">
+                    <div class="plan-app-info">
+                        <div class="plan-app-tag">PLAN AVANZADO</div>
+                        <div class="plan-app-name">E-commerce</div>
+                    </div>
+                    <div class="plan-app-price">
+                        <div class="label">DESDE</div>
+                        <div class="amount">$1.490.000</div>
+                    </div>
+                </div>
+                <div class="plan-app-items">
+                    <span>Tienda completa</span>
+                    <span>Carrito compras</span>
+                    <span>MercadoPago/Webpay</span>
+                    <span>Panel admin</span>
+                    <span>Integración envíos</span>
+                    <span>SEO + analytics</span>
+                </div>
+                <div class="plan-app-ideal">Ideal: tiendas, marcas D2C</div>
+            </div>
+
+            <div class="plan-app gold anim">
+                <div class="plan-app-header">
+                    <div class="plan-app-info">
+                        <div class="plan-app-tag">✦ PLAN PREMIUM</div>
+                        <div class="plan-app-name">Transformación Digital</div>
+                    </div>
+                    <div class="plan-app-price">
+                        <div class="label">DESDE</div>
+                        <div class="amount">$1.990.000</div>
+                    </div>
+                </div>
+                <div class="plan-app-items">
+                    <span>Todo lo anterior</span>
+                    <span>App delivery/socios</span>
+                    <span>CRM básico</span>
+                    <span>Estrategia contenido</span>
+                    <span>Capacitación</span>
+                    <span>Soporte 30 días</span>
+                </div>
+                <div class="plan-app-ideal">Ideal: negocios listos para el salto digital completo</div>
+            </div>
+        </div>
+
+        <!-- ═══ SERCOTEC ═══ -->
+        <div class="section" id="sercotec">
+            <div class="section-header anim">
+                <div class="line"></div>
+                <h2>✦ Sercotec</h2>
+                <div class="line"></div>
+            </div>
+            <div class="sercotec-card anim">
+                <h3>Subsidio <span>Kit Digital</span></h3>
+                <p>
+                    El gobierno subsidia con <strong style="color:var(--gold);">$1.200.000 CLP</strong> 
+                    a micro y pequeñas empresas para digitalizarse.
+                </p>
+                <div class="sercotec-grid">
+                    <div class="sercotec-item">
+                        <h4>✓ Web profesional</h4>
+                        <p>Sitio con dominio propio</p>
+                    </div>
+                    <div class="sercotec-item">
+                        <h4>✓ Software</h4>
+                        <p>Gestión y facturación</p>
+                    </div>
+                    <div class="sercotec-item">
+                        <h4>✓ Marketing</h4>
+                        <p>SEO y publicidad</p>
+                    </div>
+                    <div class="sercotec-item">
+                        <h4>✓ Equipos</h4>
+                        <p>PC, POS, tablet</p>
+                    </div>
+                </div>
+                <div class="sercotec-feat">
+                    <div class="big">$490.000 → <span>$0</span></div>
+                    <p>El Plan Web Profesional queda 100% cubierto. Tu cliente no paga nada.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ PROYECTOS ═══ -->
+        <div class="section" id="projects">
+            <div class="section-header anim">
+                <div class="line"></div>
+                <h2>✦ Proyectos</h2>
+                <div class="line"></div>
+            </div>
+
+            <div class="plan-app purple anim" style="border-color:rgba(15,52,96,0.3); background:linear-gradient(135deg, rgba(21,21,48,0.9), rgba(15,52,96,0.15));">
+                <div class="plan-app-header">
+                    <div class="plan-app-info">
+                        <div class="plan-app-tag" style="color:#e9c46a;">🚗 SITIO COMPLETO</div>
+                        <div class="plan-app-name" style="color:#e9c46a;">Desarmaduría FGF</div>
+                    </div>
+                    <div class="plan-app-price">
+                        <div class="label">ESTADO</div>
+                        <div class="amount" style="color:#22c55e;font-size:16px;">✓ Entregado</div>
+                    </div>
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin:8px 0;">
+                    <span style="font-size:11px; background:rgba(233,196,106,0.12); color:#e9c46a; padding:3px 10px; border-radius:20px; border:1px solid rgba(233,196,106,0.15);">Landing</span>
+                    <span style="font-size:11px; background:rgba(233,196,106,0.12); color:#e9c46a; padding:3px 10px; border-radius:20px; border:1px solid rgba(233,196,106,0.15);">Catálogo</span>
+                    <span style="font-size:11px; background:rgba(233,196,106,0.12); color:#e9c46a; padding:3px 10px; border-radius:20px; border:1px solid rgba(233,196,106,0.15);">Admin</span>
+                    <span style="font-size:11px; background:rgba(233,196,106,0.12); color:#e9c46a; padding:3px 10px; border-radius:20px; border:1px solid rgba(233,196,106,0.15);">App Móvil</span>
+                </div>
+                <p style="font-size:12px; color:var(--lgray); line-height:1.6; margin:8px 0;">
+                    Web profesional con hero animado, catálogo de repuestos, panel admin, 
+                    propuesta comercial y app móvil. Diseño oscuro con acentos dorados.
+                </p>
+                <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap;">
+                    <a href="file:///home/lordfra/FGF-RESCATE/desarmaduria-fgf/index.html" target="_blank" style="background:linear-gradient(135deg, #0f3460, #1a1a2e); color:#e9c46a; padding:8px 16px; border-radius:10px; text-decoration:none; font-size:12px; font-weight:600; border:1px solid rgba(233,196,106,0.2); display:inline-flex; align-items:center; gap:6px;">
+                        🌐 Ver sitio
+                    </a>
+                    <a href="file:///home/lordfra/FGF-RESCATE/desarmaduria-fgf/catalogo/index.html" target="_blank" style="background:transparent; color:var(--gray); padding:8px 16px; border-radius:10px; text-decoration:none; font-size:12px; border:1px solid rgba(255,255,255,0.1); display:inline-flex; align-items:center; gap:6px;">
+                        🛒 Catálogo
+                    </a>
+                    <a href="file:///home/lordfra/FGF-RESCATE/desarmaduria-fgf/admin/index.html" target="_blank" style="background:transparent; color:var(--gray); padding:8px 16px; border-radius:10px; text-decoration:none; font-size:12px; border:1px solid rgba(255,255,255,0.1); display:inline-flex; align-items:center; gap:6px;">
+                        ⚙️ Admin
+                    </a>
+                </div>
+            </div>
+
+            <p style="text-align:center; font-size:11px; color:var(--gray); margin-top:8px;">
+                + más proyectos próximamente →
+            </p>
+        </div>
+
+        <!-- ═══ BENEFITS ═══ -->
+        <div class="section" id="benefits">
+            <div class="section-header anim">
+                <div class="line"></div>
+                <h2>✦ Ventajas</h2>
+                <div class="line"></div>
+            </div>
+
+            <div class="benefit-app anim anim-d1">
+                <div class="benefit-icon" style="background:rgba(124,58,237,0.12);color:var(--purple3);">✦</div>
+                <div class="benefit-text">
+                    <h4>Sin enganche</h4>
+                    <p>Pagas contra entrega. Sin pago inicial.</p>
+                </div>
+            </div>
+            <div class="benefit-app anim anim-d2">
+                <div class="benefit-icon" style="background:rgba(6,182,212,0.12);color:var(--neon);">⬡</div>
+                <div class="benefit-text">
+                    <h4>Soporte 30 días</h4>
+                    <p>Incidencias resueltas en < 24h, sin costo.</p>
+                </div>
+            </div>
+            <div class="benefit-app anim anim-d3">
+                <div class="benefit-icon" style="background:rgba(251,191,36,0.12);color:var(--gold);">◆</div>
+                <div class="benefit-text">
+                    <h4>Hosting 1 año incluido</h4>
+                    <p>Dominio .cl + hosting + SSL. Sin costos ocultos.</p>
+                </div>
+            </div>
+            <div class="benefit-app anim anim-d4">
+                <div class="benefit-icon" style="background:rgba(168,85,247,0.12);color:var(--purple2);">◈</div>
+                <div class="benefit-text">
+                    <h4>Capacitación incluida</h4>
+                    <p>Te enseñamos el panel. Sin depender de nadie.</p>
+                </div>
+            </div>
+            <div class="benefit-app anim">
+                <div class="benefit-icon" style="background:rgba(192,132,252,0.12);color:var(--purple3);">◇</div>
+                <div class="benefit-text">
+                    <h4>Sin permanencia</h4>
+                    <p>Dueño de tu web. Sin contratos ni ataduras.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ FOOTER ═══ -->
+        <div class="app-footer">
+            <p style="font-size:13px; color:var(--gray); margin-bottom:6px;">
+                ✦ <strong style="color:var(--purple3);">+56 9 4089 4579</strong> ✦
+            </p>
+            <p style="font-size:11px; color:var(--gray); margin-bottom:4px;">
+                Francisco Javier Pardo Jara
+            </p>
+            <p style="font-size:10px; color:var(--dim); margin-bottom:12px;">
+                Camino La Palma Parcela 11, Talagante
+            </p>
+            <div class="copy">
+                FGF Digital © 2026 — Transformación Digital para Pymes Chilenas
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ─── BOTTOM NAV ─── -->
+    <nav class="bottom-nav">
+        <a href="#about" class="nav-item">
+            <span class="icon">👤</span>
+            Inicio
+        </a>
+        <a href="#impact" class="nav-item">
+            <span class="icon">📊</span>
+            Impacto
+        </a>
+        <a href="#tools" class="nav-item">
+            <span class="icon">🔧</span>
+            Tecnología
+        </a>
+        <a href="https://wa.me/56940894579" class="nav-item nav-whatsapp" target="_blank">
+            <span class="icon">✉️</span>
+            WhatsApp
+        </a>
+        <a href="#plans" class="nav-item">
+            <span class="icon">📋</span>
+            Planes
+        </a>
+        <a href="#projects" class="nav-item">
+            <span class="icon">🚗</span>
+            Proyectos
+        </a>
+        <a href="#sercotec" class="nav-item">
+            <span class="icon">💰</span>
+            Sercotec
+        </a>
+        <a href="#benefits" class="nav-item">
+            <span class="icon">⭐</span>
+            Ventajas
+        </a>
+    </nav>
+
+    <script>
+        // Highlight active nav item on scroll
+        const sections = document.querySelectorAll('.section');
+        const navItems = document.querySelectorAll('.nav-item:not(.nav-whatsapp)');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navItems.forEach(item => item.classList.remove('active'));
+                    const active = document.querySelector(`.nav-item[href="#${entry.target.id}"]`);
+                    if (active) active.classList.add('active');
+                }
+            });
+        }, { threshold: 0.3 });
+        sections.forEach(s => observer.observe(s));
+    </script>
+
+</body>
+</html>

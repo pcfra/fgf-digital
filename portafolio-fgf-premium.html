@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FGF Digital — Portafolio Premium</title>
+    <link rel="icon" type="image/png" href="logo-principal.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a14;
+            --bg2: #0f0f23;
+            --card: rgba(21, 21, 48, 0.8);
+            --card-border: rgba(124, 58, 237, 0.12);
+            --purple: #7c3aed;
+            --purple2: #a855f7;
+            --purple3: #c084fc;
+            --neon: #06b6d4;
+            --cyan: #22d3ee;
+            --white: #ffffff;
+            --gray: #a1a1aa;
+            --lgray: #e4e4e7;
+            --gold: #fbbf24;
+            --dim: #52525b;
+            --gradient: linear-gradient(135deg, #7c3aed, #a855f7, #06b6d4);
+            --gradient2: linear-gradient(135deg, #7c3aed, #06b6d4);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--lgray);
+            overflow-x: hidden;
+        }
+
+        /* ═══ THREE.JS CANVAS ═══ */
+        #three-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ═══ HERO ═══ */
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 24px 80px;
+            text-align: center;
+            pointer-events: none;
+        }
+        .hero * { pointer-events: auto; }
+        .hero-content {
+            max-width: 900px;
+            animation: heroFadeIn 1.5s ease forwards;
+        }
+        @keyframes heroFadeIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(124,58,237,0.1);
+            border: 1px solid rgba(124,58,237,0.15);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            color: var(--purple3);
+            margin-bottom: 28px;
+            backdrop-filter: blur(10px);
+        }
+        .hero-badge .dot-live {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            display: inline-block;
+            animation: pulse-live 2s infinite;
+        }
+        @keyframes pulse-live {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, #7c3aed, #a855f7, #06b6d4, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--purple), var(--purple2));
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(124,58,237,0.25);
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(124,58,237,0.4);
+        }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            background: rgba(255,255,255,0.05);
+            color: var(--lgray);
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-secondary:hover {
+            border-color: var(--purple2);
+            color: var(--purple3);
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            margin-top: 48px;
+            flex-wrap: wrap;
+        }
+        .hero-stat { text-align: center; }
+        .hero-stat .num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-stat .label {
+            font-size: 11px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--dim);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: bounceDown 2s infinite;
+        }
+        .scroll-indicator .line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--purple2), transparent);
+        }
+        @keyframes bounceDown {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* ═══ SECTIONS ═══ */
+        .section {
+            position: relative;
+            z-index: 1;
+            padding: 100px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .section-header .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--purple3);
+            background: rgba(124,58,237,0.08);
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(124,58,237,0.1);
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .section-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 14px;
+        }
+        .section-header h2 .highlight {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-header p {
+            font-size: 15px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ═══ REVEAL ═══ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-d1 { transition-delay: 0.05s; }
+        .reveal-d2 { transition-delay: 0.1s; }
+        .reveal-d3 { transition-delay: 0.15s; }
+        .reveal-d4 { transition-delay: 0.2s; }
+        .reveal-d5 { transition-delay: 0.25s; }
+        .reveal-d6 { transition-delay: 0.3s; }
+
+        /* ═══ ABOUT / MISSION ═══ */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .about-card {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 32px 28px;
+            transition: all 0.3s ease;
+        }
+        .about-card:hover {
+            border-color: rgba(124,58,237,0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .about-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .about-card h3 .icon { margin-right: 8px; }
+        .about-card p {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+        .about-card .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .about-card .mini-stat {
+            text-align: center;
+            padding: 12px 8px;
+            background: rgba(124,58,237,0.04);
+            border-radius: 12px;
+            border: 1px solid rgba(124,58,237,0.06);
+        }
+        .about-card .mini-stat .n {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--purple3);
+        }
+        .about-card .mini-stat .l {
+            font-size: 9px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ═══ TECH CARDS ═══ */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 14px;
+        }
+        .tech-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px 14px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: default;
+        }
+        .tech-card:hover {
+            border-color: var(--purple2);
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 16px 40px rgba(124,58,237,0.15);
+        }
+        .tech-card .icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .tech-card .name {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--lgray);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .tech-card .desc {
+            font-size: 8px;
+            color: var(--dim);
+            margin-top: 2px;
+        }
+
+        /* ═══ PROJECT CARD (premium) ═══ */
+        .project-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 36px;
+            transition: all 0.3s ease;
+        }
+        .project-showcase:hover {
+            border-color: rgba(124,58,237,0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        .project-info .proj-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: #e9c46a;
+            background: rgba(233,196,106,0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(233,196,106,0.15);
+            margin-bottom: 12px;
+        }
+        .project-info h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #e9c46a;
+        }
+        .project-info .desc {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .project-tech span {
+            font-size: 11px;
+            padding: 5px 14px;
+            background: rgba(124,58,237,0.06);
+            border: 1px solid rgba(124,58,237,0.1);
+            border-radius: 20px;
+            color: var(--purple3);
+        }
+        .project-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .project-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 18px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .project-links .btn-proj {
+            background: linear-gradient(135deg, #0f3460, #1a1a2e);
+            color: #e9c46a;
+            border: 1px solid rgba(233,196,106,0.2);
+        }
+        .project-links .btn-proj:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(15,52,96,0.3);
+        }
+        .project-links .btn-ghost {
+            background: rgba(255,255,255,0.04);
+            color: var(--gray);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .project-links .btn-ghost:hover {
+            border-color: var(--purple2);
+            color: var(--purple3);
+        }
+
+        .project-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, rgba(26,26,46,0.6), rgba(15,52,96,0.2));
+            border-radius: 18px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(233,196,106,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+        .project-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(233,196,106,0.03) 0%, transparent 40%);
+            animation: rotate-slow 40s linear infinite;
+        }
+        @keyframes rotate-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .project-visual .icon-big {
+            font-size: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+        .project-visual h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e9c46a;
+            margin-top: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .project-visual p {
+            font-size: 12px;
+            color: var(--gray);
+            position: relative;
+            z-index: 1;
+        }
+        .project-visual .screen-dots {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        .project-visual .screen-dots span {
+            width: 48px;
+            height: 70px;
+            background: rgba(15,52,96,0.4);
+            border: 1px solid rgba(233,196,106,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        .project-visual .screen-dots span:hover {
+            border-color: #e9c46a;
+            transform: translateY(-4px);
+        }
+
+        /* ═══ PLANS ═══ */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+        .plan-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 28px 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        .plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient2);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+        .plan-card:hover::before { transform: scaleX(1); }
+        .plan-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(124,58,237,0.25);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .plan-card .tag {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray);
+            margin-bottom: 4px;
+        }
+        .plan-card h4 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .plan-card .price {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 14px;
+        }
+        .plan-card ul {
+            list-style: none;
+        }
+        .plan-card ul li {
+            font-size: 12px;
+            color: var(--lgray);
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .plan-card ul li::before {
+            content: '✓';
+            color: var(--purple3);
+            font-weight: 700;
+        }
+        .plan-card.purple .price { color: var(--purple3); }
+        .plan-card.neon .price { color: var(--neon); }
+        .plan-card.gold {
+            border-color: rgba(251,191,36,0.15);
+            background: linear-gradient(145deg, var(--card), rgba(251,191,36,0.03));
+        }
+        .plan-card.gold .price { color: var(--gold); }
+        .plan-card.gold .tag { color: var(--gold); }
+
+        .market-note {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            color: var(--gray);
+            padding: 12px 16px;
+            background: rgba(124,58,237,0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(124,58,237,0.06);
+            margin-bottom: 20px;
+        }
+        .market-note i { color: var(--purple3); }
+
+        /* ═══ SERCOTEC ═══ */
+        .sercotec-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .sercotec-main {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 36px 32px;
+        }
+        .sercotec-main .big-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        .sercotec-main .big-num small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray);
+        }
+        .sercotec-main h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
+        .sercotec-main p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 18px;
+            font-size: 14px;
+        }
+        .sercotec-feats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .sercotec-feat {
+            padding: 12px;
+            background: rgba(124,58,237,0.04);
+            border-radius: 10px;
+            border: 1px solid rgba(124,58,237,0.06);
+        }
+        .sercotec-feat h4 {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--purple3);
+            margin-bottom: 2px;
+        }
+        .sercotec-feat p {
+            font-size: 11px;
+            margin: 0;
+        }
+        .sercotec-zero {
+            background: linear-gradient(145deg, rgba(251,191,36,0.04), rgba(124,58,237,0.03));
+            border: 1px solid rgba(251,191,36,0.12);
+            border-radius: 24px;
+            padding: 36px 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+        .sercotec-zero .big {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+        }
+        .sercotec-zero .big span { color: var(--gold); }
+        .sercotec-zero p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        /* ═══ CONTACT ═══ */
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .contact-info h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .contact-info h3 span { color: var(--purple3); }
+        .contact-info p {
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+        .contact-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .contact-method:hover {
+            border-color: var(--purple2);
+            transform: translateX(6px);
+        }
+        .contact-method .icon-wrap {
+            width: 40px; height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .contact-method .info { flex: 1; }
+        .contact-method .info h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--white);
+        }
+        .contact-method .info p {
+            font-size: 11px;
+            color: var(--gray);
+            margin: 0;
+        }
+        .contact-method .arrow {
+            color: var(--dim);
+            font-size: 12px;
+        }
+        .contact-cta {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 36px 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .contact-cta .big {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+        .contact-cta .big span { color: var(--purple3); }
+        .contact-cta p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #25d366, #128C7E);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s;
+            align-self: flex-start;
+        }
+        .btn-whatsapp:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 30px rgba(37,211,102,0.3);
+        }
+
+        /* ═══ FOOTER ═══ */
+        .footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px 24px 30px;
+            border-top: 1px solid rgba(124,58,237,0.06);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer p {
+            font-size: 12px;
+            color: var(--dim);
+        }
+        .footer .brand {
+            color: var(--purple3);
+            font-weight: 600;
+        }
+
+        /* ═══ NAV ═══ */
+        .nav-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(10,10,20,0.85);
+            backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(124,58,237,0.06);
+            padding: 0 24px;
+            transition: all 0.3s ease;
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .nav-logo .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--purple2);
+            display: inline-block;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        .nav-logo span { color: var(--purple2); }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .nav-links a {
+            font-size: 12px;
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--purple2);
+            transition: width 0.3s;
+        }
+        .nav-links a:hover { color: var(--purple3); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links .nav-wa {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, var(--purple), var(--purple2));
+            color: white !important;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        .nav-links .nav-wa::after { display: none; }
+        .nav-links .nav-wa:hover { transform: scale(1.03); }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--lgray);
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        /* ═══ RESPONSIVE ═══ */
+        @media (max-width: 768px) {
+            .about-grid { grid-template-columns: 1fr; }
+            .project-showcase { grid-template-columns: 1fr; }
+            .sercotec-grid { grid-template-columns: 1fr; }
+            .contact-wrap { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0; right: 0;
+                background: rgba(10,10,20,0.98);
+                padding: 20px;
+                border-bottom: 1px solid rgba(124,58,237,0.1);
+            }
+            .section { padding: 60px 20px; }
+        }
+
+        /* ═══ SCROLLBAR ═══ */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--purple2); }
+    </style>
+</head>
+<body>
+
+    <!-- ═══ THREE.JS CANVAS ═══ -->
+    <div id="three-canvas"></div>
+
+    <!-- ═══ NAV BAR ═══ -->
+    <nav class="nav-bar">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo" style="gap:10px;">
+                <img src="logo-principal.png" alt="FGF Digital" style="width:36px;height:36px;border-radius:8px;object-fit:cover;">
+                FGF <span>Digital</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="#about">Inicio</a>
+                <a href="#tech">Tecnología</a>
+                <a href="#projects">Proyectos</a>
+                <a href="#plans">Planes</a>
+                <a href="#sercotec">Sercotec</a>
+                <a href="#contact" class="nav-wa"><i class="fab fa-whatsapp"></i> Contacto</a>
+            </div>
+            <button class="mobile-menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="dot-live"></span>
+                Transformación Digital para Pymes Chilenas
+            </div>
+            <div style="margin-bottom:24px;">
+                <img src="logo-principal.png" alt="FGF Digital" style="width:140px;height:140px;border-radius:24px;box-shadow:0 0 50px rgba(124,58,237,0.25);border:2px solid rgba(124,58,237,0.15);object-fit:cover;">
+            </div>
+            <h1><span class="gradient">FGF Digital</span></h1>
+            <p>Informática · Publicidad · Desarrollo Web — Llevamos tu negocio tradicional al mundo digital con webs profesionales, sin vueltas ni tecnicismos.</p>
+            <div class="hero-btns">
+                <a href="#contact" class="btn-primary"><i class="fab fa-whatsapp"></i> Agendar llamada</a>
+                <a href="#projects" class="btn-secondary">Ver proyectos <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="num">77%</div>
+                    <div class="label">Pymes sin web</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="num">+60%</div>
+                    <div class="label">Más ventas al digitalizarse</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="num">$1.2M</div>
+                    <div class="label">Subsidio Sercotec</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Desliza</span>
+            <div class="line"></div>
+        </div>
+    </section>
+
+    <!-- ═══ ABOUT ═══ -->
+    <section class="section" id="about">
+        <div class="section-header reveal">
+            <div class="tag">✦ Sobre FGF Digital</div>
+            <h2>Más que una web, <span class="highlight">una oportunidad</span></h2>
+            <p>Ayudamos a los negocios tradicionales chilenos a dar el salto digital con herramientas modernas y un servicio cercano.</p>
+        </div>
+        <div class="about-grid">
+            <div class="about-card reveal reveal-d1">
+                <h3><span class="icon">👋</span>¿Quién soy?</h3>
+                <p><strong style="color:var(--purple3);">Francisco Javier Pardo Jara</strong>, freelancer experto en informática, publicidad y desarrollo web. Desde Talagante, ayudo a panaderías, talleres, almacenes, farmacias, desarmadurías y profesionales independientes a tener presencia digital profesional.</p>
+                <div class="stat-grid">
+                    <div class="mini-stat">
+                        <div class="n">+20</div>
+                        <div class="l">Prospectos</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="n">+5</div>
+                        <div class="l">Proyectos</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="n">100%</div>
+                        <div class="l">Dedicación</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-card reveal reveal-d2">
+                <h3><span class="icon">🎯</span>Nuestra Misión</h3>
+                <p>En Chile, el <strong style="color:var(--gold);">77% de las pymes</strong> aún no tiene sitio web. Mientras tanto, el <strong style="color:var(--gold);">60% de las que se digitalizan aumentan sus ventas</strong>. Queremos cerrar esa brecha.</p>
+                <div style="margin-top:14px; padding:12px 14px; background:rgba(124,58,237,0.04); border-radius:12px; border-left:3px solid var(--purple2);">
+                    <p style="font-size:12px; font-style:italic; color:var(--lgray); margin:0;">"Cada web que entrego es un negocio que empieza a aparecer en Google, recibir pedidos por WhatsApp y vender 24/7."</p>
+                </div>
+                <p style="margin-top:12px; font-size:11px; color:var(--dim);">— Fuentes: CCS 2024, Movistar 2024, Sercotec 2025</p>
+            </div>
+        </div>
+        <div class="about-card reveal reveal-d3" style="margin-top:20px; text-align:center; grid-column: 1 / -1;">
+            <h3><span class="icon">🚀</span>¡Vienen cositas grandes!</h3>
+            <p>Actualmente estamos en desarrollo de <strong style="color:var(--neon);">dos aplicaciones</strong> que van a cambiar la forma en que las pymes chilenas se digitalizan. Apps modernas, funcionales y hechas a la medida del negocio chileno. <strong style="color:var(--purple3);">Pronto más info...</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ TECH ═══ -->
+    <section class="section" id="tech">
+        <div class="section-header reveal">
+            <div class="tag">🔧 Tecnología</div>
+            <h2>Usamos las <span class="highlight">mejores herramientas</span></h2>
+            <p>Cada proyecto se construye con tecnología profesional, pensada para rendir, durar y escalar.</p>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-card reveal reveal-d1"><span class="icon"><i class="fab fa-google" style="color:#4285F4;"></i></span><span class="name">Google Business</span><span class="desc">Perfil empresa</span></div>
+            <div class="tech-card reveal reveal-d1"><span class="icon"><i class="fab fa-whatsapp" style="color:#25D366;"></i></span><span class="name">WhatsApp Business</span><span class="desc">Catálogo + chat</span></div>
+            <div class="tech-card reveal reveal-d1"><span class="icon"><i class="fab fa-google" style="color:#34A853;"></i></span><span class="name">Google Analytics</span><span class="desc">Métricas</span></div>
+            <div class="tech-card reveal reveal-d2"><span class="icon"><i class="fas fa-credit-card" style="color:#4A90D9;"></i></span><span class="name">Webpay Plus</span><span class="desc">Pagos online</span></div>
+            <div class="tech-card reveal reveal-d2"><span class="icon"><i class="fas fa-credit-card" style="color:#00B5E2;"></i></span><span class="name">MercadoPago</span><span class="desc">Pasarela pago</span></div>
+            <div class="tech-card reveal reveal-d2"><span class="icon"><i class="fas fa-chart-line" style="color:#F4B400;"></i></span><span class="name">Search Console</span><span class="desc">SEO técnico</span></div>
+            <div class="tech-card reveal reveal-d3"><span class="icon"><i class="fas fa-envelope" style="color:#EA4335;"></i></span><span class="name">Email @dominio</span><span class="desc">Correo profesional</span></div>
+            <div class="tech-card reveal reveal-d3"><span class="icon"><i class="fas fa-shield-alt" style="color:#34A853;"></i></span><span class="name">SSL / HTTPS</span><span class="desc">Seguridad</span></div>
+            <div class="tech-card reveal reveal-d3"><span class="icon"><i class="fas fa-mobile-alt" style="color:#A855F7;"></i></span><span class="name">Responsive</span><span class="desc">Mobile first</span></div>
+            <div class="tech-card reveal reveal-d4"><span class="icon"><i class="fas fa-code" style="color:#7C3AED;"></i></span><span class="name">HTML/CSS/JS</span><span class="desc">Desarrollo vanilla</span></div>
+            <div class="tech-card reveal reveal-d4"><span class="icon"><i class="fas fa-database" style="color:#F7DF1E;"></i></span><span class="name">Hosting Pro</span><span class="desc">Rendimiento</span></div>
+            <div class="tech-card reveal reveal-d4"><span class="icon"><i class="fas fa-robot" style="color:#06B6D4;"></i></span><span class="name">SEO Optimizado</span><span class="desc">Posicionamiento</span></div>
+            <div class="tech-card reveal reveal-d4"><span class="icon"><i class="fab fa-windows" style="color:#00ADEF;"></i></span><span class="name">Windows</span><span class="desc">Plataforma PC</span></div>
+            <div class="tech-card reveal reveal-d4"><span class="icon"><i class="fab fa-linux" style="color:#FCC624;"></i></span><span class="name">Linux</span><span class="desc">Servidores / Dev</span></div>
+            <div class="tech-card reveal reveal-d4"><span class="icon"><i class="fab fa-android" style="color:#3DDC84;"></i></span><span class="name">Android</span><span class="desc">Apps móviles</span></div>
+        </div>
+
+        <div class="section-header reveal" style="margin-top:36px;">
+            <div class="tag">🎨 Diseño y Edición Profesional</div>
+            <h2>Herramientas <span class="highlight">creativas</span></h2>
+            <p>Software de edición y diseño de nivel profesional para resultados impecables.</p>
+        </div>
+        <div class="tech-grid">
+            <div class="tech-card reveal reveal-d1"><span class="icon"><i class="fas fa-paint-brush" style="color:#31A8FF;"></i></span><span class="name">Photoshop</span><span class="desc">Edición de imágenes</span></div>
+            <div class="tech-card reveal reveal-d1"><span class="icon"><i class="fas fa-vector-square" style="color:#FF9A00;"></i></span><span class="name">Illustrator</span><span class="desc">Diseño vectorial</span></div>
+            <div class="tech-card reveal reveal-d1"><span class="icon"><i class="fas fa-film" style="color:#9999FF;"></i></span><span class="name">Premiere Pro</span><span class="desc">Edición de video</span></div>
+            <div class="tech-card reveal reveal-d2"><span class="icon"><i class="fas fa-play-circle" style="color="#AE4BD4;"></i></span><span class="name">After Effects</span><span class="desc">Motion graphics</span></div>
+            <div class="tech-card reveal reveal-d2"><span class="icon"><i class="fas fa-palette" style="color:#FF3366;"></i></span><span class="name">Adobe Suite</span><span class="desc">Diseño integral</span></div>
+            <div class="tech-card reveal reveal-d2"><span class="icon"><i class="fas fa-crop-alt" style="color:#7C3AED;"></i></span><span class="name">Edición Pro</span><span class="desc">Retoque profesional</span></div>
+            <div class="tech-card reveal reveal-d3"><span class="icon"><i class="fas fa-layer-group" style="color:#06B6D4;"></i></span><span class="name">Diseño UI/UX</span><span class="desc">Interfaces modernas</span></div>
+            <div class="tech-card reveal reveal-d3"><span class="icon"><i class="fas fa-brain" style="color:#A855F7;"></i></span><span class="name">Obsidian</span><span class="desc">Conocimiento + IA</span></div>
+            <div class="tech-card reveal reveal-d3"><span class="icon"><i class="fas fa-magic" style="color:#FBBF24;"></i></span><span class="name">IA Generativa</span><span class="desc">Creación asistida</span></div>
+            <div class="tech-card reveal reveal-d4"><span class="icon"><i class="fas fa-camera" style="color:#34A853;"></i></span><span class="name">Fotografía</span><span class="desc">Imagen profesional</span></div>
+            <div class="tech-card reveal reveal-d4"><span class="icon"><i class="fas fa-font" style="color:#E37400;"></i></span><span class="name">Tipografía</span><span class="desc">Branding visual</span></div>
+            <div class="tech-card reveal reveal-d4"><span class="icon"><i class="fas fa-project-diagram" style="color:#22D3EE;"></i></span><span class="name">Workflow Pro</span><span class="desc">Flujo creativo</span></div>
+        </div>
+    </section>
+
+    <!-- ═══ PROJECTS ═══ -->
+    <section class="section" id="projects">
+        <div class="section-header reveal">
+            <div class="tag">🚀 Portafolio</div>
+            <h2>Proyectos <span class="highlight">entregados</span></h2>
+            <p>Cada proyecto es único. Acá algunos de nuestros trabajos — desde webs completas, modelos comerciales y apps hasta generadores inteligentes.</p>
+        </div>
+
+        <!-- Proyecto 1: Desarmaduría FGF -->
+        <div class="project-showcase reveal" style="margin-bottom:20px;">
+            <div class="project-info">
+                <div class="proj-tag">🚗 PROYECTO ENTREGADO</div>
+                <h3>Desarmaduría FGF</h3>
+                <p class="desc">
+                    Web profesional completa para venta de repuestos automotrices en Talagante. 
+                    Incluye landing con animaciones, <strong>catálogo de productos</strong> con filtros, 
+                    panel de administración, app móvil y página de propuesta comercial.
+                </p>
+                <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
+                    <span style="font-size:11px; background:rgba(233,196,106,0.12); color:#e9c46a; padding:4px 10px; border-radius:6px;">Landing</span>
+                    <span style="font-size:11px; background:rgba(233,196,106,0.12); color:#e9c46a; padding:4px 10px; border-radius:6px;">Catálogo</span>
+                    <span style="font-size:11px; background:rgba(233,196,106,0.12); color:#e9c46a; padding:4px 10px; border-radius:6px;">Admin</span>
+                    <span style="font-size:11px; background:rgba(233,196,106,0.12); color:#e9c46a; padding:4px 10px; border-radius:6px;">App Móvil</span>
+                </div>
+                <div class="project-links">
+                    <a href="http://localhost:9090/FGF-RESCATE/desarmaduria-fgf/index.html" class="btn-proj" target="_blank">🌐 Ver sitio</a>
+                    <a href="http://localhost:9090/FGF-RESCATE/desarmaduria-fgf/catalogo/index.html" class="btn-ghost" target="_blank">🛒 Catálogo</a>
+                    <a href="http://localhost:9090/FGF-RESCATE/desarmaduria-fgf/admin/index.html" class="btn-ghost" target="_blank">⚙️ Admin</a>
+                </div>
+            </div>
+            <div class="project-visual">
+                <div class="icon-big">🚗</div>
+                <h4>Desarmaduría FGF</h4>
+                <p>Repuestos originales · Talagante</p>
+                <div class="screen-dots">
+                    <span>🏠</span>
+                    <span>📋</span>
+                    <span>📞</span>
+                    <span>⚙️</span>
+                </div>
+                <div style="margin-top:10px; font-size:10px; color:var(--gray); position:relative; z-index:1;">+ 50 productos en catálogo</div>
+            </div>
+        </div>
+
+        <!-- Proyecto 2: App Generadora de Demos -->
+        <div class="project-showcase reveal" style="margin-bottom:20px; grid-template-columns: 1fr 1fr; border-color:rgba(236,72,153,0.12); background:linear-gradient(145deg, var(--card), rgba(236,72,153,0.03));">
+            <div class="project-info">
+                <div class="proj-tag" style="color:#ec4899; border-color:rgba(236,72,153,0.2); background:rgba(236,72,153,0.08);">📱 APP MULTIRRUBRO</div>
+                <h3 style="color:#ec4899;">Creador de Aplicaciones</h3>
+                <p class="desc">
+                    App que crea <strong>webs personalizadas al instante</strong> para más de 
+                    20 rubros distintos: panaderías, boutiques, talleres, restaurantes, ferreterías, 
+                    barberías, clínicas, spas, gimnasios, peluquerías y más.
+                </p>
+                <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
+                    <span style="font-size:11px; background:rgba(236,72,153,0.1); color:#ec4899; padding:4px 10px; border-radius:6px;">⚡ Instantáneo</span>
+                    <span style="font-size:11px; background:rgba(236,72,153,0.1); color:#ec4899; padding:4px 10px; border-radius:6px;">🎨 Multi-rubro</span>
+                    <span style="font-size:11px; background:rgba(236,72,153,0.1); color:#ec4899; padding:4px 10px; border-radius:6px;">📲 App</span>
+                    <span style="font-size:11px; background:rgba(236,72,153,0.1); color:#ec4899; padding:4px 10px; border-radius:6px;">📱 Mobile</span>
+                </div>
+                <div class="project-links">
+                    <a href="http://localhost:9090/FGF-RESCATE/fgf-demo-app/www/index.html" class="btn-proj" style="background:linear-gradient(135deg, #ec4899, #8b5cf6); color:white; border:none;" target="_blank">📱 Probar App</a>
+                </div>
+            </div>
+            <div class="project-visual" style="border-color:rgba(236,72,153,0.1); background:linear-gradient(145deg, rgba(26,26,46,0.6), rgba(236,72,153,0.06));">
+                <div class="icon-big" style="font-size:3rem;">📱</div>
+                <h4 style="color:#ec4899;">Creador Express</h4>
+                <p>Elige rubro → Personaliza → ¡Listo!</p>
+                <div style="display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-top:12px; position:relative; z-index:1;">
+                    <span style="font-size:10px; padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:4px;">🍪 Panadería</span>
+                    <span style="font-size:10px; padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:4px;">👗 Boutique</span>
+                    <span style="font-size:10px; padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:4px;">🔧 Taller</span>
+                    <span style="font-size:10px; padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:4px;">💈 Barbería</span>
+                    <span style="font-size:10px; padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:4px;">🍕 Restaurante</span>
+                    <span style="font-size:10px; padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:4px;">🔩 Ferretería</span>
+                    <span style="font-size:10px; padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:4px;">💪 Gimnasio</span>
+                    <span style="font-size:10px; padding:3px 8px; background:rgba(255,255,255,0.05); border-radius:4px;">+12 más</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Proyecto 3: Landing Pages Modelo -->
+        <div class="project-showcase reveal" style="margin-bottom:20px; border-color:rgba(250,204,21,0.12); background:linear-gradient(145deg, var(--card), rgba(250,204,21,0.03));">
+            <div class="project-info">
+                <div class="proj-tag" style="color:var(--gold); border-color:rgba(250,204,21,0.2); background:rgba(250,204,21,0.08);">🌟 MODELOS COMERCIALES</div>
+                <h3 style="color:var(--gold);">Landing Pages Modelo</h3>
+                <p class="desc">
+                    Cinco sitios profesionales de muestra para distintos rubros. Cada uno con 
+                    identidad visual única, hero section, catálogo de servicios/productos, 
+                    llamados a la acción y diseño responsive oscuro premium.
+                </p>
+                <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
+                    <span style="font-size:11px; background:rgba(250,204,21,0.1); color:var(--gold); padding:4px 10px; border-radius:6px;">🥖 Panadería</span>
+                    <span style="font-size:11px; background:rgba(250,204,21,0.1); color:var(--gold); padding:4px 10px; border-radius:6px;">👗 Boutique</span>
+                    <span style="font-size:11px; background:rgba(250,204,21,0.1); color:var(--gold); padding:4px 10px; border-radius:6px;">🔧 Taller</span>
+                    <span style="font-size:11px; background:rgba(250,204,21,0.1); color:var(--gold); padding:4px 10px; border-radius:6px;">💈 Barbería</span>
+                    <span style="font-size:11px; background:rgba(250,204,21,0.1); color:var(--gold); padding:4px 10px; border-radius:6px;">🍕 Restaurante</span>
+                </div>
+                <div class="project-links">
+                    <a href="http://localhost:9090/vault/FGF-Digital/modelos/panaderia-el-trigo.html" class="btn-proj" style="background:linear-gradient(135deg, var(--gold), #d97706); color:#0a0a14; border:none;" target="_blank">🥖 Panadería</a>
+                    <a href="http://localhost:9090/vault/FGF-Digital/modelos/boutique-enkantos.html" class="btn-ghost" target="_blank">👗 Boutique</a>
+                    <a href="http://localhost:9090/vault/FGF-Digital/modelos/taller-automotriz.html" class="btn-ghost" target="_blank">🔧 Taller</a>
+                    <a href="http://localhost:9090/vault/FGF-Digital/modelos/barberia-oldschool.html" class="btn-ghost" target="_blank">💈 Barbería</a>
+                    <a href="http://localhost:9090/vault/FGF-Digital/modelos/restaurant-don-carlo.html" class="btn-ghost" target="_blank">🍕 Restaurante</a>
+                </div>
+            </div>
+            <div class="project-visual" style="border-color:rgba(250,204,21,0.1); background:linear-gradient(145deg, rgba(26,26,46,0.6), rgba(250,204,21,0.04));">
+                <div class="icon-big" style="font-size:2.5rem; display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
+                    <span>🥖</span><span>👗</span><span>🔧</span><span>💈</span><span>🍕</span>
+                </div>
+                <h4 style="color:var(--gold);">Modelos Listos</h4>
+                <p>5 rubros · 5 diseños únicos · 1 clic de distancia</p>
+                <div style="display:flex; gap:6px; justify-content:center; margin-top:10px; flex-wrap:wrap; position:relative; z-index:1;">
+                    <span style="font-size:9px; padding:2px 8px; background:rgba(250,204,21,0.08); border-radius:4px; color:var(--gold);">🎨 Estilo propio</span>
+                    <span style="font-size:9px; padding:2px 8px; background:rgba(250,204,21,0.08); border-radius:4px; color:var(--gold);">📱 Responsive</span>
+                    <span style="font-size:9px; padding:2px 8px; background:rgba(250,204,21,0.08); border-radius:4px; color:var(--gold);">🚀 WhatsApp</span>
+                    <span style="font-size:9px; padding:2px 8px; background:rgba(250,204,21,0.08); border-radius:4px; color:var(--gold);">⚡ Listo en 1 día</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Proyecto 4: Apps en desarrollo -->
+        <div class="project-showcase reveal" style="border-color:rgba(6,182,212,0.12); background:linear-gradient(145deg, var(--card), rgba(6,182,212,0.03)); cursor:default;">
+            <div class="project-info">
+                <div class="proj-tag" style="color:var(--neon); border-color:rgba(6,182,212,0.2); background:rgba(6,182,212,0.08);">🚧 EN DESARROLLO</div>
+                <h3 style="color:var(--neon);">Dos Grandes Apps</h3>
+                <p class="desc">
+                    Estamos construyendo <strong style="color:var(--neon);">dos aplicaciones</strong> 
+                    que van a cambiar la forma en que las pymes chilenas se digitalizan. 
+                    Apps modernas, funcionales y hechas a la medida del negocio chileno.
+                </p>
+                <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+                    <div style="flex:1; min-width:120px; padding:12px; background:rgba(6,182,212,0.04); border-radius:10px; border:1px solid rgba(6,182,212,0.08); text-align:center;">
+                        <div style="font-size:24px; margin-bottom:4px;">📊</div>
+                        <div style="font-size:11px; font-weight:600; color:var(--neon);">App #1</div>
+                        <div style="font-size:9px; color:var(--gray);">Gestión pymes</div>
+                    </div>
+                    <div style="flex:1; min-width:120px; padding:12px; background:rgba(6,182,212,0.04); border-radius:10px; border:1px solid rgba(6,182,212,0.08); text-align:center;">
+                        <div style="font-size:24px; margin-bottom:4px;">🛒</div>
+                        <div style="font-size:11px; font-weight:600; color:var(--neon);">App #2</div>
+                        <div style="font-size:9px; color:var(--gray);">Marketplace local</div>
+                    </div>
+                </div>
+                <p style="font-size:11px; color:var(--dim); margin-top:8px;">🔒 Pronto más información...</p>
+            </div>
+            <div class="project-visual" style="border-color:rgba(6,182,212,0.1); background:linear-gradient(145deg, rgba(26,26,46,0.6), rgba(6,182,212,0.04));">
+                <div class="icon-big" style="font-size:3rem; animation:pulse-glow 2s infinite;">🚧</div>
+                <style>
+                    @keyframes pulse-glow {
+                        0%, 100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(6,182,212,0.3)); }
+                        50% { opacity: 0.7; filter: drop-shadow(0 0 20px rgba(6,182,212,0.6)); }
+                    }
+                </style>
+                <h4 style="color:var(--neon);">Próximamente</h4>
+                <p>Dos aplicaciones en desarrollo activo</p>
+                <div style="margin-top:14px; width:100%; max-width:200px; height:6px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden; position:relative; z-index:1;">
+                    <div style="width:45%; height:100%; background:linear-gradient(90deg, var(--neon), var(--purple2)); border-radius:3px; animation:progress 3s ease-in-out infinite;"></div>
+                </div>
+                <style>
+                    @keyframes progress {
+                        0% { width: 30%; }
+                        50% { width: 60%; }
+                        100% { width: 30%; }
+                    }
+                </style>
+                <div style="font-size:10px; color:var(--dim); margin-top:6px; position:relative; z-index:1;">45% completado</div>
+            </div>
+        </div>
+
+        <div style="text-align:center; margin-top:20px; font-size:12px; color:var(--gray);">
+            <i class="fas fa-sync-alt" style="margin-right:6px; color:var(--purple3);"></i>
+            Portafolio actualizado · Julio 2026 · + proyectos en camino →
+        </div>
+    </section>
+
+    <!-- ═══ PLANS ═══ -->
+    <section class="section" id="plans">
+        <div class="section-header reveal">
+            <div class="tag">💰 Soluciones</div>
+            <h2>Planes <span class="highlight">a tu medida</span></h2>
+            <p>Cada negocio es único. Te ayudamos a encontrar la solución perfecta para lo que necesitas.</p>
+        </div>
+        <div style="text-align:center; padding:20px; background:var(--card); border:1px solid var(--card-border); border-radius:20px; margin-bottom:24px;" class="reveal">
+            <p style="font-size:14px; color:var(--gray); margin-bottom:12px;">
+                Cada proyecto es único. Contáctanos y te hacemos una cotización personalizada 
+                según lo que tu negocio necesita.
+            </p>
+            <a href="#contact" class="btn-primary" style="display:inline-flex;">
+                <i class="fab fa-whatsapp"></i> Cotiza con nosotros
+            </a>
+        </div>
+        <div class="plans-grid">
+            <div class="plan-card purple reveal reveal-d1">
+                <div class="tag">✦ PLAN BÁSICO</div>
+                <h4>Web Profesional</h4>
+                <div class="price">Cotizar</div>
+                <ul>
+                    <li>Landing profesional</li>
+                    <li>Dominio .cl + Hosting</li>
+                    <li>SSL / HTTPS</li>
+                    <li>Diseño responsive</li>
+                    <li>Google My Business</li>
+                    <li>WhatsApp Business</li>
+                    <li>Formulario contacto</li>
+                </ul>
+                <a href="#contact" style="display:block; margin-top:14px; padding:10px; background:rgba(124,58,237,0.1); border-radius:10px; color:var(--purple3); text-decoration:none; font-size:13px; font-weight:600; text-align:center; transition:all 0.3s;" onmouseover="this.style.background='rgba(124,58,237,0.2)'" onmouseout="this.style.background='rgba(124,58,237,0.1)'">📋 Cotizar este plan →</a>
+            </div>
+            <div class="plan-card purple reveal reveal-d2">
+                <div class="tag">✦ PLAN COMERCIAL</div>
+                <h4>Delivery Digital</h4>
+                <div class="price">Cotizar</div>
+                <ul>
+                    <li>Sitio multi-página</li>
+                    <li>Catálogo productos</li>
+                    <li>Pedidos web 24/7</li>
+                    <li>WhatsApp integrado</li>
+                    <li>SEO básico</li>
+                    <li>Google Maps</li>
+                    <li>Panel administración</li>
+                </ul>
+                <a href="#contact" style="display:block; margin-top:14px; padding:10px; background:rgba(124,58,237,0.1); border-radius:10px; color:var(--purple3); text-decoration:none; font-size:13px; font-weight:600; text-align:center; transition:all 0.3s;" onmouseover="this.style.background='rgba(124,58,237,0.2)'" onmouseout="this.style.background='rgba(124,58,237,0.1)'">📋 Cotizar este plan →</a>
+            </div>
+            <div class="plan-card neon reveal reveal-d3">
+                <div class="tag">✦ PLAN AVANZADO</div>
+                <h4>E-commerce</h4>
+                <div class="price">Cotizar</div>
+                <ul>
+                    <li>Tienda completa</li>
+                    <li>Carrito compras</li>
+                    <li>MercadoPago/Webpay</li>
+                    <li>Panel admin</li>
+                    <li>Integración envíos</li>
+                    <li>SEO + analytics</li>
+                </ul>
+                <a href="#contact" style="display:block; margin-top:14px; padding:10px; background:rgba(6,182,212,0.1); border-radius:10px; color:var(--neon); text-decoration:none; font-size:13px; font-weight:600; text-align:center; transition:all 0.3s;" onmouseover="this.style.background='rgba(6,182,212,0.2)'" onmouseout="this.style.background='rgba(6,182,212,0.1)'">📋 Cotizar este plan →</a>
+            </div>
+            <div class="plan-card gold reveal reveal-d4">
+                <div class="tag">✦ PLAN PREMIUM</div>
+                <h4>Transformación Digital</h4>
+                <div class="price">Cotizar</div>
+                <ul>
+                    <li>Todo lo anterior</li>
+                    <li>App delivery/socios</li>
+                    <li>CRM básico</li>
+                    <li>Estrategia contenido</li>
+                    <li>Capacitación</li>
+                    <li>Soporte 30 días</li>
+                </ul>
+                <a href="#contact" style="display:block; margin-top:14px; padding:10px; background:rgba(251,191,36,0.1); border-radius:10px; color:var(--gold); text-decoration:none; font-size:13px; font-weight:600; text-align:center; transition:all 0.3s;" onmouseover="this.style.background='rgba(251,191,36,0.2)'" onmouseout="this.style.background='rgba(251,191,36,0.1)'">📋 Cotizar este plan →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SERCOTEC ═══ -->
+    <section class="section" id="sercotec">
+        <div class="section-header reveal">
+            <div class="tag">🏛️ Sercotec</div>
+            <h2>Subsidio <span class="highlight">Kit Digital</span></h2>
+            <p>El gobierno subsidia con $1.200.000 CLP a micro y pequeñas empresas para digitalizarse.</p>
+        </div>
+        <div class="sercotec-grid">
+            <div class="sercotec-main reveal reveal-d1">
+                <div class="big-num">$1.200.000 <small>CLP</small></div>
+                <h3>Subsidio completo</h3>
+                <p>El Kit Digital de Sercotec cubre hasta $1.200.000 en soluciones digitales. Te ayudamos con la postulación y ejecución.</p>
+                <div class="sercotec-feats">
+                    <div class="sercotec-feat"><h4>✓ Web Profesional</h4><p>Sitio con dominio y hosting</p></div>
+                    <div class="sercotec-feat"><h4>✓ Software Gestión</h4><p>Administra tus ventas</p></div>
+                    <div class="sercotec-feat"><h4>✓ Marketing Digital</h4><p>SEO y publicidad online</p></div>
+                    <div class="sercotec-feat"><h4>✓ Equipamiento</h4><p>PC, POS, tablet</p></div>
+                </div>
+            </div>
+            <div class="sercotec-zero reveal reveal-d2">
+                <div class="big">$490.000 → <span>$0</span></div>
+                <p>El Plan Web Profesional queda <strong style="color:var(--gold);">100% cubierto</strong>. Tu cliente no paga nada.</p>
+                <div style="margin-top:20px; padding:14px; background:rgba(251,191,36,0.05); border-radius:14px; border:1px solid rgba(251,191,36,0.08);">
+                    <p style="font-size:12px; margin:0;">Solo el <strong style="color:var(--white);">23%</strong> de las pymes tiene web. <strong style="color:var(--white);">98% planea invertir</strong> en digitalización. El momento es ahora.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ CONTACT ═══ -->
+    <section class="section" id="contact">
+        <div class="section-header reveal">
+            <div class="tag">📞 Contacto</div>
+            <h2>Hagamos que <span class="highlight">pase</span></h2>
+            <p>Una llamada de 10 minutos sin compromiso. Te explico, te presupuesto y ves si te sirve.</p>
+        </div>
+        <div class="contact-wrap">
+            <div class="contact-info reveal reveal-d1">
+                <h3>Francisco <span>Pardo</span></h3>
+                <p>Freelancer en informática, publicidad y desarrollo web. Desde Talagante, ayudando a negocios chilenos a dar el salto digital.</p>
+                <div class="contact-methods">
+                    <a href="https://wa.me/56940894579" target="_blank" class="contact-method">
+                        <div class="icon-wrap" style="background:rgba(37,211,102,0.1);color:#25D366;"><i class="fab fa-whatsapp"></i></div>
+                        <div class="info"><h4>WhatsApp</h4><p>+56 9 4089 4579</p></div>
+                        <span class="arrow"><i class="fas fa-arrow-right"></i></span>
+                    </a>
+                    <a href="tel:+56940894579" class="contact-method">
+                        <div class="icon-wrap" style="background:rgba(124,58,237,0.1);color:var(--purple3);"><i class="fas fa-phone"></i></div>
+                        <div class="info"><h4>Llamada directa</h4><p>+56 9 4089 4579</p></div>
+                        <span class="arrow"><i class="fas fa-arrow-right"></i></span>
+                    </a>
+                    <a href="mailto:pcfra_@hotmail.es" class="contact-method">
+                        <div class="icon-wrap" style="background:rgba(6,182,212,0.1);color:var(--neon);"><i class="fas fa-envelope"></i></div>
+                        <div class="info"><h4>Email</h4><p>pcfra_@hotmail.es</p></div>
+                        <span class="arrow"><i class="fas fa-arrow-right"></i></span>
+                    </a>
+                    <div class="contact-method" style="cursor:default;">
+                        <div class="icon-wrap" style="background:rgba(251,191,36,0.1);color:var(--gold);"><i class="fas fa-location-dot"></i></div>
+                        <div class="info"><h4>Ubicación</h4><p>Camino La Palma Parcela 11, Talagante</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-cta reveal reveal-d2">
+                <div class="big">¿Listo para <span>digitalizar</span> tu negocio?</div>
+                <p>Escríbeme por WhatsApp y coordinamos una llamada de 10 minutos. Te explico el proceso, revisamos si aplicas al subsidio Sercotec y te doy un presupuesto sin compromiso.</p>
+                <a href="https://wa.me/56940894579?text=Hola%20Francisco%2C%20vi%20tu%20portafolio%20de%20FGF%20Digital%20y%20quiero%20saber%20m%C3%A1s" target="_blank" class="btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> Escribir por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="footer">
+        <p>FGF Digital © 2026 — Hecho con ❤️ desde Talagante, Chile · <span class="brand">Transformación Digital para Pymes Chilenas</span></p>
+    </footer>
+
+    <script>
+        // ═══ THREE.JS 3D HERO ═══
+        (function() {
+            const container = document.getElementById('three-canvas');
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0x0a0a14, 0.002);
+
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 30;
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            // ─── Particles ───
+            const particlesGeo = new THREE.BufferGeometry();
+            const count = 2000;
+            const positions = new Float32Array(count * 3);
+            const colors = new Float32Array(count * 3);
+            const sizes = new Float32Array(count);
+
+            const colorPurple = new THREE.Color(0x7c3aed);
+            const colorCyan = new THREE.Color(0x06b6d4);
+            const colorPink = new THREE.Color(0xa855f7);
+
+            for (let i = 0; i < count; i++) {
+                const radius = 20 + Math.random() * 15;
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos((Math.random() * 2) - 1);
+
+                positions[i*3] = radius * Math.sin(phi) * Math.cos(theta);
+                positions[i*3+1] = radius * Math.sin(phi) * Math.sin(theta);
+                positions[i*3+2] = radius * Math.cos(phi);
+
+                const color = new THREE.Color().lerpColors(colorPurple, colorCyan, Math.random());
+                colors[i*3] = color.r;
+                colors[i*3+1] = color.g;
+                colors[i*3+2] = color.b;
+
+                sizes[i] = 0.5 + Math.random() * 2;
+            }
+
+            particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particlesGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            particlesGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+            const particleTexture = (() => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 32;
+                canvas.height = 32;
+                const ctx = canvas.getContext('2d');
+                const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+                gradient.addColorStop(0, 'rgba(255,255,255,1)');
+                gradient.addColorStop(0.3, 'rgba(255,255,255,0.6)');
+                gradient.addColorStop(1, 'rgba(255,255,255,0)');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, 32, 32);
+                return new THREE.CanvasTexture(canvas);
+            })();
+
+            const particleMaterial = new THREE.PointsMaterial({
+                size: 0.4,
+                map: particleTexture,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false,
+                transparent: true,
+                vertexColors: true,
+                opacity: 0.8,
+            });
+
+            const particleSystem = new THREE.Points(particlesGeo, particleMaterial);
+            scene.add(particleSystem);
+
+            // ─── Torus Knot ───
+            const knotGeo = new THREE.TorusKnotGeometry(3, 0.8, 128, 16);
+            const knotMat = new THREE.MeshBasicMaterial({
+                color: 0x7c3aed,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.15,
+            });
+            const knot = new THREE.Mesh(knotGeo, knotMat);
+            scene.add(knot);
+
+            // ─── Second knot ───
+            const knot2Geo = new THREE.TorusKnotGeometry(4.5, 1.2, 128, 16);
+            const knot2Mat = new THREE.MeshBasicMaterial({
+                color: 0x06b6d4,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.08,
+            });
+            const knot2 = new THREE.Mesh(knot2Geo, knot2Mat);
+            scene.add(knot2);
+
+            // ─── Mouse tracking ───
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            // ─── Resize ───
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // ─── Animate ───
+            function animate() {
+                requestAnimationFrame(animate);
+
+                targetX += (mouseX - targetX) * 0.05;
+                targetY += (mouseY - targetY) * 0.05;
+
+                particleSystem.rotation.x += 0.0003;
+                particleSystem.rotation.y += 0.0005;
+
+                knot.rotation.x += 0.005;
+                knot.rotation.y += 0.008;
+                knot.position.x = targetX * 2;
+                knot.position.y = targetY * 2;
+
+                knot2.rotation.x -= 0.003;
+                knot2.rotation.y += 0.005;
+                knot2.position.x = -targetX * 1.5;
+                knot2.position.y = -targetY * 1.5;
+
+                camera.position.x += (targetX * 2 - camera.position.x) * 0.02;
+                camera.position.y += (targetY * 1.5 - camera.position.y) * 0.02;
+                camera.lookAt(0, 0, 0);
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+        })();
+
+        // ═══ SCROLL REVEAL ═══
+        (function() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            reveals.forEach(el => observer.observe(el));
+        })();
+
+        // ═══ MOBILE MENU ═══
+        (function() {
+            const btn = document.getElementById('menuBtn');
+            const links = document.getElementById('navLinks');
+            if (btn && links) {
+                btn.addEventListener('click', () => {
+                    links.classList.toggle('open');
+                    btn.innerHTML = links.classList.contains('open')
+                        ? '<i class="fas fa-times"></i>'
+                        : '<i class="fas fa-bars"></i>';
+                });
+                // Close on link click
+                links.querySelectorAll('a').forEach(a => {
+                    a.addEventListener('click', () => {
+                        links.classList.remove('open');
+                        btn.innerHTML = '<i class="fas fa-bars"></i>';
+                    });
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>

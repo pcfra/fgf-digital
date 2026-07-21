@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique Enkantos — Moda femenina</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root { --bg:#0d0d14; --bg2:#1a0d1a; --card:rgba(30,15,30,0.85); --rose:#e8798b; --rose2:#c94d6e; --gold:#d4a373; --cream:#f5e6d0; --white:#fff; --gray:#a09090; --lgray:#d4c0c8; }
+        html { scroll-behavior:smooth; }
+        body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--cream); overflow-x:hidden; }
+        .nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:14px 24px; background:rgba(13,13,20,0.9); backdrop-filter:blur(12px); border-bottom:1px solid rgba(232,121,139,0.06); display:flex; justify-content:space-between; align-items:center; }
+        .nav-logo { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; text-decoration:none; color:var(--cream); }
+        .nav-logo span { color:var(--rose); }
+        .nav-links { display:flex; gap:18px; }
+        .nav-links a { color:var(--gray); text-decoration:none; font-size:12px; font-weight:500; transition:color .3s; letter-spacing:0.3px; text-transform:uppercase; }
+        .nav-links a:hover { color:var(--rose); }
+        .hero { min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:120px 20px 60px; background:linear-gradient(135deg,#0d0d14,#1a0d1a,#0d0d14); position:relative; }
+        .hero { background:linear-gradient(135deg,rgba(13,13,20,0.85),rgba(26,13,26,0.85),rgba(13,13,20,0.85)), url('https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1920&q=75') center/cover fixed; }
+        .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 70% 30%, rgba(232,121,139,0.1) 0%, transparent 50%); }
+        .hero-content { position:relative; z-index:1; max-width:800px; }
+        .hero-icon { font-size:4rem; margin-bottom:16px; display:block; }
+        .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; margin-bottom:10px; }
+        .hero h1 span { color:var(--rose); }
+        .hero p { font-size:1.05rem; color:var(--gray); margin-bottom:28px; max-width:540px; margin-left:auto; margin-right:auto; line-height:1.7; }
+        .btn { display:inline-flex; align-items:center; gap:10px; padding:14px 28px; border-radius:50px; text-decoration:none; font-weight:600; font-size:14px; transition:all .3s; border:none; cursor:pointer; }
+        .btn-primary { background:linear-gradient(135deg,var(--rose),var(--rose2)); color:white; }
+        .btn-primary:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(232,121,139,0.3); }
+        .btn-secondary { background:transparent; color:var(--cream); border:1px solid rgba(245,230,208,0.15); }
+        .btn-secondary:hover { border-color:var(--rose); }
+        .hero-stats { display:flex; gap:30px; justify-content:center; margin-top:36px; flex-wrap:wrap; }
+        .hero-stat { text-align:center; }
+        .hero-stat .num { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--rose); }
+        .hero-stat .label { font-size:10px; color:var(--gray); text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
+        .section { padding:80px 20px; max-width:1100px; margin:0 auto; }
+        .section-header { text-align:center; margin-bottom:36px; }
+        .section-tag { display:inline-block; font-size:10px; text-transform:uppercase; letter-spacing:2px; color:var(--rose); background:rgba(232,121,139,0.08); padding:4px 12px; border-radius:20px; margin-bottom:10px; border:1px solid rgba(232,121,139,0.1); }
+        .section-header h2 { font-family:'Playfair Display',serif; font-size:clamp(1.6rem,3vw,2.3rem); font-weight:700; }
+        .section-header h2 span { color:var(--rose); }
+        .section-header p { color:var(--gray); margin-top:8px; font-size:14px; max-width:600px; margin-left:auto; margin-right:auto; }
+        .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+        .card { background:var(--card); border:1px solid rgba(232,121,139,0.08); border-radius:16px; padding:28px 22px; text-align:center; transition:all .4s; }
+        .card:hover { transform:translateY(-6px); border-color:rgba(232,121,139,0.2); box-shadow:0 12px 40px rgba(0,0,0,0.3); }
+        .card .icon { font-size:2.5rem; margin-bottom:10px; display:block; }
+        .card h3 { font-size:1rem; font-weight:700; margin-bottom:6px; color:var(--lgray); }
+        .card p { font-size:12px; color:var(--gray); line-height:1.6; }
+        .card .price { font-size:13px; color:var(--rose); font-weight:700; margin-top:8px; }
+        .about-wrap { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center; }
+        .about-text h3 { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; margin-bottom:12px; }
+        .about-text h3 span { color:var(--rose); }
+        .about-text p { color:var(--gray); line-height:1.7; font-size:13px; margin-bottom:10px; }
+        .about-feat { display:flex; gap:10px; align-items:center; margin-top:6px; }
+        .about-feat i { color:var(--rose); font-size:14px; width:20px; }
+        .about-feat span { font-size:12px; color:var(--lgray); }
+        .testimonios { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+        .testi-card { background:var(--card); border:1px solid rgba(232,121,139,0.06); border-radius:16px; padding:20px; }
+        .testi-card .stars { color:var(--rose); font-size:12px; margin-bottom:6px; }
+        .testi-card p { font-size:12px; color:var(--gray); line-height:1.6; font-style:italic; }
+        .testi-card .author { font-size:11px; font-weight:600; color:var(--lgray); margin-top:8px; }
+        .contact-section { text-align:center; background:linear-gradient(135deg,#0d0d14,#1a0d1a); border-radius:20px; padding:48px 24px; }
+        .contact-section h3 { font-family:'Playfair Display',serif; font-size:1.8rem; margin-bottom:8px; }
+        .contact-section h3 span { color:var(--rose); }
+        .contact-section p { color:var(--gray); font-size:13px; margin-bottom:20px; }
+        .contact-items { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; }
+        .contact-item { display:flex; align-items:center; gap:10px; background:rgba(232,121,139,0.04); padding:12px 16px; border-radius:12px; border:1px solid rgba(232,121,139,0.06); }
+        .contact-item i { color:var(--rose); font-size:16px; }
+        .contact-item span { font-size:13px; color:var(--lgray); }
+        .whatsapp-float { position:fixed; bottom:20px; right:20px; z-index:99; width:52px; height:52px; border-radius:50%; background:#25D366; color:white; display:flex; align-items:center; justify-content:center; font-size:24px; text-decoration:none; box-shadow:0 4px 20px rgba(37,211,102,0.3); transition:all .3s; }
+        .whatsapp-float:hover { transform:scale(1.1); box-shadow:0 6px 30px rgba(37,211,102,0.4); }
+        .reveal { opacity:0; transform:translateY(30px); transition:all .7s cubic-bezier(0.22,1,0.36,1); }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+        .footer { text-align:center; padding:30px 20px; border-top:1px solid rgba(232,121,139,0.06); color:var(--gray); font-size:12px; max-width:1100px; margin:0 auto; }
+        .footer .social { display:flex; gap:14px; justify-content:center; margin-bottom:12px; }
+        .footer .social a { color:var(--gray); font-size:18px; transition:color .3s; }
+        .footer .social a:hover { color:var(--rose); }
+        @media(max-width:700px) { .about-wrap { grid-template-columns:1fr; } .nav-links { display:none; } .hero-stats { gap:16px; } .contact-items { flex-direction:column; align-items:center; } }
+        @media(max-width:600px) { .hero h1 { font-size:2.2rem; } }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="#" class="nav-logo"><span>Enkantos</span></a>
+        <div class="nav-links">
+            <a href="#about">Nosotros</a>
+            <a href="#products">Colecciones</a>
+            <a href="#testimonios">Opiniones</a>
+            <a href="#contact">Contacto</a>
+        </div>
+    </nav>
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-icon">👗</span>
+            <h1>Boutique <span>Enkantos</span></h1>
+            <p>Moda femenina con estilo único. Ropa, accesorios y tendencias seleccionadas para la mujer que sabe lo que quiere.</p>
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+                <a href="https://wa.me/56940894579" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Consultar</a>
+                <a href="#products" class="btn btn-secondary">Ver colecciones</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat"><div class="num">500+</div><div class="label">Prendas vendidas</div></div>
+                <div class="hero-stat"><div class="num">★ 4.9</div><div class="label">Valoración</div></div>
+                <div class="hero-stat"><div class="num">24h</div><div class="label">Envío</div></div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="about">
+        <div class="reveal">
+            <div class="section-tag">Nuestra historia</div>
+            <div class="about-wrap">
+                <div class="about-text">
+                    <h3>Moda que <span>encanta</span></h3>
+                    <p>Enkantos nació del sueño de llevar moda femenina accesible y con personalidad a Talagante. Seleccionamos cada prenda pensando en la mujer moderna que quiere verse bien sin perder su esencia.</p>
+                    <p>Trabajamos con diseñadores locales y marcas seleccionadas. Cada colección es curada con cariño para ofrecerte lo mejor de la temporada.</p>
+                    <div class="about-feat"><i class="fas fa-check-circle"></i><span>Prendas seleccionadas una a una</span></div>
+                    <div class="about-feat"><i class="fas fa-check-circle"></i><span>Diseñadores nacionales</span></div>
+                    <div class="about-feat"><i class="fas fa-check-circle"></i><span>Envío 24 horas</span></div>
+                    <div class="about-feat"><i class="fas fa-check-circle"></i><span>Atención personalizada</span></div>
+                </div>
+                <div class="about-text" style="text-align:center;">
+                    <img src="https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=600&q=80" alt="Boutique de moda" style="width:100%;max-width:320px;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.3);border:1px solid rgba(232,121,139,0.1);">
+                    <p style="font-style:italic; color:var(--gray); font-size:14px; margin-top:14px;">"Vístete con lo que te hace sentir tú misma"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section" id="products">
+        <div class="section-header reveal">
+            <div class="section-tag">👗 Colecciones</div>
+            <h2>Nuestras <span>Colecciones</span></h2>
+            <p>Ropa y accesorios seleccionados para la mujer moderna. Calidad, estilo y buen gusto.</p>
+        </div>
+        <div class="grid">
+            <div class="card reveal"><span class="icon">👗</span><h3>Vestidos</h3><p>Elegantes, casuales y de temporada. Para la oficina, la tarde o esa ocasión especial.</p><div class="price">Desde $25.990</div></div>
+            <div class="card reveal"><span class="icon">👚</span><h3>Blusas</h3><p>Telas suaves, cortes modernos y diseños exclusivos que realzan tu estilo natural.</p><div class="price">Desde $15.990</div></div>
+            <div class="card reveal"><span class="icon">👜</span><h3>Carteras</h3><p>Bolsos, carteras y mochilas. Cuero, tela y diseño. El complemento perfecto.</p><div class="price">Desde $12.990</div></div>
+            <div class="card reveal"><span class="icon">👠</span><h3>Zapatos</h3><p>Tacones, zapatillas, botas. Las mejores marcas al mejor precio.</p><div class="price">Desde $19.990</div></div>
+            <div class="card reveal"><span class="icon">💍</span><h3>Accesorios</h3><p>Joyas, pañuelos, cinturones y más. El detalle que marca la diferencia.</p><div class="price">Desde $4.990</div></div>
+            <div class="card reveal"><span class="icon">🧥</span><h3>Chaquetas</h3><p>Abrigos, blazers y chaquetas livianas. Para el frío con estilo.</p><div class="price">Desde $35.990</div></div>
+        </div>
+    </section>
+    <section class="section" id="testimonios">
+        <div class="section-header reveal">
+            <div class="section-tag">⭐ Opiniones</div>
+            <h2>Lo que dicen <span>nuestras clientas</span></h2>
+        </div>
+        <div class="testimonios">
+            <div class="testi-card reveal"><div class="stars">★★★★★</div><p>"Compré un vestido para una boda y fue perfecto. Calidad increíble y el envío llegó al día siguiente."</p><div class="author">— Valentina R.</div></div>
+            <div class="testi-card reveal"><div class="stars">★★★★★</div><p>"Enkantos es mi tienda favorita. Siempre tienen cosas lindas y la atención es maravillosa."</p><div class="author">— Javiera M.</div></div>
+            <div class="testi-card reveal"><div class="stars">★★★★☆</div><p>"Me encanta que trabajen con diseñadores chilenos. Se nota la calidad y el cariño en cada prenda."</p><div class="author">— Francisca L.</div></div>
+        </div>
+    </section>
+    <section class="section" id="contact">
+        <div class="contact-section reveal">
+            <h3>Contacta <span>con nosotras</span></h3>
+            <p>Escríbenos por WhatsApp para consultar stock, tallas o hacer tu pedido. También podés visitarnos en la tienda.</p>
+            <div class="contact-items">
+                <div class="contact-item"><i class="fab fa-whatsapp"></i><span>+56 9 4089 4579</span></div>
+                <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Av. Providencia 987, Santiago</span></div>
+                <div class="contact-item"><i class="fas fa-clock"></i><span>Lun-Sáb 10:00 - 20:00</span></div>
+            </div>
+            <div style="margin-top:20px;">
+                <a href="https://wa.me/56940894579" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Consultar ahora</a>
+            </div>
+        </div>
+    </section>
+    <a href="https://wa.me/56940894579" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <footer class="footer">
+        <div class="social">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p>📍 Av. Providencia 987, Santiago · 🕐 Lun-Sáb 10:00-20:00<br>Boutique Enkantos © 2026 — Moda que encanta</p>
+    </footer>
+    <script>
+        (function() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+            }, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+            reveals.forEach(el => observer.observe(el));
+        })();
+    </script>
+</body>
+</html>

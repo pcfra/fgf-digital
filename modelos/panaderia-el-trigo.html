@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panadería El Trigo — Pan artesanal chileno</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root { --bg:#1a1008; --bg2:#23150c; --card:rgba(40,25,12,0.85); --gold:#e8b85f; --gold2:#c4952e; --cream:#f5e6cc; --brown:#8b6914; --warm:#c4952e; --white:#fff; --gray:#a09080; --lgray:#d4c4b0; }
+        html { scroll-behavior:smooth; }
+        body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--cream); overflow-x:hidden; }
+        .nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:14px 24px; background:rgba(26,16,8,0.9); backdrop-filter:blur(12px); border-bottom:1px solid rgba(232,184,95,0.06); display:flex; justify-content:space-between; align-items:center; }
+        .nav-logo { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; text-decoration:none; color:var(--cream); }
+        .nav-logo span { color:var(--gold); }
+        .nav-links { display:flex; gap:18px; }
+        .nav-links a { color:var(--gray); text-decoration:none; font-size:12px; font-weight:500; transition:color .3s; letter-spacing:0.3px; text-transform:uppercase; }
+        .nav-links a:hover { color:var(--gold); }
+        .hero { min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:120px 20px 60px; background:linear-gradient(135deg,#1a1008,#2d1a0a,#1a1008); position:relative; }
+        .hero { background:linear-gradient(135deg,rgba(26,16,8,0.85),rgba(45,26,10,0.85),rgba(26,16,8,0.85)), url('https://images.unsplash.com/photo-1549931319-a54575332b6c?auto=format&fit=crop&w=1920&q=75') center/cover fixed; }
+        .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 30% 50%, rgba(232,184,95,0.1) 0%, transparent 50%); }
+        .hero-content { position:relative; z-index:1; max-width:800px; }
+        .hero-icon { font-size:4rem; margin-bottom:16px; display:block; }
+        .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,6vw,4.5rem); font-weight:900; margin-bottom:10px; }
+        .hero h1 span { color:var(--gold); }
+        .hero p { font-size:1.05rem; color:var(--gray); margin-bottom:28px; max-width:540px; margin-left:auto; margin-right:auto; line-height:1.7; }
+        .btn { display:inline-flex; align-items:center; gap:10px; padding:14px 28px; border-radius:50px; text-decoration:none; font-weight:600; font-size:14px; transition:all .3s; border:none; cursor:pointer; }
+        .btn-primary { background:linear-gradient(135deg,var(--gold),var(--gold2)); color:var(--bg); }
+        .btn-primary:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(232,184,95,0.3); }
+        .btn-secondary { background:transparent; color:var(--cream); border:1px solid rgba(245,230,204,0.15); }
+        .btn-secondary:hover { border-color:var(--gold); }
+        .hero-stats { display:flex; gap:30px; justify-content:center; margin-top:36px; flex-wrap:wrap; }
+        .hero-stat { text-align:center; }
+        .hero-stat .num { font-family:'Playfair Display',serif; font-size:1.8rem; font-weight:700; color:var(--gold); }
+        .hero-stat .label { font-size:10px; color:var(--gray); text-transform:uppercase; letter-spacing:1px; margin-top:4px; }
+        .section { padding:80px 20px; max-width:1100px; margin:0 auto; }
+        .section-header { text-align:center; margin-bottom:36px; }
+        .section-tag { display:inline-block; font-size:10px; text-transform:uppercase; letter-spacing:2px; color:var(--gold); background:rgba(232,184,95,0.08); padding:4px 12px; border-radius:20px; margin-bottom:10px; border:1px solid rgba(232,184,95,0.1); }
+        .section-header h2 { font-family:'Playfair Display',serif; font-size:clamp(1.6rem,3vw,2.3rem); font-weight:700; }
+        .section-header h2 span { color:var(--gold); }
+        .section-header p { color:var(--gray); margin-top:8px; font-size:14px; max-width:600px; margin-left:auto; margin-right:auto; }
+        .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+        .card { background:var(--card); border:1px solid rgba(232,184,95,0.08); border-radius:16px; padding:28px 22px; text-align:center; transition:all .4s; }
+        .card:hover { transform:translateY(-6px); border-color:rgba(232,184,95,0.2); box-shadow:0 12px 40px rgba(0,0,0,0.3); }
+        .card .icon { font-size:2.5rem; margin-bottom:10px; display:block; }
+        .card h3 { font-size:1rem; font-weight:700; margin-bottom:6px; color:var(--lgray); }
+        .card p { font-size:12px; color:var(--gray); line-height:1.6; }
+        .card .price { font-size:13px; color:var(--gold); font-weight:700; margin-top:8px; }
+        .about-wrap { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:center; }
+        .about-text h3 { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; margin-bottom:12px; }
+        .about-text h3 span { color:var(--gold); }
+        .about-text p { color:var(--gray); line-height:1.7; font-size:13px; margin-bottom:10px; }
+        .about-feat { display:flex; gap:10px; align-items:center; margin-top:6px; }
+        .about-feat i { color:var(--gold); font-size:14px; width:20px; }
+        .about-feat span { font-size:12px; color:var(--lgray); }
+        .testimonios { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+        .testi-card { background:var(--card); border:1px solid rgba(232,184,95,0.06); border-radius:16px; padding:20px; }
+        .testi-card .stars { color:var(--gold); font-size:12px; margin-bottom:6px; }
+        .testi-card p { font-size:12px; color:var(--gray); line-height:1.6; font-style:italic; }
+        .testi-card .author { font-size:11px; font-weight:600; color:var(--lgray); margin-top:8px; }
+        .contact-section { text-align:center; background:linear-gradient(135deg,#1a1008,#2d1a0a); border-radius:20px; padding:48px 24px; }
+        .contact-section h3 { font-family:'Playfair Display',serif; font-size:1.8rem; margin-bottom:8px; }
+        .contact-section h3 span { color:var(--gold); }
+        .contact-section p { color:var(--gray); font-size:13px; margin-bottom:20px; }
+        .contact-items { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; }
+        .contact-item { display:flex; align-items:center; gap:10px; background:rgba(232,184,95,0.04); padding:12px 16px; border-radius:12px; border:1px solid rgba(232,184,95,0.06); }
+        .contact-item i { color:var(--gold); font-size:16px; }
+        .contact-item span { font-size:13px; color:var(--lgray); }
+        .whatsapp-float { position:fixed; bottom:20px; right:20px; z-index:99; width:52px; height:52px; border-radius:50%; background:#25D366; color:white; display:flex; align-items:center; justify-content:center; font-size:24px; text-decoration:none; box-shadow:0 4px 20px rgba(37,211,102,0.3); transition:all .3s; }
+        .whatsapp-float:hover { transform:scale(1.1); box-shadow:0 6px 30px rgba(37,211,102,0.4); }
+        .reveal { opacity:0; transform:translateY(30px); transition:all .7s cubic-bezier(0.22,1,0.36,1); }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+        .footer { text-align:center; padding:30px 20px; border-top:1px solid rgba(232,184,95,0.06); color:var(--gray); font-size:12px; max-width:1100px; margin:0 auto; }
+        .footer .social { display:flex; gap:14px; justify-content:center; margin-bottom:12px; }
+        .footer .social a { color:var(--gray); font-size:18px; transition:color .3s; }
+        .footer .social a:hover { color:var(--gold); }
+        @media(max-width:700px) { .about-wrap { grid-template-columns:1fr; } .nav-links { display:none; } .hero-stats { gap:16px; } .contact-items { flex-direction:column; align-items:center; } }
+        @media(max-width:600px) { .hero h1 { font-size:2.2rem; } }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <a href="#" class="nav-logo">El <span>Trigo</span></a>
+        <div class="nav-links">
+            <a href="#about">Nosotros</a>
+            <a href="#products">Productos</a>
+            <a href="#testimonios">Opiniones</a>
+            <a href="#contact">Contacto</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-icon">🥖</span>
+            <h1>Panadería <span>El Trigo</span></h1>
+            <p>Pan artesanal chileno horneado en horno de barro. Tradición familiar desde 1952 — masa madre, harina artesanal y el cariño de siempre.</p>
+            <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+                <a href="https://wa.me/56940894579" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Pedir ahora</a>
+                <a href="#products" class="btn btn-secondary">Ver productos</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat"><div class="num">+70</div><div class="label">Años de tradición</div></div>
+                <div class="hero-stat"><div class="num">30+</div><div class="label">Productos</div></div>
+                <div class="hero-stat"><div class="num">★ 4.8</div><div class="label">Valoración</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+        <div class="reveal">
+            <div class="section-tag">Nuestra historia</div>
+            <div class="about-wrap">
+                <div class="about-text">
+                    <h3>Más de <span>70 años</span> horneando tradición</h3>
+                    <p>Don Luis Pardo abrió las puertas de El Trigo en 1952 con un horno de barro y las recetas de su abuela. Hoy, tres generaciones después, seguimos amasando con la misma dedicación.</p>
+                    <p>Usamos harina artesanal de molino chileno, masa madre natural y horneamos cada día en nuestro horno de barro original. Sin químicos, sin apuro.</p>
+                    <div class="about-feat"><i class="fas fa-check-circle"></i><span>Horno de barro tradicional</span></div>
+                    <div class="about-feat"><i class="fas fa-check-circle"></i><span>Masa madre 100% natural</span></div>
+                    <div class="about-feat"><i class="fas fa-check-circle"></i><span>Harina artesanal chilena</span></div>
+                    <div class="about-feat"><i class="fas fa-check-circle"></i><span>Recetas de familia desde 1952</span></div>
+                </div>
+                <div class="about-text" style="text-align:center;">
+                    <img src="https://images.unsplash.com/photo-1555507036-ab1f4038029a?auto=format&fit=crop&w=600&q=80" alt="Pan artesanal" style="width:100%;max-width:320px;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.3);border:1px solid rgba(232,184,95,0.1);">
+                    <p style="font-style:italic; color:var(--gray); font-size:14px; margin-top:14px;">"El pan bueno no se hace con prisas, se hace con cariño"</p>
+                    <p style="font-size:12px; color:var(--gold);">— Don Luis Pardo, fundador</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTOS -->
+    <section class="section" id="products">
+        <div class="section-header reveal">
+            <div class="section-tag">🥖 Productos</div>
+            <h2>Nuestros <span>Panadería</span></h2>
+            <p>Hechos con harina artesanal, masa madre y horno de barro. Horneados cada mañana.</p>
+        </div>
+        <div class="grid">
+            <div class="card reveal"><span class="icon">🍞</span><h3>Marraqueta</h3><p>La clásica chilena. Crujiente por fuera, suave y esponjosa por dentro. Horneada al amanecer.</p><div class="price">Desde $1.200</div></div>
+            <div class="card reveal"><span class="icon">🥖</span><h3>Pan Amasado</h3><p>Receta tradicional con chicharrones. Amasado a mano y horneado en horno de barro.</p><div class="price">Desde $1.800</div></div>
+            <div class="card reveal"><span class="icon">🥐</span><h3>Hallulla</h3><p>Pan redondo y esponjoso, ideal para la once. Liviana, dorada y deliciosa.</p><div class="price">Desde $800</div></div>
+            <div class="card reveal"><span class="icon">🥟</span><h3>Empanadas</h3><p>De pino, queso o mariscos. Horneadas al momento con masa artesanal.</p><div class="price">Desde $2.500</div></div>
+            <div class="card reveal"><span class="icon">🍪</span><h3>Sopaipillas</h3><p>Con zapallo y especias. Fritas en aceite vegetal. Ideales con pebre o chancaca.</p><div class="price">Desde $500</div></div>
+            <div class="card reveal"><span class="icon">🎂</span><h3>Pastelería</h3><p>Kuchen, mil hojas, tortas caseras. Todo hecho con recetas de la abuela.</p><div class="price">Desde $3.000</div></div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="section" id="testimonios">
+        <div class="section-header reveal">
+            <div class="section-tag">⭐ Opiniones</div>
+            <h2>Lo que dicen <span>nuestros clientes</span></h2>
+        </div>
+        <div class="testimonios">
+            <div class="testi-card reveal"><div class="stars">★★★★★</div><p>"La marraqueta del Trigo es la mejor de Talagante. Crujiente, calientita, como la de antes."</p><div class="author">— María A.</div></div>
+            <div class="testi-card reveal"><div class="stars">★★★★★</div><p>"Compro acá desde que era niña. El pan amasado me transporta a la casa de mi abuela."</p><div class="author">— Carolina M.</div></div>
+            <div class="testi-card reveal"><div class="stars">★★★★☆</div><p>"Las sopaipillas son increíbles. Pido siempre para la once del sábado. ¡100% recomendadas!"</p><div class="author">— José L.</div></div>
+        </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="section" id="contact">
+        <div class="contact-section reveal">
+            <h3>Haz tu <span>pedido</span></h3>
+            <p>Escríbenos por WhatsApp y te confirmamos al toque. También podés pasar directamente a la panadería.</p>
+            <div class="contact-items">
+                <div class="contact-item"><i class="fab fa-whatsapp"></i><span>+56 9 4089 4579</span></div>
+                <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Camino La Palma Parcela 11, Talagante</span></div>
+                <div class="contact-item"><i class="fas fa-clock"></i><span>Lun-Dom 7:00 - 21:00</span></div>
+            </div>
+            <div style="margin-top:20px;">
+                <a href="https://wa.me/56940894579" class="btn btn-primary"><i class="fab fa-whatsapp"></i> Pedir por WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://wa.me/56940894579" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="social">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p>📍 Camino La Palma Parcela 11, Talagante · 🕐 Lun-Dom 7:00-21:00<br>Panadería El Trigo © 2026 — Hecho con ❤️ y masa madre</p>
+    </footer>
+
+    <script>
+        (function() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+            }, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+            reveals.forEach(el => observer.observe(el));
+        })();
+    </script>
+</body>
+</html>
