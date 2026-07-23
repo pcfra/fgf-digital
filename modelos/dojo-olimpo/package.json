@@ -1,0 +1,23 @@
+{
+  "name": "doyo-olimpo",
+  "version": "1.0.0",
+  "description": "Doyo Olimpo - Gimnasio, Box y Entrenamiento Funcional",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "gym",
+    "fitness",
+    "functional",
+    "reservas"
+  ],
+  "author": "FGF Digital",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.18.2"
+  }
+}

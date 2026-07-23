@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dojo Olimpo — Gimnasio, Box y Entrenamiento Funcional</title>
+    <meta name="description" content="Dojo Olimpo: Gimnasio, Box y Entrenamiento Funcional en Quinta Normal, Santiago. ¡Primera clase GRATIS! Reserva tu turno online. Comunidad, fuerza y resultados.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="imagenes/logo-fondo.png">
+    <link rel="apple-touch-icon" href="imagenes/logo-fondo.png">
+</head>
+<body>
+
+    <!-- EFECTO DE CHISPAS / LLAMAS SOBRE EL LOGO DE FONDO -->
+    <div class="fire-sparks" id="fireSparks"></div>
+
+    <!-- THREE.JS BACKGROUND -->
+    <div id="three-canvas"></div>
+
+    <!-- NAVBAR -->
+    <nav class="nav-bar">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                Dojo <span>Olimpo</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="#hero">Inicio</a>
+                <a href="#horarios">Horarios</a>
+            </div>
+            <button class="mobile-menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="hero-bg" style="background-image: url('imagenes/hero-bg.jpg');"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="dot-live"></span>
+                Primera clase 100% gratis — Sin compromiso
+            </div>
+            <div class="hero-logo">
+                <img src="imagenes/logo-fondo.png" alt="Dojo Olimpo" style="width:170px;height:170px;object-fit:cover;border-radius:50%;border:3px solid var(--gold);box-shadow:0 0 35px rgba(212,168,67,0.4);background:var(--card);">
+            </div>
+            <h1><span class="gradient">Dojo Olimpo</span></h1>
+            <p style="color: var(--gold); font-weight: 600; font-size: 1.1rem; margin-top: 4px; margin-bottom: 12px; font-style: italic;">"Sin sacrificios no consigues los objetivos."</p>
+            <p>Entrenamiento funcional, fuerza y comunidad. Sin excusas, solo resultados.</p>
+            <div class="hero-btns">
+                <a href="https://wa.me/56993550082?text=Hola!%20Quiero%20mi%20primera%20clase%20gratis%20en%20Dojo%20Olimpo" class="btn btn-primary btn-lg" target="_blank"><i class="fab fa-whatsapp"></i> Reservar mi clase gratis</a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat"><div class="num">50+</div><div class="label">Socios activos</div></div>
+                <div class="hero-stat"><div class="num">12</div><div class="label">Clases/semana</div></div>
+                <div class="hero-stat"><div class="num">5★</div><div class="label">Reseñas Google</div></div>
+            </div>
+        </div>
+        <div class="hero-scroll"><span>Desliza</span><div class="line"></div></div>
+    </section>
+
+    <!-- MODAL RESERVA -->
+    <div class="modal" id="modalReserva" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose" aria-label="Cerrar">&times;</button>
+            <h2 id="modalTitle">Reservar mi primera clase gratis</h2>
+            <p class="modal-subtitle">Completá tus datos y elegí el horario. Te confirmamos por WhatsApp.</p>
+            
+            <form class="reserva-form" id="reservaForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reservaNombre">Nombre completo *</label>
+                        <input type="text" id="reservaNombre" name="nombre" required placeholder="Juan Pérez">
+                    </div>
+                    <div class="form-group">
+                        <label for="reservaTelefono">WhatsApp *</label>
+                        <input type="tel" id="reservaTelefono" name="telefono" required placeholder="+56 9 9355 0082">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reservaEmail">Email</label>
+                        <input type="email" id="reservaEmail" name="email" placeholder="juan@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="reservaExperiencia">Experiencia</label>
+                        <select id="reservaExperiencia" name="experiencia">
+                            <option value="">Seleccioná...</option>
+                            <option value="nunca">Nunca entrené</option>
+                            <option value="poco">Hace tiempo / poco</option>
+                            <option value="regular">Entreno regular</option>
+                            <option value="avanzado">Nivel avanzado</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <fieldset class="form-group">
+                    <legend>¿Qué tipo de clase te interesa? *</legend>
+                    <div class="radio-group" id="claseOptions">
+                        <!-- Se llena dinámicamente desde JS -->
+                    </div>
+                </fieldset>
+                
+                <fieldset class="form-group">
+                    <legend>Día y hora preferidos *</legend>
+                    <div class="horario-grid" id="horarioGrid">
+                        <!-- Se llena dinámicamente desde config del dueño -->
+                    </div>
+                    <small class="form-hint">Los horarios los configura el dueño. Si no ves el tuyo, escribínos por WhatsApp.</small>
+                    <input type="hidden" id="reservaHora" name="hora">
+                </fieldset>
+                
+                <div class="form-group">
+                    <label for="reservaMensaje">Comentarios / Lesiones / Metas</label>
+                    <textarea id="reservaMensaje" name="mensaje" rows="3" placeholder="Cuéntanos tus objetivos, si tenés alguna lesión, etc."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="btnEnviarReserva">
+                        <span class="btn-text">Enviar reserva</span>
+                        <span class="btn-loading" style="display:none;"><i class="fas fa-spinner fa-spin"></i> Enviando...</span>
+                    </button>
+                </div>
+                
+                <p class="form-disclaimer">Al enviar, aceptás que te contactemos por WhatsApp para confirmar tu clase. No spam.</p>
+            </form>
+            
+            <div class="modal-success" id="modalSuccess" style="display:none;text-align:center;padding:20px;">
+                <i class="fas fa-check-circle" style="font-size:3rem;color:var(--green);margin-bottom:16px;"></i>
+                <h3>¡Reserva enviada!</h3>
+                <p>Te vamos a escribir por WhatsApp en breve para confirmar tu clase gratis.</p>
+                <a href="https://wa.me/56993550082" class="btn btn-primary" target="_blank" style="margin-top:16px;">Ir a WhatsApp</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CLASES / TIPOS DE ENTRENAMIENTO -->
+    <section class="section classes" id="clases">
+        <div class="container">
+            <header class="section-header reveal">
+                <div class="tag">💪 Entrenamiento</div>
+                <h2>Nuestras <span class="highlight">clases</span></h2>
+                <p>Diseñadas para todos los niveles. Elige la que se adapte a vos.</p>
+            </header>
+            <div class="classes-grid" id="classesGrid">
+                <!-- Se llena desde JS/config -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN COPA TRASANDINA / MENSAJE DEL DOJO -->
+    <section class="section" style="background: var(--bg-elevated); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;" class="trasandina-grid">
+                <!-- Columna Izquierda: Título y botón -->
+                <div>
+                    <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.2);border-radius:50px;color:var(--gold);font-size:12px;font-weight:700;text-transform:uppercase;margin-bottom:16px;">
+                        <i class="fas fa-trophy"></i> Copa Trasandina
+                    </div>
+                    <h2 style="font-family:'Outfit',sans-serif;font-size:2.2rem;font-weight:800;color:var(--white);margin-bottom:20px;line-height:1.3;">
+                        Pasión, fuerza y <span class="gradient">campeones en el dojo</span>
+                    </h2>
+                    <p style="color:var(--gray);font-size:1.05rem;line-height:1.7;margin-bottom:12px;">
+                        Cada torneo es una prueba de nuestra constancia y entrega. ¡Formamos competidores con mentalidad ganadora!
+                    </p>
+                </div>
+                <!-- Columna Derecha: Imagen nítida con marco dorado y el texto abajo -->
+                <div style="position: relative; text-align: center; background: rgba(20,20,22,0.9); padding: 12px; border-radius: var(--radius-lg); border: 2px solid var(--gold); box-shadow: 0 10px 30px rgba(212,168,67,0.2);">
+                    <img src="imagenes/copa-trasandina.png" alt="Copa Trasandina Dojo Olimpo" style="width: 100%; max-height: 380px; object-fit: contain; border-radius: 10px; display: block;">
+                    <div style="margin-top: 12px; background: rgba(10,10,12,0.9); padding: 16px; border-radius: 8px; border: 1px solid var(--card-border); text-align: left;">
+                        <p style="color: var(--lgray); font-size: 0.95rem; line-height: 1.6; margin: 0;">
+                            En nuestro dojo no solo entrenamos Boxeo y Kickboxing, construimos disciplina, confianza y un gran equipo. Si quieres aprender desde cero o seguir perfeccionando tu técnica, ¡te esperamos!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <style>
+        @media (max-width: 768px) {
+            .trasandina-grid { grid-template-columns: 1fr !important; }
+            .espartanos-grid { grid-template-columns: 1fr !important; }
+        }
+    </style>
+
+    <!-- SECCIÓN ESPARTANOS (FOTO IZQUIERDA, TEXTO DERECHA) -->
+    <section class="section" style="background: var(--bg); border-bottom: 1px solid var(--card-border);">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;" class="espartanos-grid">
+                <!-- Columna Izquierda: Foto con marco dorado -->
+                <div style="position: relative; text-align: center; background: rgba(20,20,22,0.9); padding: 12px; border-radius: var(--radius-lg); border: 2px solid var(--gold); box-shadow: 0 10px 30px rgba(212,168,67,0.2);">
+                    <img src="imagenes/espartanos.png" alt="Espartanos Dojo Olimpo" style="width: 100%; max-height: 380px; object-fit: contain; border-radius: 10px; display: block;">
+                    <div style="margin-top: 12px; background: rgba(10,10,12,0.9); padding: 16px; border-radius: 8px; border: 1px solid var(--card-border); text-align: left;">
+                        <div style="font-weight: 700; color: var(--gold); font-size: 14px;"><i class="fas fa-shield-alt"></i> Equipo Espartanos</div>
+                        <div style="font-size: 12px; color: var(--gray);">Mentalidad de hierro y unión inquebrantable.</div>
+                    </div>
+                </div>
+                <!-- Columna Derecha: Texto institucional -->
+                <div>
+                    <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.2);border-radius:50px;color:var(--gold);font-size:12px;font-weight:700;text-transform:uppercase;margin-bottom:16px;">
+                        <i class="fas fa-fist-raised"></i> Espíritu Guerrero
+                    </div>
+                    <h2 style="font-family:'Outfit',sans-serif;font-size:2.2rem;font-weight:800;color:var(--white);margin-bottom:20px;line-height:1.3;">
+                        Forjando <span class="gradient">guerreros dentro y fuera</span> del dojo
+                    </h2>
+                    <p style="color: var(--lgray); font-size: 1.05rem; line-height: 1.7; margin-bottom: 12px;">
+                        Por su entrega y confianza en cada entreno. Seguiremos trabajando para hacer nuestros sueños realidad. Nosotros no jugamos a Boxear o Kickboxing ya que no es un juego, nosotros realizamos un trabajo serio y dedicado con la finalidad de obtener atletas de alta calidad. Sudor y Sangre ha sido la consigna de este equipo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN VALKIRIAS (TEXTO IZQUIERDA, FOTO DERECHA) -->
+    <section class="section" style="background: var(--bg-elevated); border-bottom: 1px solid var(--card-border);">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;" class="valkirias-grid">
+                <!-- Columna Izquierda: Texto institucional -->
+                <div>
+                    <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.2);border-radius:50px;color:var(--gold);font-size:12px;font-weight:700;text-transform:uppercase;margin-bottom:16px;">
+                        <i class="fas fa-shield-alt"></i> Equipo Femenino
+                    </div>
+                    <h2 style="font-family:'Outfit',sans-serif;font-size:2.2rem;font-weight:800;color:var(--white);margin-bottom:20px;line-height:1.3;">
+                        El llamado de <span class="gradient">las Valkirias</span>
+                    </h2>
+                    <p style="color: var(--lgray); font-size: 1.05rem; line-height: 1.7; margin-bottom: 16px;">
+                        De a poco se van forman las VALKIRIAS!
+                    </p>
+                    <p style="color: var(--gray); font-size: 1rem; line-height: 1.6;">
+                        Que nadie diga que los deportes de contacto solo lo practican los hombres. Muy bien
+                    </p>
+                </div>
+                <!-- Columna Derecha: Foto con marco dorado y texto abajo -->
+                <div style="position: relative; text-align: center; background: rgba(20,20,22,0.9); padding: 12px; border-radius: var(--radius-lg); border: 2px solid var(--gold); box-shadow: 0 10px 30px rgba(212,168,67,0.2);">
+                    <img src="imagenes/valkirias.png" alt="El llamado de las Valkirias - Dojo Olimpo" style="width: 100%; max-height: 400px; object-fit: contain; border-radius: 10px; display: block;">
+                    <div style="margin-top: 12px; background: rgba(10,10,12,0.9); padding: 16px; border-radius: 8px; border: 1px solid var(--card-border); text-align: left;">
+                        <p style="color: var(--lgray); font-size: 0.95rem; line-height: 1.6; margin: 0;">
+                            Hay que seguir puliendo la técnica, sin embargo la valentía está!!<br>Vamos que se forma ese equipo femenino de combate, las VALKIRIAS!!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <style>
+        @media (max-width: 768px) {
+            .valkirias-grid { grid-template-columns: 1fr !important; }
+        }
+    </style>
+
+    <!-- HORARIOS SEMANALES -->
+    <section class="section horarios" id="horarios">
+        <div class="container">
+            <header class="section-header reveal">
+                <div class="tag">📅 Horarios</div>
+                <h2>Horarios <span class="highlight">semana</span></h2>
+                <p>Nuestras clases presenciales oficiales.</p>
+            </header>
+            <div style="max-width: 600px; margin: 0 auto; background: var(--card); border: 2px solid var(--gold); border-radius: var(--radius-lg); padding: 40px; text-align: center; box-shadow: 0 10px 30px rgba(212,168,67,0.15);">
+                <div style="font-size: 40px; color: var(--gold); margin-bottom: 16px;"><i class="fas fa-clock"></i></div>
+                <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--white); margin-bottom: 12px;">Clases Presenciales</h3>
+                <p style="font-size: 1.25rem; font-weight: 700; color: var(--gold); margin-bottom: 8px;">Lunes a Viernes</p>
+                <p style="font-size: 1.1rem; color: var(--lgray);">19:30 a 21:00 hrs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLANES / PRECIOS -->
+    <section class="section planes" id="planes">
+        <div class="container">
+            <header class="section-header reveal">
+                <div class="tag">💰 Planes</div>
+                <h2>Planes y <span class="highlight">precios</span></h2>
+                <p>Sin letras chicas. Entrenás cuando quieras.</p>
+            </header>
+            <div class="plans-grid" id="planesGrid">
+                <!-- Se llena desde config -->
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERÍA INSTAGRAM -->
+    <section class="section galeria" id="galeria">
+        <div class="container">
+            <header class="section-header reveal">
+                <div class="tag">📸 Comunidad</div>
+                <h2>Nuestra <span class="highlight">comunidad</span></h2>
+                <p>Fotos reales de nuestra gente entrenando. <a href="https://www.instagram.com/dojo_olimpo/" target="_blank">Seguinos en @dojo_olimpo</a></p>
+            </header>
+            <div class="galeria-grid" id="galeriaGrid">
+                <!-- Fotos de Instagram descargadas -->
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="section testimonios" id="testimonios">
+        <div class="container">
+            <header class="section-header reveal">
+                <div class="tag">⭐ Reseñas</div>
+                <h2>Lo que dicen <span class="highlight">nuestros socios</span></h2>
+            </header>
+            <div class="testimonios-slider" id="testimoniosSlider">
+                <!-- Testimonios -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO / UBICACIÓN -->
+    <section class="section contacto" id="contacto">
+        <div class="container">
+            <div class="contact-wrap">
+                <div class="contact-info reveal">
+                    <h3>Ven a <span style="color:var(--purple3)">conocernos</span></h3>
+                    <p>Primera clase gratis. Sin compromiso. Solo traé ganas.</p>
+                    
+                    <div class="contact-methods">
+                        <a href="https://maps.google.com" target="_blank" class="contact-method">
+                            <div class="icon-wrap" style="background:rgba(124,58,237,0.15);color:var(--purple3);"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="info">
+                                <h4>Dirección</h4>
+                                <p>Venus 1584, Quinta Normal, Santiago</p>
+                            </div>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </a>
+                        <a href="https://wa.me/56993550082" target="_blank" class="contact-method">
+                            <div class="icon-wrap" style="background:rgba(37,211,102,0.15);color:#25d366;"><i class="fab fa-whatsapp"></i></div>
+                            <div class="info">
+                                <h4>WhatsApp</h4>
+                                <p>+56 9 9355 0082</p>
+                            </div>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </a>
+                        <a href="tel:+56993550082" class="contact-method">
+                            <div class="icon-wrap" style="background:rgba(6,182,212,0.15);color:var(--cyan);"><i class="fas fa-phone"></i></div>
+                            <div class="info">
+                                <h4>Llamar</h4>
+                                <p>Lun-Vie 7:00-22:00</p>
+                            </div>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </a>
+                        <a href="mailto:info@dojo_olimpo.cl" class="contact-method">
+                            <div class="icon-wrap" style="background:rgba(251,191,36,0.15);color:var(--gold);"><i class="fas fa-envelope"></i></div>
+                            <div class="info">
+                                <h4>Email</h4>
+                                <p>info@dojo_olimpo.cl</p>
+                            </div>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-cta reveal">
+                    <div class="big"><span>Reservá tu</span> <span style="color:var(--purple3)">clase gratis</span></div>
+                    <p>Te contactamos por WhatsApp en minutos para confirmar día y hora.</p>
+                    <a href="https://wa.me/56993550082?text=Hola!%20Quiero%20mi%20primera%20clase%20gratis%20en%20Dojo%20Olimpo" class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> Agendar por WhatsApp</a>
+                </div>
+            </div>
+            
+            <!-- MAPA Y NAVEGACIÓN -->
+            <div style="margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div class="contacto-map" style="border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--card-border);">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.5!2d-70.6933!3d-33.4264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5b5c5b5c5b5%3A0x5c5b5c5b5c5b5c5b!2sVenus%201584%2C%20Quinta%20Normal!5e0!3m2!1ses!2scl!4v1784756028" width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <div style="background:var(--card);border:1px solid var(--card-border);border-radius:var(--radius-lg);padding:32px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+                    <h3 style="font-size:1.2rem;font-weight:700;margin-bottom:8px;">¿Cómo llegar?</h3>
+                    <p style="color:var(--gray);margin-bottom:20px;font-size:14px;">Venus 1584, Quinta Normal. Metro Línea 5: Estación Quinta Normal (10 min caminando).</p>
+                    <a href="https://waze.com/ul?q=Venus%201584%2C%20Quinta%20Normal%2C%20Santiago&navigate=yes" target="_blank" class="btn" style="background:linear-gradient(135deg,#2b8b3c,#4CAF50);color:white;border:none;padding:16px 32px;font-size:15px;"><i class="fas fa-location-arrow" style="margin-right:8px;"></i> Abrir en Waze</a>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=Venus+1584+Quinta+Normal+Santiago" target="_blank" class="btn btn-outline" style="margin-top:12px;"><i class="fas fa-map-marked-alt" style="margin-right:8px;"></i> Abrir en Google Maps</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <img src="imagenes/logo-fondo.png" alt="Dojo Olimpo" class="footer-logo-img" style="width:48px;height:48px;object-fit:contain;">
+                        Dojo <span style="color:var(--purple2)">Olimpo</span>
+                    </a>
+                    <p>Tu gimnasio de entrenamiento funcional en Quinta Normal, Santiago. Comunidad, fuerza y resultados.</p>
+<div class="footer-social">
+                        <a href="https://www.instagram.com/dojo_olimpo/" target="_blank" rel="noopener" class="instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/56993550082" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://maps.google.com/?q=Venus+1584+Quinta+Normal+Santiago" target="_blank" rel="noopener" aria-label="Maps"><i class="fas fa-map-marker-alt"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Navegación</h4>
+                    <ul><li><a href="#hero">Inicio</a></li><li><a href="#clases">Clases</a></li><li><a href="#horarios">Horarios</a></li><li><a href="#planes">Planes</a></li><li><a href="#contacto">Contacto</a></li></ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Clases</h4>
+                    <ul><li><a href="#">Funcional</a></li><li><a href="#">Open Box</a></li><li><a href="#">Entrenamiento Personal</a></li><li><a href="#reserva">Primera clase gratis</a></li></ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul><li><a href="#">Términos y condiciones</a></li><li><a href="#">Política de privacidad</a></li></ul>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2025 Dojo Olimpo. Desarrollado por <a href="https://fgfdigital.com" target="_blank" style="color:var(--purple3);">FGF Digital</a></p></div>
+        </div>
+    </footer>
+
+    <!-- WHATSAPP FLOTANTE -->
+    <a href="https://wa.me/56993550082?text=Hola!%20Quiero%20mi%20primera%20clase%20gratis%20en%20Dojo%20Olimpo" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+        <span class="wa-tooltip">Primera clase gratis</span>
+    </a>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer" style="position:fixed;bottom:90px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none;"></div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Generador dinámico de chispas / ascuas de llama
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('fireSparks');
+            if (!container) return;
+            const sparkCount = 25;
+            for (let i = 0; i < sparkCount; i++) {
+                const spark = document.createElement('div');
+                spark.className = 'spark';
+                spark.style.left = Math.random() * 100 + '%';
+                spark.style.width = (Math.random() * 6 + 3) + 'px';
+                spark.style.height = spark.style.width;
+                spark.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                spark.style.animationDelay = (Math.random() * 4) + 's';
+                container.appendChild(spark);
+            }
+        });
+    </script>
+</body>
+</html>

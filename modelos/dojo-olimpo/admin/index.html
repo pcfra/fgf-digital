@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dojo Olimpo — Panel Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* Admin specific styles */
+        .admin-layout { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
+        .admin-sidebar { background: var(--bg2); border-right: 1px solid var(--card-border); padding: 24px 16px; position: fixed; left: 0; top: 0; bottom: 0; width: 260px; z-index: 50; overflow-y: auto; }
+        .admin-main { margin-left: 260px; padding: 32px; min-height: 100vh; }
+        .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+        .admin-title { font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; }
+        .admin-title span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .admin-nav { display: flex; flex-direction: column; gap: 4px; margin-top: 24px; }
+        .admin-nav a { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; color: var(--gray); text-decoration: none; font-weight: 500; font-size: 14px; transition: var(--trans); }
+        .admin-nav a:hover { background: rgba(124,58,237,0.1); color: var(--purple3); }
+        .admin-nav a.active { background: var(--gradient); color: white; }
+        .admin-nav a i { width: 20px; text-align: center; font-size: 16px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px; }
+        .stat-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 24px; display: flex; align-items: center; gap: 16px; transition: var(--trans); }
+        .stat-card:hover { border-color: var(--card-hover); transform: translateY(-2px); box-shadow: var(--shadow); }
+        .stat-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+        .stat-icon.purple { background: rgba(124,58,237,0.15); color: var(--purple3); }
+        .stat-icon.cyan { background: rgba(6,182,212,0.15); color: var(--cyan); }
+        .stat-icon.gold { background: rgba(251,191,36,0.15); color: var(--gold); }
+        .stat-icon.green { background: rgba(34,197,94,0.15); color: var(--green); }
+        .stat-info { flex: 1; }
+        .stat-info .num { font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--white); line-height: 1; }
+        .stat-info .label { font-size: 12px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+        .reservas-table { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-lg); overflow: hidden; }
+        .reservas-table table { width: 100%; border-collapse: collapse; }
+        .reservas-table th { padding: 14px 16px; text-align: left; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--purple3); background: rgba(124,58,237,0.05); border-bottom: 1px solid var(--card-border); }
+        .reservas-table td { padding: 14px 16px; border-bottom: 1px solid rgba(124,58,237,0.04); font-size: 13px; }
+        .reservas-table tbody tr:hover { background: rgba(124,58,237,0.02); }
+        .reservas-table tbody tr:last-child td { border-bottom: none; }
+        .status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+        .status-badge.pendiente { background: rgba(251,191,36,0.15); color: var(--gold); border: 1px solid rgba(251,191,36,0.2); }
+        .status-badge.confirmada { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.2); }
+        .status-badge.cancelada { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+        .status-badge.asistio { background: rgba(6,182,212,0.15); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
+        .clase-badge { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 600; text-transform: uppercase; }
+        .clase-badge.funcional { background: rgba(124,58,237,0.15); color: var(--purple3); }
+        .clase-badge.openbox { background: rgba(6,182,212,0.15); color: var(--cyan); }
+        .clase-badge.personal { background: rgba(251,191,36,0.15); color: var(--gold); }
+        .btn-action { padding: 6px 10px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; transition: var(--trans); border: none; }
+        .btn-action.confirm { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.2); }
+        .btn-action.confirm:hover { background: var(--green); color: white; }
+        .btn-action.cancel { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+        .btn-action.cancel:hover { background: var(--red); color: white; }
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--gray); }
+        .empty-state i { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+        .horarios-admin { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .horario-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 20px; transition: var(--trans); }
+        .horario-card:hover { border-color: var(--card-hover); }
+        .horario-card .time { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--gold); margin-bottom: 12px; }
+        .horario-card .dias { display: flex; flex-wrap: wrap; gap: 6px; }
+        .horario-card .dia-tag { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+        .horario-form { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 24px; max-width: 500px; margin-bottom: 32px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--lgray); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input, .form-group select { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(124,58,237,0.1); border-radius: 10px; padding: 12px 14px; color: var(--white); font-size: 14px; font-family: inherit; transition: var(--trans); }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--purple2); box-shadow: 0 0 0 3px rgba(124,58,237,0.15); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .dias-checkboxes { display: flex; flex-wrap: wrap; gap: 10px; }
+        .dia-check { display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 8px; cursor: pointer; transition: var(--trans); }
+        .dia-check:hover { border-color: var(--purple2); }
+        .dia-check input { accent-color: var(--purple); }
+        .toast { position: fixed; bottom: 24px; right: 24px; background: var(--bg2); border: 1px solid var(--card-border); border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 12px; z-index: 9999; transform: translateX(120%); opacity: 0; transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+        .toast.show { transform: translateX(0); opacity: 1; }
+        .toast.success { border-left: 4px solid var(--green); }
+        .toast.error { border-left: 4px solid var(--red); }
+        @media (max-width: 768px) {
+            .admin-sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+            .admin-sidebar.open { transform: translateX(0); }
+            .admin-main { margin-left: 0; padding: 20px; }
+            .form-row { grid-template-columns: 1fr; }
+            .reservas-table { overflow-x: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- THREE.JS BACKGROUND -->
+    <div id="three-canvas"></div>
+
+    <!-- ADMIN LAYOUT -->
+    <div class="admin-layout">
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <a href="../index.html" class="nav-logo" style="display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;color:var(--white);text-decoration:none;margin-bottom:24px;">
+                <img src="../logos/logo.png" alt="Dojo Olimpo" style="width:36px;height:36px;border-radius:8px;object-fit:cover;border:1px solid rgba(124,58,237,0.15);">
+                Dojo <span style="color:var(--purple2)">Olimpo</span>
+            </a>
+            <nav class="admin-nav">
+                <a href="#" class="active" data-tab="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="#" data-tab="reservas"><i class="fas fa-calendar-check"></i> Reservas</a>
+                <a href="#" data-tab="horarios"><i class="fas fa-clock"></i> Horarios</a>
+                <a href="#" data-tab="config"><i class="fas fa-cog"></i> Configuración</a>
+            </nav>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div>
+                    <h1 class="admin-title" id="pageTitle">Dashboard</h1>
+                    <p style="color:var(--gray);font-size:14px;margin-top:4px;">Panel de administración Dojo Olimpo</p>
+                </div>
+                <button class="btn btn-primary" onclick="exportReservas()"><i class="fas fa-download"></i> Exportar CSV</button>
+            </header>
+
+            <!-- DASHBOARD TAB -->
+            <div class="tab-content" id="tab-dashboard">
+                <div class="stats-grid reveal">
+                    <div class="stat-card">
+                        <div class="stat-icon purple"><i class="fas fa-calendar-check"></i></div>
+                        <div class="stat-info"><div class="num" id="statTotal">0</div><div class="label">Total Reservas</div></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon gold"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info"><div class="num" id="statPendientes">0</div><div class="label">Pendientes</div></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-info"><div class="num" id="statConfirmadas">0</div><div class="label">Confirmadas</div></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon cyan"><i class="fas fa-users"></i></div>
+                        <div class="stat-info"><div class="num" id="statUnicos">0</div><div class="label">Clientes únicos</div></div>
+                    </div>
+                </div>
+
+                <div class="card reveal-d1" style="padding:24px;">
+                    <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">
+                        <span>Próximas reservas</span>
+                        <a href="#" onclick="showTab('reservas')" style="color:var(--purple3);font-size:13px;font-weight:600;">Ver todas →</a>
+                    </h3>
+                    <div class="reservas-table" style="overflow-x:auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Clase</th>
+                                    <th>Horario</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboardReservas"></tbody>
+                        </table>
+                    </div>
+                    <div class="empty-state" id="dashboardEmpty" style="display:none;"><i class="fas fa-calendar-plus"></i><p>No hay reservas próximas</p></div>
+                </div>
+            </div>
+
+            <!-- RESERVAS TAB -->
+            <div class="tab-content" id="tab-reservas" style="display:none;">
+                <div class="card reveal" style="padding:24px;">
+                    <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:16px;">Todas las reservas</h3>
+                    <div class="reservas-table" style="overflow-x:auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Cliente</th>
+                                    <th>WhatsApp</th>
+                                    <th>Clase</th>
+                                    <th>Horario</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allReservas"></tbody>
+                        </table>
+                    </div>
+                    <div class="empty-state" id="reservasEmpty" style="display:none;"><i class="fas fa-inbox"></i><p>No hay reservas aún</p></div>
+                </div>
+            </div>
+
+            <!-- HORARIOS TAB -->
+            <div class="tab-content" id="tab-horarios" style="display:none;">
+                <div class="card reveal horario-form" id="horarioForm">
+                    <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:16px;"><i class="fas fa-plus-circle" style="color:var(--purple3);margin-right:8px;"></i> Agregar / Editar horario</h3>
+                    <form id="formHorario">
+                        <input type="hidden" id="horarioId" name="id">
+                        <div class="form-group">
+                            <label>Hora (formato 24h)</label>
+                            <input type="time" name="hora" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo de clase</label>
+                            <select name="tipo" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="funcional">💪 Funcional</option>
+                                <option value="openbox">🏋️ Open Box</option>
+                                <option value="personal">🎯 Entrenamiento Personal</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Días de la semana</label>
+                            <div class="dias-checkboxes" id="diasCheckboxes"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar horario</button>
+                        <button type="button" class="btn btn-secondary" style="margin-left:12px;" onclick="resetHorarioForm()">Cancelar</button>
+                    </form>
+                </div>
+
+                <h3 style="font-size:1.1rem;font-weight:700;margin:32px 0 16px;">Horarios configurados</h3>
+                <div class="horarios-admin" id="horariosAdmin"></div>
+            </div>
+
+            <!-- CONFIG TAB -->
+            <div class="tab-content" id="tab-config" style="display:none;">
+                <div class="card reveal" style="padding:24px;max-width:600px;">
+                    <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:16px;">Configuración del negocio</h3>
+                    <form id="formConfig">
+                        <div class="form-group">
+                            <label>WhatsApp del dueño (formato: 569XXXXXXXX)</label>
+                            <input type="text" name="whatsapp" id="configWhatsapp" placeholder="56912345678">
+                        </div>
+                        <div class="form-group">
+                            <label>Email de contacto</label>
+                            <input type="email" name="email" id="configEmail" placeholder="info@doyoolimpo.cl">
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <input type="text" name="direccion" id="configDireccion" placeholder="Av. Principal 123, Talagante">
+                        </div>
+                        <div class="form-group">
+                            <label>Google Maps Embed URL</label>
+                            <input type="url" name="mapsEmbed" id="configMaps" placeholder="https://www.google.com/maps/embed?pb=...">
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre del negocio</label>
+                            <input type="text" name="nombre" id="configNombre" placeholder="Dojo Olimpo">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar configuración</button>
+                    </form>
+                </div>
+
+                <div class="card reveal-d1" style="padding:24px;max-width:600px;margin-top:16px;">
+                    <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:16px;">Acciones rápidas</h3>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                        <button class="btn btn-outline" onclick="abrirWeb()"><i class="fas fa-external-link-alt"></i> Ver web pública</button>
+                        <button class="btn btn-outline" onclick="limpiarDatos()"><i class="fas fa-trash"></i> Limpiar datos locales</button>
+                        <button class="btn btn-outline" style="border-color:var(--red);color:var(--red);" onclick="resetearTodo()"><i class="fas fa-undo"></i> Resetear todo</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i><div class="toast-content"><div class="toast-title">Éxito</div><div class="toast-message">Operación completada</div></div></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // ═══ CONFIG ═══
+        const ADMIN_CONFIG = {
+            whatsapp: '569XXXXXXXX',
+            email: 'info@doyoolimpo.cl',
+            direccion: 'Av. Principal 123, Talagante',
+            mapsEmbed: 'https://www.google.com/maps/embed?pb=...',
+            nombre: 'Dojo Olimpo'
+        };
+
+        // ═══ STATE ═══
+        let reservas = JSON.parse(localStorage.getItem('doyo_reservas') || '[]');
+        let horarios = JSON.parse(localStorage.getItem('doyo_horarios') || '[]');
+        let config = JSON.parse(localStorage.getItem('doyo_config') || '{}');
+
+        // Merge with defaults
+        config = { ...ADMIN_CONFIG, ...config };
+        ADMIN_CONFIG.whatsapp = config.whatsapp || ADMIN_CONFIG.whatsapp;
+        ADMIN_CONFIG.email = config.email || ADMIN_CONFIG.email;
+        ADMIN_CONFIG.direccion = config.direccion || ADMIN_CONFIG.direccion;
+        ADMIN_CONFIG.mapsEmbed = config.mapsEmbed || ADMIN_CONFIG.mapsEmbed;
+        ADMIN_CONFIG.nombre = config.nombre || ADMIN_CONFIG.nombre;
+
+        // Default horarios if empty
+        if (horarios.length === 0) {
+            horarios = [
+                { id: 1, hora: '07:00', tipo: 'funcional', dias: ['lunes','miercoles','viernes'] },
+                { id: 2, hora: '08:00', tipo: 'funcional', dias: ['lunes','miercoles','viernes'] },
+                { id: 3, hora: '09:00', tipo: 'funcional', dias: ['sabado'] },
+                { id: 4, hora: '18:00', tipo: 'funcional', dias: ['lunes','miercoles','viernes'] },
+                { id: 5, hora: '19:00', tipo: 'funcional', dias: ['lunes','miercoles','viernes'] },
+                { id: 6, hora: '19:00', tipo: 'personal', dias: ['martes','jueves'] },
+                { id: 7, hora: '20:00', tipo: 'openbox', dias: ['lunes','miercoles','viernes'] },
+                { id: 8, hora: '21:00', tipo: 'openbox', dias: ['lunes','martes','miercoles','jueves','viernes'] }
+            ];
+            saveHorarios();
+        }
+
+        // ═══ THREE.JS ═══
+        let threeScene, threeCamera, threeRenderer, particles, animationId;
+        function initThree() {
+            const canvas = document.getElementById('three-canvas');
+            if (!canvas || typeof THREE === 'undefined') return;
+            threeScene = new THREE.Scene();
+            threeCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+            threeCamera.position.z = 50;
+            threeRenderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            threeRenderer.setSize(window.innerWidth, window.innerHeight);
+            threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            const geometry = new THREE.BufferGeometry();
+            const count = 1000;
+            const positions = new Float32Array(count * 3);
+            const colors = new Float32Array(count * 3);
+            const sizes = new Float32Array(count);
+            const colorPurple = new THREE.Color(0x7c3aed);
+            const colorCyan = new THREE.Color(0x06b6d4);
+            const colorGold = new THREE.Color(0xfbbf24);
+
+            for (let i = 0; i < count; i++) {
+                const radius = 15 + Math.random() * 35;
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos(2 * Math.random() - 1);
+                positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+                positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+                positions[i * 3 + 2] = radius * Math.cos(phi);
+                const c = Math.random();
+                if (c < 0.5) colors.set([colorPurple.r, colorPurple.g, colorPurple.b], i * 3);
+                else if (c < 0.8) colors.set([colorCyan.r, colorCyan.g, colorCyan.b], i * 3);
+                else colors.set([colorGold.r, colorGold.g, colorGold.b], i * 3);
+                sizes[i] = 0.5 + Math.random() * 1.5;
+            }
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+            const material = new THREE.PointsMaterial({ size: 1.2, vertexColors: true, transparent: true, opacity: 0.5, sizeAttenuation: true, blending: THREE.AdditiveBlending, depthWrite: false });
+            particles = new THREE.Points(geometry, material);
+            threeScene.add(particles);
+
+            const ambient = new THREE.AmbientLight(0xffffff, 0.3);
+            threeScene.add(ambient);
+
+            animateThree();
+            window.addEventListener('resize', onThreeResize);
+        }
+        function animateThree() {
+            animationId = requestAnimationFrame(animateThree);
+            if (particles) {
+                particles.rotation.y += 0.0001;
+                particles.rotation.x += 0.00005;
+            }
+            threeRenderer?.render(threeScene, threeCamera);
+        }
+        function onThreeResize() {
+            if (!threeCamera || !threeRenderer) return;
+            threeCamera.aspect = window.innerWidth / window.innerHeight;
+            threeCamera.updateProjectionMatrix();
+            threeRenderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // ═══ UTILS ═══
+        function showToast(message, type = 'success', title = '') {
+            const toast = document.getElementById('toast');
+            toast.className = `toast ${type}`;
+            toast.querySelector('.toast-title').textContent = title || (type === 'success' ? 'Éxito' : 'Error');
+            toast.querySelector('.toast-message').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        function formatDate(iso) {
+            const d = new Date(iso);
+            return d.toLocaleDateString('es-CL', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        }
+
+        function getClaseInfo(tipo) {
+            const clases = {
+                funcional: { nombre: 'Funcional', icon: '💪', badge: 'funcional' },
+                openbox: { nombre: 'Open Box', icon: '🏋️', badge: 'openbox' },
+                personal: { nombre: 'Personal', icon: '🎯', badge: 'personal' }
+            };
+            return clases[tipo] || { nombre: tipo, icon: '•', badge: '' };
+        }
+
+        function getDiaNombre(dia) {
+            const dias = { lunes: 'Lun', martes: 'Mar', miercoles: 'Mié', jueves: 'Jue', viernes: 'Vie', sabado: 'Sáb', domingo: 'Dom' };
+            return dias[dia] || dia;
+        }
+
+        // ═══ STORAGE ═══
+        function saveReservas() { localStorage.setItem('doyo_reservas', JSON.stringify(reservas)); }
+        function saveHorarios() { localStorage.setItem('doyo_horarios', JSON.stringify(horarios)); }
+        function saveConfig() { localStorage.setItem('doyo_config', JSON.stringify(config)); }
+
+        // ═══ RENDER ═══
+        function renderDashboard() {
+            const total = reservas.length;
+            const pendientes = reservas.filter(r => r.estado === 'pendiente').length;
+            const confirmadas = reservas.filter(r => r.estado === 'confirmada').length;
+            const unicos = new Set(reservas.map(r => r.telefono)).size;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statPendientes').textContent = pendientes;
+            document.getElementById('statConfirmadas').textContent = confirmadas;
+            document.getElementById('statUnicos').textContent = unicos;
+
+            // Últimas 5 reservas
+            const ultimas = [...reservas].sort((a,b) => new Date(b.fecha) - new Date(a.fecha)).slice(0, 5);
+            const tbody = document.getElementById('dashboardReservas');
+            const empty = document.getElementById('dashboardEmpty');
+
+            if (ultimas.length === 0) {
+                tbody.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+            empty.style.display = 'none';
+            tbody.innerHTML = ultimas.map(r => {
+                const clase = getClaseInfo(r.clase);
+                return `
+                    <tr>
+                        <td><strong>${r.nombre}</strong></td>
+                        <td><span class="clase-badge ${clase.badge}">${clase.icon} ${clase.nombre}</span></td>
+                        <td>${r.hora}</td>
+                        <td><span class="status-badge ${r.estado}">${r.estado}</span></td>
+                        <td>
+                            ${r.estado === 'pendiente' ? `<button class="btn-action confirm" onclick="cambiarEstado(${r.id},'confirmada')"><i class="fas fa-check"></i> Confirmar</button>` : ''}
+                            ${r.estado !== 'cancelada' ? `<button class="btn-action cancel" onclick="cambiarEstado(${r.id},'cancelada')"><i class="fas fa-times"></i> Cancelar</button>` : ''}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderAllReservas() {
+            const tbody = document.getElementById('allReservas');
+            const empty = document.getElementById('reservasEmpty');
+
+            if (reservas.length === 0) {
+                tbody.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+            empty.style.display = 'none';
+
+            const sorted = [...reservas].sort((a,b) => new Date(b.fecha) - new Date(a.fecha));
+            tbody.innerHTML = sorted.map(r => {
+                const clase = getClaseInfo(r.clase);
+                return `
+                    <tr>
+                        <td>${formatDate(r.fecha)}</td>
+                        <td><strong>${r.nombre}</strong></td>
+                        <td>${r.telefono}</td>
+                        <td><span class="clase-badge ${clase.badge}">${clase.icon} ${clase.nombre}</span></td>
+                        <td>${r.hora}</td>
+                        <td><span class="status-badge ${r.estado}">${r.estado}</span></td>
+                        <td>
+                            ${r.estado === 'pendiente' ? `<button class="btn-action confirm" onclick="cambiarEstado(${r.id},'confirmada')"><i class="fas fa-check"></i> Confirmar</button>` : ''}
+                            ${r.estado !== 'cancelada' ? `<button class="btn-action cancel" onclick="cambiarEstado(${r.id},'cancelada')"><i class="fas fa-times"></i> Cancelar</button>` : ''}
+                            <button class="btn-action" style="background:rgba(6,182,212,0.15);color:var(--cyan);border:1px solid rgba(6,182,212,0.2);margin-left:4px;" onclick="contactarWhatsApp('${r.telefono}','${r.nombre}')"><i class="fab fa-whatsapp"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderHorariosAdmin() {
+            const container = document.getElementById('horariosAdmin');
+            const diasOrden = ['lunes','martes','miercoles','jueves','viernes','sabado','domingo'];
+
+            // Agrupar por hora
+            const porHora = {};
+            horarios.forEach(h => {
+                if (!porHora[h.hora]) porHora[h.hora] = [];
+                porHora[h.hora].push(h);
+            });
+
+            const horasOrdenadas = Object.keys(porHora).sort();
+
+            container.innerHTML = horasOrdenadas.map(hora => {
+                const items = porHora[hora];
+                const clase = getClaseInfo(items[0].tipo);
+                const todosDias = items.flatMap(i => i.dias);
+                const diasUnicos = [...new Set(todosDias)].sort((a,b) => diasOrden.indexOf(a) - diasOrden.indexOf(b));
+                const ids = items.map(i => i.id).join(',');
+
+                return `
+                    <div class="horario-card" data-id="${ids}">
+                        <div class="time">${hora}</div>
+                        <span class="clase-badge ${clase.badge}" style="margin-bottom:12px;display:inline-block;">${clase.icon} ${clase.nombre}</span>
+                        <div class="dias">
+                            ${diasUnicos.map(d => `<span class="dia-tag" style="background:rgba(124,58,237,0.15);color:var(--purple3);">${getDiaNombre(d)}</span>`).join('')}
+                        </div>
+                        <div style="margin-top:12px;display:flex;gap:8px;">
+                            <button class="btn-action" style="background:rgba(124,58,237,0.15);color:var(--purple3);border:1px solid rgba(124,58,237,0.2);flex:1;" onclick="editarHorario(${items[0].id})"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="btn-action cancel" onclick="eliminarHorario(${ids})"><i class="fas fa-trash"></i> Eliminar</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Llenar checkboxes de días
+            const diasContainer = document.getElementById('diasCheckboxes');
+            if (diasContainer) {
+                diasContainer.innerHTML = diasOrden.map(d => `
+                    <label class="dia-check"><input type="checkbox" name="dias" value="${d}"> ${getDiaNombre(d)}</label>
+                `).join('');
+            }
+        }
+
+        function renderConfigForm() {
+            document.getElementById('configWhatsapp').value = config.whatsapp || '';
+            document.getElementById('configEmail').value = config.email || '';
+            document.getElementById('configDireccion').value = config.direccion || '';
+            document.getElementById('configMaps').value = config.mapsEmbed || '';
+            document.getElementById('configNombre').value = config.nombre || '';
+        }
+
+        // ═══ TABS ═══
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+            document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
+            document.getElementById('tab-' + tabName).style.display = 'block';
+            document.querySelector(`.admin-nav a[data-tab="${tabName}"]`)?.classList.add('active');
+            document.getElementById('pageTitle').textContent = tabName.charAt(0).toUpperCase() + tabName.slice(1);
+
+            // Re-render on tab switch
+            if (tabName === 'dashboard') renderDashboard();
+            else if (tabName === 'reservas') renderAllReservas();
+            else if (tabName === 'horarios') renderHorariosAdmin();
+            else if (tabName === 'config') renderConfigForm();
+
+            document.getElementById('adminSidebar')?.classList.remove('open');
+        }
+
+        // ═══ RESERVAS ACTIONS ═══
+        function cambiarEstado(id, estado) {
+            const r = reservas.find(x => x.id === id);
+            if (r) {
+                r.estado = estado;
+                saveReservas();
+                renderDashboard();
+                renderAllReservas();
+                showToast(`Reserva ${estado}`, 'success');
+            }
+        }
+
+        function contactarWhatsApp(telefono, nombre) {
+            const msg = encodeURIComponent(`Hola ${nombre}! Te contactamos de Dojo Olimpo para confirmar tu reserva. ¡Nos vemos pronto! 💪`);
+            window.open(`https://wa.me/${ADMIN_CONFIG.whatsapp}?text=${msg}`, '_blank');
+        }
+
+        function exportReservas() {
+            if (reservas.length === 0) { showToast('No hay reservas para exportar', 'error'); return; }
+            const headers = ['ID','Fecha','Nombre','WhatsApp','Email','Experiencia','Clase','Horario','Mensaje','Estado','Plan'];
+            const rows = reservas.map(r => [r.id, formatDate(r.fecha), r.nombre, r.telefono, r.email||'', r.experiencia||'', r.clase, r.hora, r.mensaje||'', r.estado, r.plan||'']);
+            const csv = [headers.join(','), ...rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(','))].join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `reservas-doyo-olimpo-${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+            showToast('CSV descargado', 'success');
+        }
+
+        // ═══ HORARIOS ACTIONS ═══
+        document.getElementById('formHorario')?.addEventListener('submit', e => {
+            e.preventDefault();
+            const form = e.target;
+            const id = form.horarioId.value ? parseInt(form.horarioId.value) : Date.now();
+            const dias = Array.from(form.querySelectorAll('input[name="dias"]:checked')).map(cb => cb.value);
+
+            if (dias.length === 0) { showToast('Selecciona al menos un día', 'error'); return; }
+
+            const existente = horarios.findIndex(h => h.id === id);
+            const horario = { id, hora: form.hora.value, tipo: form.tipo.value, dias };
+
+            if (existente >= 0) horarios[existente] = horario;
+            else horarios.push(horario);
+
+            saveHorarios();
+            renderHorariosAdmin();
+            resetHorarioForm();
+            showToast('Horario guardado', 'success');
+        });
+
+        function resetHorarioForm() {
+            const form = document.getElementById('formHorario');
+            form.reset();
+            form.horarioId.value = '';
+            form.querySelectorAll('input[name="dias"]').forEach(cb => cb.checked = false);
+        }
+
+        function editarHorario(id) {
+            const h = horarios.find(x => x.id === id);
+            if (!h) return;
+            const form = document.getElementById('formHorario');
+            form.horarioId.value = h.id;
+            form.hora.value = h.hora;
+            form.tipo.value = h.tipo;
+            form.querySelectorAll('input[name="dias"]').forEach(cb => cb.checked = h.dias.includes(cb.value));
+            form.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function eliminarHorario(ids) {
+            if (!confirm('¿Eliminar este horario?')) return;
+            const idArray = ids.split(',').map(Number);
+            horarios = horarios.filter(h => !idArray.includes(h.id));
+            saveHorarios();
+            renderHorariosAdmin();
+            showToast('Horario eliminado', 'success');
+        }
+
+        // ═══ CONFIG ACTIONS ═══
+        document.getElementById('formConfig')?.addEventListener('submit', e => {
+            e.preventDefault();
+            const form = e.target;
+            config = {
+                whatsapp: form.whatsapp.value,
+                email: form.email.value,
+                direccion: form.direccion.value,
+                mapsEmbed: form.mapsEmbed.value,
+                nombre: form.nombre.value
+            };
+            saveConfig();
+            // Update global
+            ADMIN_CONFIG.whatsapp = config.whatsapp;
+            ADMIN_CONFIG.email = config.email;
+            ADMIN_CONFIG.direccion = config.direccion;
+            ADMIN_CONFIG.mapsEmbed = config.mapsEmbed;
+            ADMIN_CONFIG.nombre = config.nombre;
+            showToast('Configuración guardada', 'success');
+        });
+
+        function abrirWeb() { window.open('../index.html', '_blank'); }
+
+        function limpiarDatos() {
+            if (!confirm('¿Borrar TODAS las reservas y horarios locales? Esta acción no se puede deshacer.')) return;
+            localStorage.removeItem('doyo_reservas');
+            localStorage.removeItem('doyo_horarios');
+            reservas = [];
+            horarios = [];
+            renderDashboard();
+            renderAllReservas();
+            renderHorariosAdmin();
+            showToast('Datos locales limpiados', 'success');
+        }
+
+        function resetearTodo() {
+            if (!confirm('¿RESETEAR TODO? Se borra configuración, reservas, horarios. Vuelve a valores por defecto.')) return;
+            localStorage.clear();
+            location.reload();
+        }
+
+        // ═══ MOBILE MENU ═══
+        document.addEventListener('click', e => {
+            if (e.target.closest('.mobile-menu-btn') || e.target.closest('#menuBtn')) {
+                document.getElementById('adminSidebar')?.classList.toggle('open');
+            }
+        });
+
+        // ═══ INIT ═══
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof THREE === 'undefined') {
+                const s = document.createElement('script');
+                s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+                s.onload = initThree;
+                document.head.appendChild(s);
+            } else { initThree(); }
+
+            // Tab navigation
+            document.querySelectorAll('.admin-nav a').forEach(a => {
+                a.addEventListener('click', e => { e.preventDefault(); showTab(a.dataset.tab); });
+            });
+
+            // Mobile menu toggle button
+            const menuBtn = document.createElement('button');
+            menuBtn.className = 'mobile-menu-btn';
+            menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            menuBtn.style.cssText = 'display:none;position:fixed;top:16px;left:16px;z-index:100;background:var(--bg2);border:1px solid var(--card-border);border-radius:10px;padding:10px;color:var(--white);font-size:18px;';
+            document.body.appendChild(menuBtn);
+            menuBtn.onclick = () => document.getElementById('adminSidebar')?.classList.toggle('open');
+
+            // Show mobile button on small screens
+            const checkMobile = () => { menuBtn.style.display = window.innerWidth < 768 ? 'flex' : 'none'; };
+            checkMobile();
+            window.addEventListener('resize', checkMobile);
+
+            // Initial render
+            showTab('dashboard');
+            renderConfigForm();
+        });
+    </script>
+</body>
+</html>

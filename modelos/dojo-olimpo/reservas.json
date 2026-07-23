@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1784755347934,
+    "nombre": "Juan Test",
+    "telefono": "+56912345678",
+    "email": "juan@test.cl",
+    "clase": "funcional",
+    "hora": "19:00",
+    "mensaje": "Prueba API",
+    "plan": "gratis",
+    "fecha": "2026-07-22T21:22:27.934Z",
+    "estado": "pendiente",
+    "confirmada": false
+  },
+  {
+    "id": 1784763157040,
+    "nombre": "Test WhatsApp",
+    "telefono": "+56911111111",
+    "email": "test@test.cl",
+    "clase": "funcional",
+    "hora": "19:00",
+    "mensaje": "probando whatsapp dueño",
+    "plan": "gratis",
+    "fecha": "2026-07-22T23:32:37.040Z",
+    "estado": "pendiente",
+    "confirmada": false
+  },
+  {
+    "id": 1784763974973,
+    "nombre": "Test Final",
+    "telefono": "+56999999999",
+    "email": "final@test.cl",
+    "clase": "personal",
+    "hora": "20:00",
+    "mensaje": "prueba completa",
+    "plan": "gratis",
+    "fecha": "2026-07-22T23:46:14.974Z",
+    "estado": "pendiente",
+    "confirmada": false
+  },
+  {
+    "id": 1784764257234,
+    "nombre": "Debug POST",
+    "telefono": "+56977777777",
+    "email": "debug@test.cl",
+    "clase": "funcional",
+    "hora": "19:00",
+    "mensaje": "debug post",
+    "plan": "gratis",
+    "fecha": "2026-07-22T23:50:57.234Z",
+    "estado": "pendiente",
+    "confirmada": false
+  },
+  {
+    "id": 1784764290838,
+    "nombre": "Test Keep Alive",
+    "telefono": "+56966666666",
+    "email": "keep@test.cl",
+    "clase": "funcional",
+    "hora": "19:00",
+    "mensaje": "keep alive test",
+    "plan": "gratis",
+    "fecha": "2026-07-22T23:51:30.838Z",
+    "estado": "pendiente",
+    "confirmada": false
+  },
+  {
+    "id": 1784765110650,
+    "nombre": "Test POST",
+    "telefono": "+56988888888",
+    "email": "post@test.cl",
+    "clase": "funcional",
+    "hora": "19:00",
+    "mensaje": "test post",
+    "plan": "gratis",
+    "fecha": "2026-07-23T00:05:10.650Z",
+    "estado": "pendiente",
+    "confirmada": false
+  }
+]
