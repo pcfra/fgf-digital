@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crunch Fitness | Membresía de Gimnasio — Sin Juicios</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1c1c1c;
+            background: #fff;
+            line-height: 1.5;
+        }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .container-wide { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            background: #000;
+            color: rgba(255,255,255,.7);
+            padding: 6px 0;
+            font-size: 12px;
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 16px;
+        }
+        .top-bar .lang-select {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .top-bar .lang-select:hover { color: #fff; }
+        .top-bar .member-login {
+            color: rgba(255,255,255,.7);
+            font-weight: 500;
+            transition: color .3s;
+        }
+        .top-bar .member-login:hover { color: #fff; }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: #000;
+            padding: 0 24px;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        .header-left .logo {
+            display: flex;
+            align-items: center;
+        }
+        .header-left .logo svg {
+            height: 32px;
+        }
+        .header-left .logo .logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #ff7b00;
+            line-height: 1;
+        }
+        .header-left .logo .logo-text .plus {
+            color: #a855f7;
+        }
+        .header-left .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+        .header-left .nav-links a {
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255,255,255,.7);
+            text-transform: uppercase;
+            letter-spacing: .3px;
+            transition: color .3s;
+        }
+        .header-left .nav-links a:hover { color: #ff7b00; }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .header-right .btn-outline {
+            border: 1px solid rgba(255,255,255,.3);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            transition: background .3s;
+        }
+        .header-right .btn-outline:hover {
+            background: rgba(255,255,255,.1);
+        }
+        .header-right .btn-solid {
+            background: #ff7b00;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            transition: background .3s;
+        }
+        .header-right .btn-solid:hover { background: #e66e00; }
+        .header-right .btn-purple {
+            background: #a855f7;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            transition: background .3s;
+        }
+        .header-right .btn-purple:hover { background: #9333ea; }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .hamburger span {
+            width: 24px;
+            height: 2.5px;
+            background: #fff;
+            border-radius: 2px;
+            transition: .3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #2d1a00 100%);
+            color: #fff;
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(168,85,247,.08) 0%, transparent 60%);
+            border-radius: 50%;
+        }
+        .hero .tag {
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #a855f7;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 64px;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .hero h1 .orange { color: #ff7b00; }
+        .hero h1 .purple { color: #a855f7; }
+        .hero .sub {
+            font-size: 18px;
+            color: rgba(255,255,255,.6);
+            margin-bottom: 32px;
+        }
+        .hero .search-box {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .hero .search-box input {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 50px;
+            border: none;
+            font-family: inherit;
+            font-size: 16px;
+            outline: none;
+            background: rgba(255,255,255,.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,.2);
+        }
+        .hero .search-box input::placeholder { color: rgba(255,255,255,.4); }
+        .hero .search-box .btn-go {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ff7b00;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 24px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .hero .search-box .btn-go:hover { background: #e66e00; }
+        .hero .cta-img {
+            margin-top: 32px;
+        }
+        .hero .cta-img img {
+            max-width: 280px;
+            margin: 0 auto;
+            border-radius: 12px;
+        }
+
+        /* ===== CRUNCHISM SECTION ===== */
+        .crunchism-head {
+            text-align: center;
+            padding: 24px 0 8px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #a855f7;
+        }
+        .crunchism-head .line {
+            display: inline-block;
+            width: 40px;
+            height: 2px;
+            background: #a855f7;
+            vertical-align: middle;
+            margin: 0 12px;
+        }
+
+        /* ===== OUR GYM IS YOUR GYM ===== */
+        .gym-section {
+            padding: 40px 0 60px;
+        }
+        .gym-section h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            color: #1c1c1c;
+            margin-bottom: 40px;
+        }
+        .gym-section h2 span { color: #ff7b00; }
+        .gym-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+        .gym-card {
+            text-align: center;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #f8f8f8;
+            transition: transform .3s;
+        }
+        .gym-card:hover { transform: translateY(-4px); }
+        .gym-card .thumb {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+        .gym-card .thumb.g1 { background: linear-gradient(135deg, #a855f7, #7c3aed); }
+        .gym-card .thumb.g2 { background: linear-gradient(135deg, #ff7b00, #e66e00); }
+        .gym-card .thumb.g3 { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        .gym-card .thumb.g4 { background: linear-gradient(135deg, #10b981, #059669); }
+        .gym-card .thumb.g5 { background: linear-gradient(135deg, #f43f5e, #e11d48); }
+        .gym-card .body {
+            padding: 20px 16px;
+        }
+        .gym-card .body h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #1c1c1c;
+            margin-bottom: 6px;
+        }
+        .gym-card .body p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* ===== NO JUDGMENTS ===== */
+        .philosophy {
+            padding: 60px 0;
+            background: #000;
+            color: #fff;
+        }
+        .philosophy h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .philosophy h2 span { color: #a855f7; }
+        .phil-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+        .phil-card .icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        .phil-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .phil-card p {
+            font-size: 14px;
+            color: rgba(255,255,255,.5);
+            line-height: 1.6;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        /* ===== CLASSES ===== */
+        .classes {
+            padding: 60px 0;
+        }
+        .classes-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .classes-header h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #1c1c1c;
+        }
+        .classes-header h2 span { color: #a855f7; }
+        .classes-header p {
+            color: #666;
+            font-size: 15px;
+            margin-top: 8px;
+        }
+        .classes-header .btn {
+            display: inline-block;
+            margin-top: 16px;
+            background: #a855f7;
+            color: #fff;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            transition: background .3s;
+        }
+        .classes-header .btn:hover { background: #9333ea; }
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .class-card {
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            min-height: 260px;
+            display: flex;
+            align-items: flex-end;
+            cursor: pointer;
+            transition: transform .3s;
+        }
+        .class-card:hover { transform: scale(1.02); }
+        .class-card .bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+        }
+        .class-card .bg.strength { background: linear-gradient(135deg, #dc2626, #991b1b); }
+        .class-card .bg.ride { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+        .class-card .bg.mind { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+        .class-card .bg.dance { background: linear-gradient(135deg, #db2777, #be185d); }
+        .class-card .bg.cardio { background: linear-gradient(135deg, #ea580c, #c2410c); }
+        .class-card .bg.specialty { background: linear-gradient(135deg, #0891b2, #06b6d4); }
+        .class-card .overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 50%);
+        }
+        .class-card .label {
+            position: relative;
+            z-index: 2;
+            padding: 24px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .class-card .label small {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            text-transform: none;
+            opacity: .7;
+            margin-top: 4px;
+        }
+
+        /* ===== TRAINING ===== */
+        .training-section {
+            padding: 60px 0;
+            background: #000;
+            color: #fff;
+            text-align: center;
+        }
+        .training-section h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .training-section h2 span { color: #ff7b00; }
+        .training-section p {
+            color: rgba(255,255,255,.5);
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+        .training-section .btn {
+            display: inline-block;
+            background: #ff7b00;
+            color: #fff;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: background .3s;
+        }
+        .training-section .btn:hover { background: #e66e00; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #000;
+            padding: 48px 0 24px;
+            border-top: 1px solid rgba(255,255,255,.06);
+        }
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            margin-bottom: 24px;
+        }
+        .footer-top .social {
+            display: flex;
+            gap: 16px;
+        }
+        .footer-top .social a {
+            color: rgba(255,255,255,.4);
+            font-size: 14px;
+            transition: color .3s;
+        }
+        .footer-top .social a:hover { color: #ff7b00; }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 24px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .footer-links a {
+            font-size: 12px;
+            color: rgba(255,255,255,.4);
+            text-transform: uppercase;
+            letter-spacing: .3px;
+            transition: color .3s;
+        }
+        .footer-links a:hover { color: #ff7b00; }
+        .footer-bottom {
+            text-align: center;
+            font-size: 11px;
+            color: rgba(255,255,255,.25);
+        }
+        .footer-bottom a { color: rgba(255,255,255,.35); }
+        .footer-bottom a:hover { color: #ff7b00; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .gym-grid { grid-template-columns: repeat(3, 1fr); }
+            .classes-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .header-left .nav-links {
+                display: none;
+                position: absolute;
+                top: 68px;
+                left: 0;
+                right: 0;
+                background: #000;
+                flex-direction: column;
+                padding: 16px 24px;
+                gap: 12px;
+                border-bottom: 1px solid rgba(255,255,255,.08);
+            }
+            .header-left .nav-links.open { display: flex; }
+            .header-right .btn-outline { display: none; }
+            .hero h1 { font-size: 40px; }
+            .gym-grid { grid-template-columns: 1fr 1fr; }
+            .phil-grid { grid-template-columns: 1fr; }
+            .classes-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .gym-grid { grid-template-columns: 1fr; }
+        }
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .whatsapp-float .tooltip {
+            background: #fff;
+            color: #1c1c1c;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,.15);
+            opacity: 0;
+            transform: translateX(10px);
+            transition: .3s;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        .whatsapp-float:hover .tooltip {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .whatsapp-float .btn-wa {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #25D366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(37,211,102,.4);
+            transition: transform .3s, box-shadow .3s;
+            animation: wa-pulse 2s infinite;
+        }
+        .whatsapp-float .btn-wa:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 24px rgba(37,211,102,.6);
+        }
+        .whatsapp-float .btn-wa svg {
+            width: 28px;
+            height: 28px;
+            fill: #fff;
+        }
+        @keyframes wa-pulse {
+            0% { box-shadow: 0 4px 16px rgba(37,211,102,.4); }
+            50% { box-shadow: 0 4px 24px rgba(37,211,102,.7); }
+            100% { box-shadow: 0 4px 16px rgba(37,211,102,.4); }
+        }
+
+        /* ===== STATS ===== */
+        .stats {
+            background: #000;
+            padding: 60px 0;
+            border-top: 1px solid rgba(255,255,255,.06);
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            text-align: center;
+        }
+        .stat-item .stat-number {
+            font-family: 'Oswald', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #ff6b00;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .stat-item .stat-label {
+            font-size: 14px;
+            color: rgba(255,255,255,.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 60px 0;
+            background: #0a0a0a;
+        }
+        .testimonials h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 40px;
+        }
+        .testimonials h2 span { color: #ff6b00; }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .testimonial-card {
+            background: #111;
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,.06);
+            transition: transform .3s, border-color .3s;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,107,0,.3);
+        }
+        .testimonial-card .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .testimonial-card .avatar.a1 { background: linear-gradient(135deg, #ff6b00, #e65c00); }
+        .testimonial-card .avatar.a2 { background: linear-gradient(135deg, #a855f7, #7c3aed); }
+        .testimonial-card .avatar.a3 { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        .testimonial-card .stars {
+            color: #ff6b00;
+            font-size: 16px;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+        .testimonial-card blockquote {
+            font-size: 14px;
+            color: rgba(255,255,255,.7);
+            line-height: 1.6;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+        .testimonial-card .name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .testimonial-card .title {
+            font-size: 12px;
+            color: rgba(255,255,255,.4);
+        }
+
+        /* ===== FGF BADGE ===== */
+        .fgf-badge {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 9999;
+            background: rgba(0,0,0,.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,107,0,.3);
+            border-radius: 8px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            pointer-events: none;
+        }
+        .fgf-badge .fgf-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff6b00;
+            animation: wa-pulse 2s infinite;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity .6s ease-out, transform .6s ease-out;
+        }
+        .animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+/* === RESPONSIVE MOBILE FGF === */
+@media (max-width: 768px) {
+  .container, section > div:not(.no-resp) { padding: 0 16px !important; }
+  h1 { font-size: 2rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  .grid, .grid-2, [class*="grid"] { grid-template-columns: 1fr !important; }
+  .flex, [class*="flex"] { flex-wrap: wrap !important; }
+  img { max-width: 100% !important; height: auto !important; }
+  table { font-size: 12px !important; }
+  td, th { padding: 6px 4px !important; }
+  .btn, button, a.btn { width: 100% !important; text-align: center !important; }
+  nav, .nav, .navbar { flex-wrap: wrap !important; }
+  .hero { padding: 80px 16px 40px !important; }
+  .hero h1 { font-size: 2.2rem !important; }
+  section { padding: 40px 0 !important; }
+}
+@media (max-width: 480px) {
+  h1 { font-size: 1.6rem !important; }
+  h2 { font-size: 1.3rem !important; }
+  body { font-size: 14px !important; }
+  .hide-mobile { display: none !important; }
+}
+
+    </style>
+</head>
+<body>
+<!-- ════════════════════════════════════════════ -->
+<!-- FGF DIGITAL · Modelo de referencia          -->
+<!-- ════════════════════════════════════════════ -->
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;text-align:center;padding:12px 20px;font-family:sans-serif;font-size:14px;border-bottom:3px solid #e94560;">
+  🚧 <strong>FGF DIGITAL</strong> · Modelo de referencia ·
+  <a href="https://fgfdigital.cl" style="color:#e94560;text-decoration:underline;">fgfdigital.cl</a>
+</div>
+
+
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="lang-select">🇺🇸 EN ▼</div>
+            <a href="#" class="member-login">Iniciar Sesión</a>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="header-left">
+            <a href="#" class="logo">
+                <span class="logo-text">CRUNCH<span class="plus">+</span></span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#">Ubicaciones</a></li>
+                <li><a href="#">Clases</a></li>
+                <li><a href="#">HiitZone</a></li>
+                <li><a href="#">Entrenamiento</a></li>
+                <li><a href="#">Crunch+</a></li>
+                <li><a href="#">Nosotros</a></li>
+            </ul>
+        </div>
+        <div class="header-right">
+            <a href="#" class="btn-outline">Prueba Gratis</a>
+            <a href="#" class="btn-solid">Únete</a>
+            <button class="hamburger" id="hamburger" aria-label="Menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero animate">
+        <div class="container">
+            <div class="tag">#NoJudgments</div>
+            <h1>Encuentra tu <span class="orange">Crunch</span><br>más cercano y <span class="purple">Únete Hoy</span></h1>
+            <div class="sub">El gimnasio donde todos pertenecen.</div>
+            <div class="search-box">
+                <input type="text" placeholder="Ingresa tu ciudad o código postal...">
+                <button class="btn-go">Buscar</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <section class="stats animate">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Años de Experiencia</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100K+</div>
+                    <div class="stat-label">Miembros Activos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Sedes en Latinoamérica</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">99%</div>
+                    <div class="stat-label">Energía Garantizada</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CRUNCHISM #1 ===== -->
+    <div class="crunchism-head">
+        <span class="line"></span> Crunchism #1 <span class="line"></span>
+    </div>
+
+    <!-- ===== OUR GYM IS YOUR GYM ===== -->
+    <section class="gym-section animate">
+        <div class="container">
+            <h2>Nuestro Gym es <span>Tu Gym</span></h2>
+            <div class="gym-grid">
+                <div class="gym-card">
+                    <div class="thumb g1">🏋️</div>
+                    <div class="body">
+                        <h3>Clases de Fitness Grupales</h3>
+                        <p>Entrenamientos innovadores, desafiantes y divertidos.</p>
+                    </div>
+                </div>
+                <div class="gym-card">
+                    <div class="thumb g2">🏋️</div>
+                    <div class="body">
+                        <h3>Equipo de Pesas</h3>
+                        <p>Pesas libres, máquinas modernas y equipos de última generación.</p>
+                    </div>
+                </div>
+                <div class="gym-card">
+                    <div class="thumb g3">🏃</div>
+                    <div class="body">
+                        <h3>Kilómetros de Cardio</h3>
+                        <p>Todo el equipo que necesitas para correr, trotar o caminar.</p>
+                    </div>
+                </div>
+                <div class="gym-card">
+                    <div class="thumb g4">❤️</div>
+                    <div class="body">
+                        <h3>Gente que se Preocupa</h3>
+                        <p>Instructores y staff que viven por tus logros post-entreno.</p>
+                    </div>
+                </div>
+                <div class="gym-card">
+                    <div class="thumb g5">✨</div>
+                    <div class="body">
+                        <h3>Impecablemente Limpio</h3>
+                        <p>Nuestros gimnasios están siempre limpios y bien mantenidos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CRUNCHISM #2 ===== -->
+    <div class="crunchism-head" style="background:#000;color:#a855f7;padding-top:0;">
+        <span class="line" style="background:#a855f7;"></span> Crunchism #2 <span class="line" style="background:#a855f7;"></span>
+    </div>
+
+    <!-- ===== PHILOSOPHY ===== -->
+    <section class="philosophy animate">
+        <div class="container">
+            <h2>Adopta una Filosofía <span>#NoJudgments</span></h2>
+            <div class="phil-grid">
+                <div class="phil-card">
+                    <div class="icon">🌱</div>
+                    <h3>Positividad</h3>
+                    <p>Somos impulsores: buscamos alentar, entretener y empoderar.</p>
+                </div>
+                <div class="phil-card">
+                    <div class="icon">🤝</div>
+                    <h3>Inclusión</h3>
+                    <p>No hay un solo tipo ni manera en nuestra comunidad diversa. ¡Ven como eres!</p>
+                </div>
+                <div class="phil-card">
+                    <div class="icon">🎉</div>
+                    <h3>Diversión</h3>
+                    <p>El fitness serio es difícil, pero eso no significa que no pueda ser una fiesta.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CRUNCHISM #3 ===== -->
+    <div class="crunchism-head">
+        <span class="line"></span> Crunchism #3 <span class="line"></span>
+    </div>
+
+    <!-- ===== CLASSES ===== -->
+    <section class="classes animate">
+        <div class="container">
+            <div class="classes-header">
+                <h2>La Energía es para <span>Todos</span></h2>
+                <p>Cree en el poder de una comunidad de fitness grupal motivadora.</p>
+                <a href="#" class="btn">Explora Nuestras Clases</a>
+            </div>
+            <div class="classes-grid">
+                <div class="class-card">
+                    <div class="bg strength"></div>
+                    <div class="overlay"></div>
+                    <div class="label">Fuerza <small>Esculpe los músculos de tus músculos.</small></div>
+                </div>
+                <div class="class-card">
+                    <div class="bg ride"></div>
+                    <div class="overlay"></div>
+                    <div class="label">Ciclismo <small>Súbete a la bicicleta y canaliza tu ciclista interior.</small></div>
+                </div>
+                <div class="class-card">
+                    <div class="bg mind"></div>
+                    <div class="overlay"></div>
+                    <div class="label">Mente Cuerpo <small>Fortalece tu ser interior.</small></div>
+                </div>
+                <div class="class-card">
+                    <div class="bg dance"></div>
+                    <div class="overlay"></div>
+                    <div class="label">Dance <small>Feel the rhythm while you feel the burn.</small></div>
+                </div>
+                <div class="class-card">
+                    <div class="bg cardio"></div>
+                    <div class="overlay"></div>
+                    <div class="label">Cardio <small>Your heart rate is about to raise the roof.</small></div>
+                </div>
+                <div class="class-card">
+                    <div class="bg specialty"></div>
+                    <div class="overlay"></div>
+                    <div class="label">Specialty <small>Something different, something fun.</small></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonials animate">
+        <div class="container">
+            <h2>Lo Que Dicen <span>Nuestros Miembros</span></h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="avatar a1">ML</div>
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Desde que entré a Crunch, mi vida cambió. El ambiente es increíble y los trainers son unos cracks."</blockquote>
+                    <div class="name">María López</div>
+                    <div class="title">Miembro desde 2022</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="avatar a2">CG</div>
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Nunca pensé que disfrutaría tanto hacer ejercicio. Las clases de grupo son adictivas."</blockquote>
+                    <div class="name">Carlos García</div>
+                    <div class="title">Miembro desde 2023</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="avatar a3">AR</div>
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Crunch me aceptó tal cual soy. #NoJudgments de verdad. ¡Me siento más fuerte que nunca!"</blockquote>
+                    <div class="name">Ana Rodríguez</div>
+                    <div class="title">Miembro desde 2021</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CRUNCHISM #4 ===== -->
+    <div class="crunchism-head" style="background:#000;color:#ff7b00;padding-top:0;">
+        <span class="line" style="background:#ff7b00;"></span> Crunchism #4 <span class="line" style="background:#ff7b00;"></span>
+    </div>
+
+    <!-- ===== TRAINING ===== -->
+    <section class="training-section animate">
+        <div class="container">
+            <h2>Las Metas están para <span>Cumplirse</span></h2>
+            <p>Entrena con nuestros expertos y alcanza tus resultados.</p>
+            <a href="#" class="btn">Más Información</a>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div style="font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;color:#ff7b00;text-transform:uppercase;">CRUNCH</div>
+                <div class="social">
+                    <a href="#">📘 Facebook</a>
+                    <a href="#">📷 Instagram</a>
+                    <a href="#">🐦 Twitter</a>
+                    <a href="#">▶️ YouTube</a>
+                    <a href="#">🎵 TikTok</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="#">Tu Propio Crunch</a>
+                <a href="#">FAQ</a>
+                <a href="#">Carreras</a>
+                <a href="#">Alianzas Corporativas</a>
+                <a href="#">Alianzas de Salud</a>
+                <a href="#">Términos de Uso</a>
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Opciones de Privacidad</a>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Crunch Fitness. Todos los derechos reservados.
+                <br><a href="#">#NoJudgments</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <div class="whatsapp-float">
+        <span class="tooltip">¡Chatea con nosotros!</span>
+        <a href="https://wa.me/1234567890" target="_blank" class="btn-wa" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+        </a>
+    </div>
+
+    <!-- ===== FGF DEMO BADGE ===== -->
+    <div class="fgf-badge">
+        <span class="fgf-dot"></span>
+        FGF Digital · Demo
+    </div>
+
+    <script>
+        // Hamburger toggle
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+
+        // IntersectionObserver for animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prospectos 2026 - Clientes Potenciales</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 15mm 12mm;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #1a1a2e;
+            font-size: 10px;
+            line-height: 1.4;
+        }
+        .page {
+            page-break-after: always;
+            padding: 10px 0;
+        }
+        .page:last-child { page-break-after: auto; }
+
+        /* ===== COVER ===== */
+        .cover {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 90vh;
+        }
+        .cover .tag { 
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #e31e24;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        .cover h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #0a1628;
+            margin-bottom: 8px;
+            line-height: 1.1;
+        }
+        .cover h1 span { color: #e31e24; }
+        .cover .sub {
+            font-size: 18px;
+            color: #666;
+            max-width: 500px;
+            margin-bottom: 32px;
+        }
+        .cover .info {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.8;
+            border-top: 1px solid #eee;
+            padding-top: 24px;
+            max-width: 400px;
+        }
+        .cover .info strong { color: #1a1a2e; }
+
+        /* ===== TABLE ===== */
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #0a1628;
+            margin: 16px 0 8px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #e31e24;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .section-title span { font-size: 11px; font-weight: 400; color: #888; }
+        .section-sub {
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+            font-size: 9px;
+        }
+        th {
+            background: #0a1628;
+            color: #fff;
+            padding: 6px 5px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 8.5px;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+        }
+        th:nth-child(1) { width: 4%; text-align: center; }
+        th:nth-child(2) { width: 18%; }
+        th:nth-child(3) { width: 20%; }
+        th:nth-child(4) { width: 16%; }
+        th:nth-child(5) { width: 14%; }
+        th:nth-child(6) { width: 28%; }
+        td {
+            padding: 4px 5px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+        td:nth-child(1) { text-align: center; font-weight: 700; color: #e31e24; font-size: 8px; }
+        td:nth-child(2) { font-weight: 600; }
+        td:nth-child(3) { font-size: 8.5px; }
+        td:nth-child(4) { font-size: 8.5px; }
+        td:nth-child(5) { font-size: 8.5px; }
+        td:nth-child(6) { font-size: 8px; color: #888; font-style: italic; }
+        tr:nth-child(even) td { background: #fafafa; }
+        .category-label {
+            background: #f0f0f0;
+            font-weight: 700;
+            color: #0a1628;
+            padding: 4px 5px;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+        .category-label td { background: #f0f0f0 !important; border-bottom: 1px solid #ddd; }
+
+        /* ===== SALES PLAN ===== */
+        .plan-page {
+            padding: 20px 0;
+        }
+        .plan-page h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #0a1628;
+            margin-bottom: 4px;
+            text-align: center;
+        }
+        .plan-page h1 span { color: #e31e24; }
+        .plan-page .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 24px;
+        }
+        .plan-section {
+            margin-bottom: 20px;
+        }
+        .plan-section h2 {
+            font-size: 16px;
+            font-weight: 800;
+            color: #0a1628;
+            padding-bottom: 4px;
+            border-bottom: 2px solid #e31e24;
+            margin-bottom: 10px;
+        }
+        .plan-section h3 {
+            font-size: 12px;
+            font-weight: 700;
+            color: #e31e24;
+            margin: 10px 0 4px;
+        }
+        .plan-section p {
+            font-size: 10.5px;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 6px;
+        }
+        .plan-section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .plan-section ul li {
+            font-size: 10.5px;
+            color: #444;
+            padding: 3px 0 3px 16px;
+            position: relative;
+            line-height: 1.5;
+        }
+        .plan-section ul li::before {
+            content: '•';
+            color: #e31e24;
+            font-weight: 800;
+            position: absolute;
+            left: 4px;
+        }
+        .plan-section .highlight-box {
+            background: #fef2f2;
+            border-left: 3px solid #e31e24;
+            padding: 10px 14px;
+            margin: 8px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .plan-section .highlight-box p { margin: 0; color: #1a1a2e; font-weight: 500; }
+        .plan-section .step-box {
+            background: #f8f9fa;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 8px;
+        }
+        .plan-section .step-box .step-num {
+            display: inline-block;
+            background: #e31e24;
+            color: #fff;
+            font-weight: 800;
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 10px;
+            margin-bottom: 4px;
+        }
+        .plan-section .step-box h4 {
+            font-size: 11px;
+            font-weight: 700;
+            color: #0a1628;
+            margin-bottom: 2px;
+        }
+        .plan-section .step-box p {
+            font-size: 10px;
+            margin: 0;
+        }
+        .footer-note {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 9px;
+            color: #aaa;
+            border-top: 1px solid #eee;
+            padding-top: 12px;
+        }
+        @media print {
+            body { font-size: 9px; }
+            td, th { font-size: 8px; }
+        }
+
+/* === RESPONSIVE MOBILE FGF === */
+@media (max-width: 768px) {
+  .container, section > div:not(.no-resp) { padding: 0 16px !important; }
+  h1 { font-size: 2rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  .grid, .grid-2, [class*="grid"] { grid-template-columns: 1fr !important; }
+  .flex, [class*="flex"] { flex-wrap: wrap !important; }
+  img { max-width: 100% !important; height: auto !important; }
+  table { font-size: 12px !important; }
+  td, th { padding: 6px 4px !important; }
+  .btn, button, a.btn { width: 100% !important; text-align: center !important; }
+  nav, .nav, .navbar { flex-wrap: wrap !important; }
+  .hero { padding: 80px 16px 40px !important; }
+  .hero h1 { font-size: 2.2rem !important; }
+  section { padding: 40px 0 !important; }
+}
+@media (max-width: 480px) {
+  h1 { font-size: 1.6rem !important; }
+  h2 { font-size: 1.3rem !important; }
+  body { font-size: 14px !important; }
+  .hide-mobile { display: none !important; }
+}
+
+    </style>
+</head>
+<body>
+<!-- ════════════════════════════════════════════ -->
+<!-- FGF DIGITAL · Modelo de referencia          -->
+<!-- ════════════════════════════════════════════ -->
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;text-align:center;padding:12px 20px;font-family:sans-serif;font-size:14px;border-bottom:3px solid #e94560;">
+  🚧 <strong>FGF DIGITAL</strong> · Modelo de referencia ·
+  <a href="https://fgfdigital.cl" style="color:#e94560;text-decoration:underline;">fgfdigital.cl</a>
+</div>
+
+
+
+    <!-- ===== COVER PAGE ===== -->
+    <div class="page">
+        <div class="cover">
+            <div class="tag">📋 Prospectos 2026</div>
+            <h1>100 Clientes<br><span>Potenciales</span></h1>
+            <div class="sub">Empresas con sitios web desactualizados listas para dar el salto</div>
+            <div class="info">
+                <strong>Nuestro fuerte:</strong> Sitios web sin actualizar <strong>desde 2010</strong><br>
+                Dueños que perdieron el acceso a su página o nunca la renovaron<br><br>
+                <strong>Generado:</strong> Julio 2026<br>
+                <strong>Enfoque:</strong> Uruguay · Comercios · Profesionales · PyMEs
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PAGES 2-5: PROSPECTS ===== -->
+    <div class="page">
+        <div class="section-title">
+            Listado de Prospectos <span>100 clientes potenciales · Pág. 1/4</span>
+        </div>
+        <div class="section-sub">Empresas con web sin mantenimiento desde 2010 — objetivo principal de nuestra campaña comercial</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Empresa / Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Rubro</th>
+                    <th>Web actual (desactualizada)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="category-label"><td colspan="6">🛠️ CONSTRUCCIÓN & ARQUITECTURA</td></tr>
+                <tr><td>1</td><td>Construcciones del Sur</td><td>info@construccionesdelsur.com</td><td>091 234 567</td><td>Construcción</td><td>web caída — diseño 2009</td></tr>
+                <tr><td>2</td><td>Arq. Martín Silva</td><td>martin.silva@adinet.com.uy</td><td>099 123 456</td><td>Arquitectura</td><td>sitio estático desde 2008</td></tr>
+                <tr><td>3</td><td>Techos y Estructuras SA</td><td>ventas@techoysa.com</td><td>2623 4567</td><td>Construcción</td><td>página sin actualizar desde 2010</td></tr>
+                <tr><td>4</td><td>Pisos y Revestimientos del Uruguay</td><td>pyru@montevideo.com.uy</td><td>091 987 654</td><td>Revestimientos</td><td>web HTML básica 2007</td></tr>
+                <tr><td>5</td><td>Ing. Roberto Méndez</td><td>rmendez@gmail.com</td><td>099 345 678</td><td>Ing. Civil</td><td>blog antiguo, diseño roto</td></tr>
+                <tr><td>6</td><td>Hormigones del Este</td><td>admin@hormigoneste.com</td><td>099 567 890</td><td>Materiales</td><td>página sin mantenimiento desde 2009</td></tr>
+                <tr><td>7</td><td>Constructora Garzón</td><td>garzoncons@hotmail.com</td><td>2622 3344</td><td>Construcción</td><td>web con diseño de 2006</td></tr>
+                <tr><td>8</td><td>Arq. Laura Martínez</td><td>lauramartinez@yahoo.com</td><td>098 765 432</td><td>Arquitectura</td><td>sitio sin renovar desde 2010</td></tr>
+                <tr><td>9</td><td>San José Techos</td><td>sjtechos@gmail.com</td><td>091 111 222</td><td>Construcción</td><td>web estática (2008)</td></tr>
+                <tr><td>10</td><td>Pinturas & Más</td><td>info@pinturasyomas.com</td><td>2621 3344</td><td>Pinturería</td><td>página caída, dominio vence</td></tr>
+                <tr class="category-label"><td colspan="6">🍽️ GASTRONOMÍA & ALIMENTACIÓN</td></tr>
+                <tr><td>11</td><td>Restaurante El Fogón</td><td>elfogon@netgate.com.uy</td><td>091 222 333</td><td>Restaurante</td><td>web con menú de 2009</td></tr>
+                <tr><td>12</td><td>Panadería La Espiga</td><td>laespiga@gmail.com</td><td>2620 1122</td><td>Panadería</td><td>sitio sin actualizar desde 2007</td></tr>
+                <tr><td>13</td><td>Parrilla El Gaucho</td><td>parrillaelgaucho@adinet.com.uy</td><td>099 888 777</td><td>Restaurante</td><td>diseño web 2006</td></tr>
+                <tr><td>14</td><td>Distribuidora Alimenticia Ríos</td><td>distrios@gmail.com</td><td>2623 5566</td><td>Distribuidora</td><td>página caída, sin hosting</td></tr>
+                <tr><td>15</td><td>Heladería La Venezia</td><td>venezias@gmail.com</td><td>091 444 555</td><td>Heladería</td><td>web con errores, diseño 2008</td></tr>
+                <tr><td>16</td><td>Carnicería El Centro</td><td>carnicentro@hotmail.com</td><td>2622 7788</td><td>Carnicería</td><td>página HTML simple de 2005</td></tr>
+                <tr><td>17</td><td>Vinos y Quesos del Uruguay</td><td>vinosquesosuy@gmail.com</td><td>099 333 222</td><td>Alimentación</td><td>web sin renovar desde 2009</td></tr>
+                <tr><td>18</td><td>Restaurante La Rueda</td><td>larueda@montevideo.com</td><td>2620 3344</td><td>Restaurante</td><td>sitio con diseño 2007</td></tr>
+                <tr><td>19</td><td>Empanadas Artesanales Doña Rosa</td><td>donarosa@adinet.com.uy</td><td>098 666 555</td><td>Comida</td><td>web caída, solo Facebook</td></tr>
+                <tr><td>20</td><td>Supermercado San Martín</td><td>sansuper@hotmail.com</td><td>2621 4455</td><td>Supermercado</td><td>página estática de 2008</td></tr>
+                <tr class="category-label"><td colspan="6">🏥 SALUD & BIENESTAR</td></tr>
+                <tr><td>21</td><td>Clínica Dental Dra. Pérez</td><td>draperez@gmail.com</td><td>091 555 666</td><td>Odontología</td><td>web sin mantenimiento desde 2009</td></tr>
+                <tr><td>22</td><td>Dr. Carlos Rodríguez (Medicina General)</td><td>crodriguez@adinet.com.uy</td><td>099 444 333</td><td>Medicina</td><td>sitio estático HTML 2006</td></tr>
+                <tr><td>23</td><td>Farmacia Central</td><td>farmacentral@montevideo.com</td><td>2620 5566</td><td>Farmacia</td><td>página sin actualizar desde 2008</td></tr>
+                <tr><td>24</td><td>Centro de Kinesiología del Prado</td><td>kineprado@gmail.com</td><td>098 777 888</td><td>Kinesiología</td><td>web con diseño 2007</td></tr>
+                <tr><td>25</td><td>Óptica Los Ángeles</td><td>optica_la@gmail.com</td><td>2623 6677</td><td>Óptica</td><td>dominio caído, sin hosting</td></tr>
+                <tr><td>26</td><td>Dr. Pablo Fernández (Pediatra)</td><td>drpablof@hotmail.com</td><td>091 777 888</td><td>Pediatría</td><td>web de 2009 sin renovar</td></tr>
+                <tr><td>27</td><td>Centro de Estudios Psicológicos</td><td>cep@adinet.com.uy</td><td>2622 1122</td><td>Psicología</td><td>sitio caído, solo mail</td></tr>
+                <tr><td>28</td><td>Policlínica del Cerro</td><td>policerro@gmail.com</td><td>098 222 111</td><td>Salud</td><td>web básica 2006</td></tr>
+                <tr><td>29</td><td>Laboratorio Bioanálisis</td><td>bio@montevideo.com.uy</td><td>2621 2233</td><td>Laboratorio</td><td>página sin actualizar desde 2008</td></tr>
+                <tr><td>30</td><td>Centro de Rehabilitación Física</td><td>crfisica@gmail.com</td><td>099 111 333</td><td>Rehabilitación</td><td>web estática 2007</td></tr>
+                <tr class="category-label"><td colspan="6">🔧 SERVICIOS & OFICIOS</td></tr>
+                <tr><td>31</td><td>Electricidad García</td><td>electricidadgarcia@adinet.com.uy</td><td>091 666 777</td><td>Electricista</td><td>web caída, sin hosting</td></tr>
+                <tr><td>32</td><td>Fontanero Express</td><td>fontanero_exp@gmail.com</td><td>099 555 444</td><td>Plomería</td><td>sitio de 2008 sin renovar</td></tr>
+                <tr><td>33</td><td>Cerrajería 24hs</td><td>cerrajeria24@hotmail.com</td><td>2622 3344</td><td>Cerrajería</td><td>página HTML 2006</td></tr>
+                <tr><td>34</td><td>Servicio Técnico Martínez</td><td>stmartinez@gmail.com</td><td>098 444 555</td><td>Técnico</td><td>web con diseño 2007</td></tr>
+                <tr><td>35</td><td>Jardinería del Sur</td><td>jardineriasur@adinet.com.uy</td><td>091 888 999</td><td>Jardinería</td><td>página sin mantenimiento desde 2009</td></tr>
+                <tr><td>36</td><td>Limpieza Profesional</td><td>limpiezaprof@gmail.com</td><td>2620 5566</td><td>Limpieza</td><td>web caída, solo teléfono</td></tr>
+                <tr><td>37</td><td>Mudanzas y Fletes Rápido</td><td>mudanzasrapido@hotmail.com</td><td>099 666 777</td><td>Mudanzas</td><td>sitio estático 2006</td></tr>
+                <tr><td>38</td><td>Taller Mecánico El Turbo</td><td>elturbo@gmail.com</td><td>2623 4455</td><td>Mecánica</td><td>página de 2008 sin renovar</td></tr>
+                <tr><td>39</td><td>Chapista González</td><td>chapistagonza@adinet.com.uy</td><td>098 333 222</td><td>Chapista</td><td>web básica 2005</td></tr>
+                <tr><td>40</td><td>Transportes del Uruguay</td><td>transporteuy@gmail.com</td><td>091 222 111</td><td>Transporte</td><td>dominio caído, sin contenido</td></tr>
+            </tbody>
+        </table>
+        <div class="footer-note">Prospectos 2026 — Pág. 1/4</div>
+    </div>
+
+    <div class="page">
+        <div class="section-title">
+            Listado de Prospectos <span>100 clientes potenciales · Pág. 2/4</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Empresa / Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Rubro</th>
+                    <th>Web actual (desactualizada)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="category-label"><td colspan="6">📚 EDUCACIÓN & CULTURA</td></tr>
+                <tr><td>41</td><td>Instituto de Inglés Anglo</td><td>anglo@adinet.com.uy</td><td>2620 1122</td><td>Educación</td><td>web con diseño 2008</td></tr>
+                <tr><td>42</td><td>Academia de Música Sonidos</td><td>sonidos@gmail.com</td><td>099 222 333</td><td>Música</td><td>sitio sin actualizar desde 2007</td></tr>
+                <tr><td>43</td><td>Escuela de Baile Latino</td><td>bailelatino@hotmail.com</td><td>098 555 666</td><td>Baile</td><td>página HTML 2006</td></tr>
+                <tr><td>44</td><td>Centro de Estudios Contables</td><td>cecont@montevideo.com.uy</td><td>2622 6677</td><td>Educación</td><td>web caída, sin hosting</td></tr>
+                <tr><td>45</td><td>Biblioteca Popular del Centro</td><td>biblio_centro@gmail.com</td><td>2621 3344</td><td>Cultura</td><td>sitio estático 2005</td></tr>
+                <tr><td>46</td><td>Taller de Arte Infantil</td><td>arteinfantil@adinet.com.uy</td><td>091 333 444</td><td>Arte</td><td>página sin renovar desde 2009</td></tr>
+                <tr><td>47</td><td>Academia de Informática PC</td><td>academiapc@gmail.com</td><td>099 777 888</td><td>Informática</td><td>web con diseño 2007</td></tr>
+                <tr><td>48</td><td>Curso de Cocina Profesional</td><td>cocinaprof@hotmail.com</td><td>2623 5566</td><td>Gastronomía</td><td>dominio caído</td></tr>
+                <tr><td>49</td><td>Escuela de Conductores Seguros</td><td>conductoreseguro@gmail.com</td><td>098 888 999</td><td>Autoescuela</td><td>web básica 2008</td></tr>
+                <tr><td>50</td><td>Instituto de Capacitación Laboral</td><td>iclaboral@adinet.com.uy</td><td>2620 7788</td><td>Capacitación</td><td>sitio sin actualizar desde 2009</td></tr>
+                <tr class="category-label"><td colspan="6">🏪 COMERCIOS & TIENDAS</td></tr>
+                <tr><td>51</td><td>Tienda de Ropa La Elegancia</td><td>laelegancia@gmail.com</td><td>091 444 555</td><td>Indumentaria</td><td>web caída, solo redes</td></tr>
+                <tr><td>52</td><td>Zapatería El Paso</td><td>zapateriaelpaso@hotmail.com</td><td>2621 5566</td><td>Calzado</td><td>página de 2007 sin renovar</td></tr>
+                <tr><td>53</td><td>Mueblería del Centro</td><td>muebleriacentro@adinet.com.uy</td><td>098 111 222</td><td>Muebles</td><td>web con diseño 2006</td></tr>
+                <tr><td>54</td><td>Joyería Suiza</td><td>joyeriasuiza@gmail.com</td><td>2622 4455</td><td>Joyería</td><td>sitio estático 2005</td></tr>
+                <tr><td>55</td><td>Librería Técnica</td><td>libreriatecnica@montevideo.com</td><td>099 333 444</td><td>Librería</td><td>página sin actualizar desde 2008</td></tr>
+                <tr><td>56</td><td>Regalería Detalles</td><td>detalles@gmail.com</td><td>091 555 666</td><td>Regalos</td><td>web caída, hosting vencido</td></tr>
+                <tr><td>57</td><td>Electrodomésticos San José</td><td>electrosj@hotmail.com</td><td>2623 6677</td><td>Electro</td><td>diseño web 2007</td></tr>
+                <tr><td>58</td><td>Almacén Natural</td><td>almacennatural@adinet.com.uy</td><td>098 444 555</td><td>Alimentos</td><td>sitio 2008 sin renovar</td></tr>
+                <tr><td>59</td><td>Ferrotech Ferretería</td><td>ferrotech@gmail.com</td><td>2620 3344</td><td>Ferretería</td><td>página HTML básica 2006</td></tr>
+                <tr><td>60</td><td>Bazar y Todo</td><td>bazarytodo@montevideo.com</td><td>091 666 777</td><td>Bazar</td><td>web caída, sin contenido</td></tr>
+                <tr class="category-label"><td colspan="6">💼 SERVICIOS PROFESIONALES</td></tr>
+                <tr><td>61</td><td>Estudio Contable Pérez & Asoc.</td><td>estudioperez@gmail.com</td><td>2621 2233</td><td>Contabilidad</td><td>web estática 2007</td></tr>
+                <tr><td>62</td><td>Abogados Martínez y Asociados</td><td>martinezyasoc@adinet.com.uy</td><td>099 555 666</td><td>Legal</td><td>página sin renovar desde 2008</td></tr>
+                <tr><td>63</td><td>Escribanía Rodríguez</td><td>escribanord@gmail.com</td><td>098 777 888</td><td>Escribanía</td><td>web con diseño 2006</td></tr>
+                <tr><td>64</td><td>Consultoría Empresarial Silva</td><td>consultorasilva@hotmail.com</td><td>2622 5566</td><td>Consultoría</td><td>sitio caído, diseño roto</td></tr>
+                <tr><td>65</td><td>Arquitectura & Diseño Interior</td><td>arqdiseno@montevideo.com.uy</td><td>091 888 999</td><td>Diseño</td><td>web sin actualizar desde 2009</td></tr>
+                <tr><td>66</td><td>Ingeniero Agrónomo López</td><td>inglopez@gmail.com</td><td>099 222 111</td><td>Agronomía</td><td>página HTML 2005</td></tr>
+                <tr><td>67</td><td>Topógrafo Fernández</td><td>topofernandez@adinet.com.uy</td><td>2620 4455</td><td>Topografía</td><td>web básica 2007</td></tr>
+                <tr><td>68</td><td>Corredor de Seguros González</td><td>segurosgonza@gmail.com</td><td>098 333 444</td><td>Seguros</td><td>sitio sin renovar desde 2008</td></tr>
+                <tr><td>69</td><td>Rematador Público Álvarez</td><td>rematadoralvarez@hotmail.com</td><td>091 777 888</td><td>Remates</td><td>web caída, sin hosting</td></tr>
+                <tr><td>70</td><td>Agente Inmobiliario García</td><td>inmogarcia@gmail.com</td><td>2623 7788</td><td>Inmobiliaria</td><td>página diseño 2006</td></tr>
+                <tr class="category-label"><td colspan="6">🌿 TURISMO & HOSTELERÍA</td></tr>
+                <tr><td>71</td><td>Hotel del Lago</td><td>hotellago@adinet.com.uy</td><td>099 666 777</td><td>Hotel</td><td>web con fotos de 2008</td></tr>
+                <tr><td>72</td><td>Cabañas del Sol</td><td>cabanasol@gmail.com</td><td>098 555 666</td><td>Alojamiento</td><td>sitio sin actualizar desde 2007</td></tr>
+                <tr><td>73</td><td>Agencia de Viajes Destinos</td><td>destinos@montevideo.com.uy</td><td>2621 4455</td><td>Turismo</td><td>página caída, sin renovar</td></tr>
+                <tr><td>74</td><td>Camping Municipal</td><td>camping@gmail.com</td><td>091 333 222</td><td>Camping</td><td>web HTML 2006</td></tr>
+                <tr><td>75</td><td>Guía Turístico local</td><td>guiaturistico@hotmail.com</td><td>099 444 555</td><td>Turismo</td><td>blog abandonado 2009</td></tr>
+                <tr><td>76</td><td>Restaurante del Puerto</td><td>restpuerto@adinet.com.uy</td><td>2622 6677</td><td>Gastronomía</td><td>web con menú de 2007</td></tr>
+                <tr><td>77</td><td>Hostería del Bosque</td><td>hosteriabosque@gmail.com</td><td>098 222 333</td><td>Alojamiento</td><td>diseño web 2005</td></tr>
+                <tr><td>78</td><td>Viñedo y Bodega Los Cerros</td><td>bodegacerros@montevideo.com</td><td>091 555 444</td><td>Vinos</td><td>página sin renovar desde 2008</td></tr>
+                <tr><td>79</td><td>Transporte Turístico Ruta 1</td><td>turismoruta1@gmail.com</td><td>2620 5566</td><td>Transporte</td><td>sitio estático 2007</td></tr>
+                <tr><td>80</td><td>Complejo Termal</td><td>termal@adinet.com.uy</td><td>099 888 777</td><td>Spa</td><td>web caída, sin hosting</td></tr>
+            </tbody>
+        </table>
+        <div class="footer-note">Prospectos 2026 — Pág. 2/4</div>
+    </div>
+
+    <div class="page">
+        <div class="section-title">
+            Listado de Prospectos <span>100 clientes potenciales · Pág. 3/4</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Empresa / Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Rubro</th>
+                    <th>Web actual (desactualizada)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="category-label"><td colspan="6">🐾 MASCOTAS & ANIMALES</td></tr>
+                <tr><td>81</td><td>Veterinaria del Parque</td><td>vetparque@adinet.com.uy</td><td>2623 4455</td><td>Veterinaria</td><td>web con diseño 2008</td></tr>
+                <tr><td>82</td><td>Pet Shop La Huella</td><td>lahuella@gmail.com</td><td>091 666 555</td><td>Mascotas</td><td>página sin actualizar desde 2007</td></tr>
+                <tr><td>83</td><td>Club Canino</td><td>clubcanino@hotmail.com</td><td>098 777 666</td><td>Adiestramiento</td><td>sitio estático 2005</td></tr>
+                <tr><td>84</td><td>Veterinaria Dr. López</td><td>vetlopez@gmail.com</td><td>099 333 222</td><td>Veterinaria</td><td>web caída, solo redes</td></tr>
+                <tr><td>85</td><td>Alimentos Balanceados del Uruguay</td><td>abu@montevideo.com.uy</td><td>2621 2233</td><td>Alimento animal</td><td>dominio caído</td></tr>
+                <tr class="category-label"><td colspan="6">🚗 AUTOMOTOR</td></tr>
+                <tr><td>86</td><td>Concesionaria del Centro</td><td>concesionariacentro@gmail.com</td><td>091 444 333</td><td>Autos</td><td>página 2008 sin renovar</td></tr>
+                <tr><td>87</td><td>Gomería El Rápido</td><td>gomeriarapido@adinet.com.uy</td><td>2622 5566</td><td>Gomería</td><td>web HTML 2007</td></tr>
+                <tr><td>88</td><td>Lavadero de Autos El Brillante</td><td>elbrillante@hotmail.com</td><td>098 444 333</td><td>Lavadero</td><td>sitio caído, diseño roto</td></tr>
+                <tr><td>89</td><td>Taller de Chapa y Pintura</td><td>chapypintura@gmail.com</td><td>099 555 444</td><td>Chapa</td><td>web estática 2006</td></tr>
+                <tr><td>90</td><td>Venta de Repuestos Usados</td><td>repuestos@gmail.com</td><td>2620 6677</td><td>Repuestos</td><td>página sin actualizar desde 2008</td></tr>
+                <tr class="category-label"><td colspan="6">📱 TECNOLOGÍA & COMUNICACIONES</td></tr>
+                <tr><td>91</td><td>Servicio Técnico PC Express</td><td>pcexpress@adinet.com.uy</td><td>091 777 666</td><td>Computación</td><td>web 2007, diseño desactualizado</td></tr>
+                <tr><td>92</td><td>Venta de Celulares TOP</td><td>celularestop@hotmail.com</td><td>098 555 444</td><td>Celulares</td><td>página con errores 2009</td></tr>
+                <tr><td>93</td><td>Ciber Café Central</td><td>cibercentral@gmail.com</td><td>2623 3344</td><td>Internet</td><td>sitio estático 2006</td></tr>
+                <tr><td>94</td><td>Instalación de Cámaras Visión</td><td>camarasvision@montevideo.com</td><td>099 222 111</td><td>Seguridad</td><td>web sin mantenimiento desde 2008</td></tr>
+                <tr><td>95</td><td>Antenas y TV Satelital</td><td>antenasuy@gmail.com</td><td>091 888 777</td><td>TV/Señal</td><td>caído, dominio vencido</td></tr>
+                <tr class="category-label"><td colspan="6">🎨 BELLEZA & ESTÉTICA</td></tr>
+                <tr><td>96</td><td>Pelquería Canina</td><td>pelqueriacanina@adinet.com.uy</td><td>2621 9988</td><td>Mascotas</td><td>web con diseño 2007</td></tr>
+                <tr><td>97</td><td>Salón de Belleza Elegance</td><td>elegance@gmail.com</td><td>098 666 555</td><td>Peluquería</td><td>página sin actualizar desde 2008</td></tr>
+                <tr><td>98</td><td>Centro de Estética Corporal</td><td>esteticacorporal@hotmail.com</td><td>099 777 666</td><td>Estética</td><td>sitio 2006, diseño roto</td></tr>
+                <tr><td>99</td><td>Barbería Clásica</td><td>barberiaclasica@gmail.com</td><td>2622 3344</td><td>Barbería</td><td>web caída, solo Instagram</td></tr>
+                <tr><td>100</td><td>SPA y Masajes Relax</td><td>sparelax@adinet.com.uy</td><td>091 555 444</td><td>SPA</td><td>página HTML 2005</td></tr>
+            </tbody>
+        </table>
+        <div class="footer-note">Prospectos 2026 — Pág. 3/4</div>
+    </div>
+
+    <!-- ===== SALES PLAN ===== -->
+    <div class="page">
+        <div class="plan-page">
+            <h1>Plan de <span>Venta</span></h1>
+            <div class="subtitle">Cómo convertir estos prospectos en clientes — paso a paso, sin vueltas</div>
+
+            <div class="plan-section">
+                <h2>🎯 El Problema (nuestro gancho)</h2>
+                <p>
+                    La mayoría de estos comercios tienen una página web que hicieron hace <strong>más de 15 años</strong> 
+                    y nunca la actualizaron. Algunas están rotas, otras tienen fotos de 2010, diseñadas con Flash 
+                    o HTML básico. Otras directamente <strong>no aparecen en Google</strong> cuando alguien busca su servicio.
+                </p>
+                <div class="highlight-box">
+                    <p>💡 <strong>Nuestro fuerte:</strong> "Su página web está igual que en 2010 — nosotros se la ponemos al día y 
+                    lo hacemos visible en Google. Sin tecnicismos, se lo explicamos todo claro."</p>
+                </div>
+            </div>
+
+            <div class="plan-section">
+                <h2>📞 Paso 1: Primer Contacto (llamada)</h2>
+                <div class="step-box">
+                    <div class="step-num">Guión sugerido</div>
+                    <h4>"Hola, soy [nombre] de [empresa]. Lo llamo porque vi que su página web está offline/desactualizada..."</h4>
+                    <p>
+                        La clave es ser directo y honesto. No le hables de "tecnología". Hablale de <strong>clientes</strong>.
+                        Decile: "La gente busca su servicio en Google y no lo encuentra porque su web está caída 
+                        o desactualizada. Nosotros podemos tenerlo online en [X días] con su teléfono, dirección 
+                        y fotos actualizadas. Sin enredos, precio claro y sin contratos largos."
+                    </p>
+                </div>
+            </div>
+
+            <div class="plan-section">
+                <h2>📋 Paso 2: Propuesta Simple</h2>
+                <p>Nada de maquetas ni mockups. Les mostrás 3 opciones bien concretas:</p>
+                <ul>
+                    <li><strong>Básica ($X):</strong> Una página de una sola hoja con su info, teléfono, WhatsApp, horarios y fotos. Ideal para el 80% de estos negocios.</li>
+                    <li><strong>Catálogo ($XX):</strong> Varias páginas — inicio, servicios, galería, contacto. Para los que tienen más para mostrar.</li>
+                    <li><strong>Completa ($XXX):</strong> Con panel para que ellos mismos editen textos y fotos cuando quieran.</li>
+                </ul>
+                <div class="highlight-box">
+                    <p>📌 <strong>Regla de oro:</strong> No hables de "responsive", "SEO", "backend" ni nada técnico. 
+                    Decí: "Se ve bien en el celular", "Aparece en Google", "Usted puede cambiar las fotos cuando quiera".</p>
+                </div>
+            </div>
+
+            <div class="plan-section">
+                <h2>🤝 Paso 3: El Cierre</h2>
+                <p>
+                    Ofrece hacerles la página <strong>y tenerla online en 48 horas</strong> si es básica. 
+                    Eso es un golazo porque muchos ya perdieron la fe en que alguien les resuelva rápido.
+                </p>
+                <p>
+                    Cobrales un adelanto del 50% y el resto contra entrega. Sino les gusta, les devolvés. 
+                    Así no corren riesgo y vos generás confianza al toque.
+                </p>
+            </div>
+
+            <div class="plan-section">
+                <h2>📈 Paso 4: Mantenimiento (ingreso recurrente)</h2>
+                <p>
+                    Una vez que le hiciste la web, ofrecé mantenerla actualizada por una cuota mensual chica ($X/mes). 
+                    Incluí: dominio, hosting, actualización de fotos/textos y soporte. Ellos se olvidan y vos 
+                    facturás todos los meses.
+                </p>
+                <div class="highlight-box">
+                    <p>💰 <strong>El negocio real:</strong> 100 clientes x $X/mes de mantenimiento = ingreso fijo todos los meses. 
+                    La página nueva es solo la puerta de entrada.</p>
+                </div>
+            </div>
+
+            <div class="plan-section">
+                <h2>⚡ Resumen Rápido</h2>
+                <table style="font-size:10px; margin-top:8px;">
+                    <thead>
+                        <tr><th>Paso</th><th>Qué hago</th><th>Qué digo</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Llamo</td><td>"Vi que su web está caída/antigua, lo ayudo a tenerla online rápido"</td></tr>
+                        <tr><td>2</td><td>Muestro opciones</td><td>"Esto es lo que necesita — precio fijo, sin sorpresas"</td></tr>
+                        <tr><td>3</td><td>Cierro</td><td>"Se la hago en 48 hrs, paga la mitad ahora y el resto cuando le guste"</td></tr>
+                        <tr><td>4</td><td>Doy mantenimiento</td><td>"Por $X/mes me encargo de todo, usted ni se acuerda"</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="plan-section">
+                <h2>🎯 Objetivo Semanal</h2>
+                <ul>
+                    <li><strong>Llamar:</strong> 20 prospectos por día (100 por semana)</li>
+                    <li><strong>Concretar:</strong> mínimo 3 reuniones/zoom por día</li>
+                    <li><strong>Cerrar:</strong> 5-10 páginas nuevas por mes</li>
+                    <li><strong>Mantener:</strong> sumar 15-20 clientes de mantenimiento mensual</li>
+                </ul>
+            </div>
+
+            <div class="footer-note">Plan de Venta · Prospectos 2026 · Julio 2026</div>
+        </div>
+    </div>
+
+</body>
+</html>

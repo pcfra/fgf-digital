@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold's Gym | El Hogar Original del Entrenamiento de Fuerza Serio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            background: #0a0a0a;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .container-wide {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(0,0,0,.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,.06);
+            padding: 0 24px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        .header-left .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-left .logo svg {
+            width: 100px;
+            height: auto;
+        }
+        .header-left .logo .logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #facc15;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .header-left .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+        .header-left .nav-links a {
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255,255,255,.7);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            transition: color .3s;
+        }
+        .header-left .nav-links a:hover {
+            color: #facc15;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .header-right .btn-outline {
+            border: 1px solid rgba(255,255,255,.3);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            transition: background .3s, border-color .3s;
+        }
+        .header-right .btn-outline:hover {
+            background: rgba(255,255,255,.1);
+            border-color: #fff;
+        }
+        .header-right .btn-solid {
+            background: #facc15;
+            color: #0a0a0a;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            transition: background .3s;
+        }
+        .header-right .btn-solid:hover {
+            background: #eab308;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .hamburger span {
+            width: 24px;
+            height: 2.5px;
+            background: #fff;
+            border-radius: 2px;
+            transition: .3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            margin-top: 72px;
+            height: 92vh;
+            min-height: 600px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%);
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to right, rgba(0,0,0,.8) 0%, rgba(0,0,0,.4) 50%, transparent 100%);
+        }
+        .hero .container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+        .hero .logo-big {
+            margin-bottom: 24px;
+        }
+        .hero .logo-big svg {
+            width: 180px;
+            height: auto;
+        }
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 96px;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: .9;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: -2px;
+        }
+        .hero h1 .highlight {
+            color: #facc15;
+        }
+        .hero .sub {
+            font-size: 18px;
+            color: rgba(255,255,255,.6);
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+        .hero .btn-hero {
+            display: inline-block;
+            background: #facc15;
+            color: #0a0a0a;
+            padding: 16px 48px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background .3s, transform .2s;
+        }
+        .hero .btn-hero:hover {
+            background: #eab308;
+            transform: translateY(-2px);
+        }
+        .hero .find-club {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 20px;
+            color: rgba(255,255,255,.6);
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            transition: color .3s;
+        }
+        .hero .find-club:hover {
+            color: #facc15;
+        }
+
+        /* ===== HISTORY ===== */
+        .history {
+            padding: 80px 0;
+            background: #0a0a0a;
+        }
+        .history-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .history-header h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .history-header h2 span {
+            color: #facc15;
+        }
+        .history-timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .history-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform .3s, border-color .3s;
+        }
+        .history-card:hover {
+            transform: translateY(-4px);
+            border-color: #facc15;
+        }
+        .history-card .thumb {
+            height: 240px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+        .history-card .body {
+            padding: 24px;
+        }
+        .history-card .year {
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #facc15;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .history-card .body h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 22px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .history-card .body p {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.6;
+        }
+        .history-card .quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-style: italic;
+            color: #facc15;
+            line-height: 1.6;
+        }
+        .history-card .quote-author {
+            font-size: 13px;
+            color: #888;
+            margin-top: 8px;
+        }
+
+        /* ===== TRAINING ===== */
+        .training {
+            padding: 80px 0;
+            background: #111;
+        }
+        .training-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .training-header h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .training-header h2 span {
+            color: #facc15;
+        }
+        .training-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .training-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            min-height: 420px;
+            display: flex;
+            align-items: flex-end;
+            cursor: pointer;
+            transition: transform .3s;
+        }
+        .training-card:hover {
+            transform: scale(1.02);
+        }
+        .training-card .bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+        }
+        .training-card .bg.t1 { background: linear-gradient(135deg, #1a1a2e, #16213e); }
+        .training-card .bg.t2 { background: linear-gradient(135deg, #2d1a1a, #3e1616); }
+        .training-card .bg.t3 { background: linear-gradient(135deg, #1a2d1a, #163e16); }
+        .training-card .overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,.8) 0%, transparent 60%);
+        }
+        .training-card .content {
+            position: relative;
+            z-index: 2;
+            padding: 32px;
+        }
+        .training-card .content .icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+        .training-card .content h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .training-card .content p {
+            font-size: 14px;
+            color: rgba(255,255,255,.6);
+            line-height: 1.6;
+        }
+
+        /* ===== STORE ===== */
+        .store {
+            padding: 80px 0;
+            background: #0a0a0a;
+        }
+        .store-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .store-header h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .store-header h2 span {
+            color: #facc15;
+        }
+        .store-header .btn-shop {
+            display: inline-block;
+            margin-top: 16px;
+            background: #facc15;
+            color: #0a0a0a;
+            padding: 12px 32px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            transition: background .3s;
+        }
+        .store-header .btn-shop:hover {
+            background: #eab308;
+        }
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .store-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 16px;
+            overflow: hidden;
+            text-align: center;
+            padding-bottom: 24px;
+            transition: transform .3s, border-color .3s;
+        }
+        .store-card:hover {
+            transform: translateY(-4px);
+            border-color: #facc15;
+        }
+        .store-card .thumb {
+            height: 280px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        .store-card h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .store-card p {
+            font-size: 14px;
+            color: #888;
+        }
+        .store-card .btn {
+            display: inline-block;
+            margin-top: 16px;
+            border: 1px solid #facc15;
+            color: #facc15;
+            padding: 8px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            transition: background .3s, color .3s;
+        }
+        .store-card .btn:hover {
+            background: #facc15;
+            color: #0a0a0a;
+        }
+
+        /* ===== FRANCHISE ===== */
+        .franchise {
+            padding: 80px 0;
+            background: #111;
+        }
+        .franchise .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .franchise-text h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+        .franchise-text h2 span {
+            color: #facc15;
+        }
+        .franchise-text p {
+            font-size: 15px;
+            color: #888;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+        .franchise-text .btn {
+            background: #facc15;
+            color: #0a0a0a;
+            padding: 14px 32px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            display: inline-block;
+            transition: background .3s;
+        }
+        .franchise-text .btn:hover {
+            background: #eab308;
+        }
+        .franchise-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .franchise-stat {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+        }
+        .franchise-stat .num {
+            font-family: 'Oswald', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: #facc15;
+            line-height: 1;
+        }
+        .franchise-stat .label {
+            font-size: 13px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-top: 8px;
+        }
+
+        /* ===== NEWS ===== */
+        .news {
+            padding: 80px 0;
+            background: #0a0a0a;
+        }
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+        .news-header h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .news-header h2 span {
+            color: #facc15;
+        }
+        .news-header .see-all {
+            color: #facc15;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            transition: opacity .3s;
+        }
+        .news-header .see-all:hover {
+            opacity: .7;
+        }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .news-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform .3s, border-color .3s;
+        }
+        .news-card:hover {
+            transform: translateY(-4px);
+            border-color: #facc15;
+        }
+        .news-card .thumb {
+            height: 200px;
+            background: #1a1a1a;
+        }
+        .news-card .body {
+            padding: 20px;
+        }
+        .news-card .tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            color: #facc15;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            background: rgba(250,204,21,.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .news-card .body h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .news-card .body .date {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* ===== SOCIAL ===== */
+        .social-section {
+            padding: 48px 0;
+            background: #111;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+        .social-section h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .social-section h2 span {
+            color: #facc15;
+        }
+        .social-section .handles {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 16px;
+        }
+        .social-section .handles a {
+            color: #888;
+            font-size: 15px;
+            transition: color .3s;
+        }
+        .social-section .handles a:hover {
+            color: #facc15;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #0a0a0a;
+            padding: 48px 0 24px;
+            border-top: 1px solid #1a1a1a;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #1a1a1a;
+            margin-bottom: 24px;
+        }
+        .footer-brand .logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #facc15;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .footer-brand .tagline {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .footer-brand p {
+            font-size: 13px;
+            color: #555;
+            max-width: 320px;
+            line-height: 1.7;
+        }
+        .footer-col h4 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            font-size: 13px;
+            color: #666;
+            transition: color .3s;
+        }
+        .footer-col ul li a:hover {
+            color: #facc15;
+        }
+        .footer-bottom {
+            text-align: center;
+            font-size: 12px;
+            color: #444;
+        }
+        .footer-bottom a {
+            color: #666;
+            transition: color .3s;
+        }
+        .footer-bottom a:hover {
+            color: #facc15;
+        }
+        .footer-bottom .sep {
+            margin: 0 6px;
+            color: #333;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .history-timeline {
+                grid-template-columns: 1fr 1fr;
+            }
+            .training-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .store-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .franchise .container {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .news-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        /* ===== WHATSAPP FLOAT ===== */
+        .wa-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .wa-float .tooltip {
+            background: #fff;
+            color: #111;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,.3);
+            opacity: 0;
+            transform: translateX(10px);
+            transition: .3s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .wa-float:hover .tooltip {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .wa-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #25D366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(37,211,102,.4);
+            transition: transform .3s, box-shadow .3s;
+            animation: wa-pulse 2s infinite;
+            flex-shrink: 0;
+        }
+        .wa-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 24px rgba(37,211,102,.6);
+        }
+        .wa-btn svg {
+            width: 28px;
+            height: 28px;
+            fill: #fff;
+        }
+        @keyframes wa-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37,211,102,.5); }
+            70% { box-shadow: 0 0 0 16px rgba(37,211,102,0); }
+            100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+        }
+
+        /* ===== STATS ===== */
+        .stats {
+            padding: 60px 0;
+            background: #111;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            text-align: center;
+        }
+        .stats-item .num {
+            font-family: 'Oswald', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #facc15;
+            line-height: 1;
+        }
+        .stats-item .label {
+            font-size: 13px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-top: 8px;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 80px 0;
+            background: #111;
+        }
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .testimonials-header h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .testimonials-header h2 span {
+            color: #facc15;
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .testimonial-card {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: transform .3s, border-color .3s;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            border-color: #facc15;
+        }
+        .testimonial-card .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #1a1a1a;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: #facc15;
+            font-family: 'Oswald', sans-serif;
+        }
+        .testimonial-card .stars {
+            color: #facc15;
+            font-size: 18px;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+        .testimonial-card blockquote {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 16px;
+        }
+        .testimonial-card .name {
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+        }
+        .testimonial-card .role {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        /* ===== FGF BADGE ===== */
+        .fgf-badge {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 9999;
+            background: rgba(0,0,0,.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(250,204,21,.2);
+            border-radius: 8px;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #facc15;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            cursor: default;
+            box-shadow: 0 2px 8px rgba(0,0,0,.4);
+            transition: border-color .3s;
+        }
+        .fgf-badge:hover {
+            border-color: #facc15;
+        }
+        .fgf-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #facc15;
+            animation: wa-pulse 2s infinite;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+        .animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1024px) {
+            .testimonials-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .header-left .nav-links {
+                display: none;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                background: #0a0a0a;
+                flex-direction: column;
+                padding: 16px 24px;
+                gap: 12px;
+                border-bottom: 1px solid #222;
+            }
+            .header-left .nav-links.open {
+                display: flex;
+            }
+            .header-right .btn-outline {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 48px;
+            }
+            .hero .find-club {
+                display: block;
+                margin-left: 0;
+                margin-top: 16px;
+            }
+            .history-timeline {
+                grid-template-columns: 1fr;
+            }
+            .training-grid {
+                grid-template-columns: 1fr;
+            }
+            .store-grid {
+                grid-template-columns: 1fr;
+            }
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            .franchise-stats {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 32px 16px;
+            }
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+        }
+
+/* === RESPONSIVE MOBILE FGF === */
+@media (max-width: 768px) {
+  .container, section > div:not(.no-resp) { padding: 0 16px !important; }
+  h1 { font-size: 2rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  .grid, .grid-2, [class*="grid"] { grid-template-columns: 1fr !important; }
+  .flex, [class*="flex"] { flex-wrap: wrap !important; }
+  img { max-width: 100% !important; height: auto !important; }
+  table { font-size: 12px !important; }
+  td, th { padding: 6px 4px !important; }
+  .btn, button, a.btn { width: 100% !important; text-align: center !important; }
+  nav, .nav, .navbar { flex-wrap: wrap !important; }
+  .hero { padding: 80px 16px 40px !important; }
+  .hero h1 { font-size: 2.2rem !important; }
+  section { padding: 40px 0 !important; }
+}
+@media (max-width: 480px) {
+  h1 { font-size: 1.6rem !important; }
+  h2 { font-size: 1.3rem !important; }
+  body { font-size: 14px !important; }
+  .hide-mobile { display: none !important; }
+}
+
+    </style>
+</head>
+<body>
+<!-- ════════════════════════════════════════════ -->
+<!-- FGF DIGITAL · Modelo de referencia          -->
+<!-- ════════════════════════════════════════════ -->
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;text-align:center;padding:12px 20px;font-family:sans-serif;font-size:14px;border-bottom:3px solid #e94560;">
+  🚧 <strong>FGF DIGITAL</strong> · Modelo de referencia ·
+  <a href="https://fgfdigital.cl" style="color:#e94560;text-decoration:underline;">fgfdigital.cl</a>
+</div>
+
+
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="header-left">
+            <a href="#" class="logo">
+                <div class="logo-text">Gold's Gym</div>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#">Noticias</a></li>
+                <li><a href="#">Tienda</a></li>
+                <li><a href="#">Tu Propio Gold's Gym</a></li>
+            </ul>
+        </div>
+        <div class="header-right">
+            <a href="#" class="btn-outline">Pase Gratuito</a>
+            <a href="#" class="btn-solid">Encuentra un Club</a>
+            <button class="hamburger" id="hamburger" aria-label="Menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero animate">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="logo-big">
+                <div style="font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;color:#facc15;letter-spacing:2px;">GOLD'S GYM</div>
+            </div>
+            <h1>MÁS FUERTE<br><span class="highlight">EMPIEZA AQUÍ</span></h1>
+            <div class="sub">El hogar original del entrenamiento de fuerza desde 1965.</div>
+            <a href="#" class="btn-hero">Únete Ahora</a>
+            <a href="#" class="find-club">📍 Encuentra un Club →</a>
+        </div>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <section class="stats animate">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stats-item">
+                    <div class="num">50+</div>
+                    <div class="label">Años de Historia</div>
+                </div>
+                <div class="stats-item">
+                    <div class="num">2M+</div>
+                    <div class="label">Miembros Activos</div>
+                </div>
+                <div class="stats-item">
+                    <div class="num">500+</div>
+                    <div class="label">Sedes en el Mundo</div>
+                </div>
+                <div class="stats-item">
+                    <div class="num">100%</div>
+                    <div class="label">Intensidad Garantizada</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HISTORY ===== -->
+    <section class="history animate">
+        <div class="container">
+            <div class="history-header">
+                <h2>60 Años de <span>Entrenamiento Serio</span></h2>
+            </div>
+            <div class="history-timeline">
+                <div class="history-card">
+                    <div class="thumb">🏋️</div>
+                    <div class="body">
+                        <div class="year">1938</div>
+                        <h3>Hecho a Sí Mismo</h3>
+                        <p>Joe era un hombre hecho a sí mismo. Gran parte del equipo del gimnasio fue fabricado por él mismo.</p>
+                    </div>
+                </div>
+                <div class="history-card">
+                    <div class="thumb">🌴</div>
+                    <div class="body">
+                        <div class="year">1945</div>
+                        <h3>Regreso a California</h3>
+                        <p>Después de la Segunda Guerra Mundial, Joe regresa a California para perseguir sus dos pasiones: el entrenamiento con pesas y el culturismo.</p>
+                    </div>
+                </div>
+                <div class="history-card">
+                    <div class="thumb">🏆</div>
+                    <div class="body">
+                        <div class="year">1965</div>
+                        <h3>Nace una Leyenda</h3>
+                        <p>Joe abre el primer Gold's Gym en Venice Beach, California. Nace una leyenda.</p>
+                    </div>
+                </div>
+                <div class="history-card">
+                    <div class="thumb">💪</div>
+                    <div class="body">
+                        <div class="quote">"Cuando llegué aquí, no tenía dinero. Joe me dejó entrenar en su estudio de todas formas gratis."</div>
+                        <div class="quote-author">— Arnold Schwarzenegger</div>
+                    </div>
+                </div>
+                <div class="history-card">
+                    <div class="thumb">🌍</div>
+                    <div class="body">
+                        <div class="year">Icono Global</div>
+                        <h3>Seis Décadas de Impacto</h3>
+                        <p>Desde Venice Beach hasta seis continentes, Gold's Gym se ha convertido en un icono global del fitness inspirando a millones.</p>
+                    </div>
+                </div>
+                <div class="history-card">
+                    <div class="thumb">🔥</div>
+                    <div class="body">
+                        <div class="year">Hoy</div>
+                        <h3>Todavía Firme</h3>
+                        <p>Por más de 60 años, Gold's Gym ha estado a la vanguardia del fitness, pionero en transformaciones que cambian vidas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TRAINING ===== -->
+    <section class="training animate">
+        <div class="container">
+            <div class="training-header">
+                <h2>Entrenamiento en <span>Gold's Gym</span></h2>
+            </div>
+            <div class="training-grid">
+                <div class="training-card">
+                    <div class="bg t1"></div>
+                    <div class="overlay"></div>
+                    <div class="content">
+                        <div class="icon">🎯</div>
+                        <h3>Entrenamiento Personal</h3>
+                        <p>Alcanza tus metas de fitness con planes de entrenamiento personalizados y la guía experta de nuestros entrenadores personales certificados.</p>
+                    </div>
+                </div>
+                <div class="training-card">
+                    <div class="bg t2"></div>
+                    <div class="overlay"></div>
+                    <div class="content">
+                        <div class="icon">🔥</div>
+                        <h3>Clases Grupales</h3>
+                        <p>Supera tus límites con nuestras energéticas clases grupales de fitness. Desde ciclismo hasta HIIT, nuestros instructores te mantienen motivado.</p>
+                    </div>
+                </div>
+                <div class="training-card">
+                    <div class="bg t3"></div>
+                    <div class="overlay"></div>
+                    <div class="content">
+                        <div class="icon">🏋️</div>
+                        <h3>Equipo para Cada Meta</h3>
+                        <p>Máquinas de última generación y pesas libres diseñadas para ayudar a cada atleta a alcanzar su potencial.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonials animate">
+        <div class="container">
+            <div class="testimonials-header">
+                <h2>Lo Que Dicen <span>Nuestros Miembros</span></h2>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="avatar">AR</div>
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Gold's Gym cambió mi vida. En 6 meses transformé mi cuerpo y mi mentalidad. El mejor gym del mundo."</blockquote>
+                    <div class="name">Arnold R.</div>
+                    <div class="role">Miembro desde 2023</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="avatar">LM</div>
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"El ambiente es increíble. Los trainers te empujan al límite y los resultados hablan solos. 100% recomendado."</blockquote>
+                    <div class="name">Laura M.</div>
+                    <div class="role">Miembro desde 2024</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="avatar">CG</div>
+                    <div class="stars">★★★★★</div>
+                    <blockquote>"Desde que entreno en Gold's Gym mi fuerza y resistencia mejoraron drásticamente. Es mucho más que un gimnasio."</blockquote>
+                    <div class="name">Carlos G.</div>
+                    <div class="role">Miembro desde 2022</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STORE ===== -->
+    <section class="store animate">
+        <div class="container">
+            <div class="store-header">
+                <h2>Explora la <span>Tienda</span></h2>
+                <a href="#" class="btn-shop">Ir a la Tienda</a>
+            </div>
+            <div class="store-grid">
+                <div class="store-card">
+                    <div class="thumb">👕</div>
+                    <h3>Ropa</h3>
+                    <p>Mercancía y ropa de Gold's Gym</p>
+                    <a href="#" class="btn">Comprar Ahora</a>
+                </div>
+                <div class="store-card">
+                    <div class="thumb">💊</div>
+                    <h3>Nutrición</h3>
+                    <p>Suplementos, proteína y más</p>
+                    <a href="#" class="btn">Comprar Ahora</a>
+                </div>
+                <div class="store-card">
+                    <div class="thumb">🛍️</div>
+                    <h3>Colecciones</h3>
+                    <p>Nuevos ingresos y artículos exclusivos</p>
+                    <a href="#" class="btn">Comprar Ahora</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FRANCHISE ===== -->
+    <section class="franchise animate">
+        <div class="container">
+            <div class="franchise-text">
+                <h2>Tu Propio <span>Gold's Gym</span></h2>
+                <p>Gold's Gym ofrece oportunidades de franquicia tanto a nivel nacional como en todo el mundo. Únete al icono global del fitness.</p>
+                <a href="#" class="btn">Más Información</a>
+            </div>
+            <div class="franchise-stats">
+                <div class="franchise-stat">
+                    <div class="num">$1.9M+</div>
+                    <div class="label">Ingreso Bruto Promedio por Gym</div>
+                </div>
+                <div class="franchise-stat">
+                    <div class="num">500+</div>
+                    <div class="label">Ubicaciones en Todo el Mundo</div>
+                </div>
+                <div class="franchise-stat">
+                    <div class="num">30+</div>
+                    <div class="label">Países</div>
+                </div>
+                <div class="franchise-stat">
+                    <div class="num">1965</div>
+                    <div class="label">Fundado</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEWS ===== -->
+    <section class="news animate">
+        <div class="container">
+            <div class="news-header">
+                <h2>Últimas <span>Noticias</span></h2>
+                <a href="#" class="see-all">Leer Más →</a>
+            </div>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="thumb" style="background:linear-gradient(135deg,#1a1a2e,#2d2d5e)"></div>
+                    <div class="body">
+                        <div class="tag">Comunicados de Prensa</div>
+                        <h3>Liderando la Próxima Era: Brad Reynolds Nombrado CEO Único de Gold's Gym</h3>
+                        <div class="date">13 de Julio, 2026</div>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="thumb" style="background:linear-gradient(135deg,#2d1a1a,#5e2d2d)"></div>
+                    <div class="body">
+                        <div class="tag">Entrenamientos</div>
+                        <h3>Los Mejores Ejercicios con Barra Trap: 16 Potentes Entrenamientos para Fuerza de Cuerpo Completo</h3>
+                        <div class="date">2 de Julio, 2026</div>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="thumb" style="background:linear-gradient(135deg,#1a2d1a,#2d5e2d)"></div>
+                    <div class="body">
+                        <div class="tag">Consejos Fitness</div>
+                        <h3>5 Ejercicios Efectivos de Bíceps Superior para Desarrollar Masa</h3>
+                        <div class="date">1 de Julio, 2026</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SOCIAL ===== -->
+    <section class="social-section animate">
+        <div class="container">
+            <h2>Únete a la <span>Comunidad</span></h2>
+            <div class="handles">
+                <a href="#">@goldsgym</a>
+                <a href="#">#goldsgym</a>
+                <a href="#">Gold's Gym</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo-text">Gold's Gym</div>
+                    <div class="tagline">El Estándar Desde 1965</div>
+                    <p>El hogar original del entrenamiento de fuerza. Desde Venice Beach hasta el mundo.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Explorar</h4>
+                    <ul>
+                        <li><a href="#">Encuentra un Gym</a></li>
+                        <li><a href="#">Membresía</a></li>
+                        <li><a href="#">Horario de Clases</a></li>
+                        <li><a href="#">Entrenamiento Personal</a></li>
+                        <li><a href="#">Tienda</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Compañía</h4>
+                    <ul>
+                        <li><a href="#">Tu Propia Franquicia</a></li>
+                        <li><a href="#">Carreras</a></li>
+                        <li><a href="#">Noticias</a></li>
+                        <li><a href="#">RSG Group</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Aviso de Privacidad</a></li>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Aviso de Privacidad Estatal</a></li>
+                        <li><a href="#">Solicitud de Cancelación</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 GOLD'S GYM — TODOS LOS DERECHOS RESERVADOS
+                <br>
+                <a href="#">No Vender ni Compartir Mi Información Personal</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <div class="wa-float">
+        <div class="tooltip">Chateá con Gold's Gym</div>
+        <a href="https://wa.me/" target="_blank" rel="noopener" class="wa-btn" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+        </a>
+    </div>
+
+    <!-- ===== FGF BADGE ===== -->
+    <div class="fgf-badge">
+        <span class="dot"></span>
+        Demo · FGF Digital
+    </div>
+
+    <script>
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: .15 });
+
+        document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

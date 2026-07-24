@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarOne | Compra y Venta de Autos Usados y 0km</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1c1c1c;
+            background: #fff;
+            line-height: 1.5;
+        }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            background: #0a1628;
+            color: rgba(255,255,255,.5);
+            font-size: 12px;
+            padding: 8px 0;
+        }
+        .top-bar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-bar a { color: rgba(255,255,255,.5); transition: color .3s; }
+        .top-bar a:hover { color: #fff; }
+        .top-bar .left { display: flex; gap: 16px; }
+        .top-bar .right { display: flex; gap: 16px; }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #e8e8e8;
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #e31e24;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 800;
+            font-size: 18px;
+        }
+        .logo .logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: #0a1628;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        .logo .logo-text span { color: #e31e24; }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+            transition: color .3s;
+        }
+        .nav-links a:hover { color: #e31e24; }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-right a {
+            font-size: 13px;
+            color: #555;
+            transition: color .3s;
+        }
+        .header-right a:hover { color: #e31e24; }
+        .header-right .icon-link { font-size: 18px; }
+        .header-right .btn-search-header {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #555;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .hamburger span { width: 24px; height: 2.5px; background: #0a1628; border-radius: 2px; }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 100%);
+            color: #fff;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(227,30,36,.08) 0%, transparent 60%);
+            border-radius: 50%;
+        }
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 52px;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 8px;
+            position: relative;
+        }
+        .hero h1 .highlight { color: #e31e24; }
+        .hero p {
+            font-size: 17px;
+            color: rgba(255,255,255,.6);
+            margin-bottom: 32px;
+            position: relative;
+        }
+        .hero .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .hero .btn {
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            transition: .3s;
+        }
+        .hero .btn-primary { background: #e31e24; color: #fff; }
+        .hero .btn-primary:hover { background: #c41a1f; transform: translateY(-2px); }
+        .hero .btn-outline-light { border: 2px solid rgba(255,255,255,.3); color: #fff; }
+        .hero .btn-outline-light:hover { border-color: #fff; background: rgba(255,255,255,.05); }
+
+        /* ===== PROMO BAR ===== */
+        .promo-bar {
+            background: #e31e24;
+            color: #fff;
+            text-align: center;
+            padding: 14px 0;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .promo-bar small { font-weight: 400; opacity: .8; display: block; margin-top: 4px; font-size: 12px; }
+
+        /* ===== BRANDS ===== */
+        .brands {
+            padding: 40px 0;
+            text-align: center;
+        }
+        .brands h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #0a1628;
+            margin-bottom: 24px;
+        }
+        .brands h2 span { color: #e31e24; }
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .brand-item {
+            background: #f8f8f8;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 20px 12px;
+            text-align: center;
+            transition: transform .3s, border-color .3s;
+            cursor: pointer;
+        }
+        .brand-item:hover { transform: translateY(-3px); border-color: #e31e24; }
+        .brand-item .icon { font-size: 40px; margin-bottom: 8px; }
+        .brand-item .name { font-size: 13px; font-weight: 600; color: #333; }
+
+        /* ===== SELL SECTION ===== */
+        .sell-section {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+        .sell-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        .sell-text h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 34px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #0a1628;
+            line-height: 1.1;
+        }
+        .sell-text h2 span { color: #e31e24; }
+        .sell-text p {
+            font-size: 16px;
+            color: #666;
+            margin: 16px 0 24px;
+        }
+        .sell-text .btn { 
+            background: #e31e24; color: #fff; padding: 14px 32px;
+            border-radius: 50px; font-weight: 700; font-size: 14px;
+            text-transform: uppercase; display: inline-block; transition: .3s;
+        }
+        .sell-text .btn:hover { background: #c41a1f; }
+        .sell-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .step-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        .step-card .num {
+            width: 40px; height: 40px;
+            background: #e31e24; color: #fff;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 18px;
+            margin: 0 auto 12px;
+        }
+        .step-card h4 { font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 600; color: #0a1628; margin-bottom: 6px; }
+        .step-card p { font-size: 13px; color: #888; }
+
+        /* ===== NEW ARRIVALS ===== */
+        .new-arrivals {
+            padding: 60px 0;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .section-header h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #0a1628;
+        }
+        .section-header h2 span { color: #e31e24; }
+        .section-header .see-all {
+            color: #e31e24; font-weight: 600; font-size: 13px;
+            text-transform: uppercase;
+        }
+        .section-header .see-all:hover { text-decoration: underline; }
+        .type-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .type-tabs a {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #666;
+            transition: .3s;
+        }
+        .type-tabs a:hover,
+        .type-tabs a.active { border-color: #e31e24; color: #e31e24; background: rgba(227,30,36,.05); }
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .car-card {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: box-shadow .3s, transform .3s;
+            cursor: pointer;
+            background: #fff;
+        }
+        .car-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); transform: translateY(-3px); }
+        .car-card .thumb {
+            height: 160px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+        }
+        .car-card .body { padding: 14px; }
+        .car-card .body .name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #0a1628;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .car-card .body .year-km {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        .car-card .body .price {
+            font-family: 'Oswald', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #e31e24;
+        }
+        .car-card .body .old-price {
+            font-size: 13px;
+            color: #999;
+            text-decoration: line-through;
+        }
+        .car-card .body .tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            color: #fff;
+            background: #e31e24;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        /* ===== REASONS ===== */
+        .reasons {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+        .reasons h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-align: center;
+            color: #0a1628;
+            margin-bottom: 32px;
+        }
+        .reasons h2 span { color: #e31e24; }
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .reason-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 28px 20px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        .reason-card .icon { font-size: 40px; margin-bottom: 12px; }
+        .reason-card h4 { font-family: 'Oswald', sans-serif; font-size: 17px; font-weight: 600; color: #0a1628; margin-bottom: 8px; }
+        .reason-card p { font-size: 13px; color: #888; line-height: 1.5; }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 60px 0;
+        }
+        .testimonials h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-align: center;
+            color: #0a1628;
+            margin-bottom: 32px;
+        }
+        .testimonials h2 span { color: #e31e24; }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .testimonial-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid #eee;
+        }
+        .testimonial-card .stars { color: #f5a623; font-size: 14px; margin-bottom: 8px; }
+        .testimonial-card .text { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 12px; font-style: italic; }
+        .testimonial-card .author { font-size: 13px; font-weight: 600; color: #0a1628; }
+        .testimonial-card .date { font-size: 11px; color: #aaa; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #0a1628;
+            color: rgba(255,255,255,.5);
+            padding: 48px 0 24px;
+        }
+        .footer-newsletter {
+            text-align: center;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+            margin-bottom: 32px;
+        }
+        .footer-newsletter h3 { font-family: 'Oswald', sans-serif; font-size: 22px; color: #fff; margin-bottom: 4px; }
+        .footer-newsletter p { font-size: 13px; margin-bottom: 16px; }
+        .footer-newsletter .news-form {
+            display: flex;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .footer-newsletter .news-form input {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+        .footer-newsletter .news-form button {
+            background: #e31e24;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 0 50px 50px 0;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .footer-newsletter .news-form button:hover { background: #c41a1f; }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+            margin-bottom: 24px;
+        }
+        .footer-brand .logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .footer-brand .logo-text span { color: #e31e24; }
+        .footer-brand p { font-size: 13px; line-height: 1.6; max-width: 320px; }
+        .footer-brand .social {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .footer-brand .social a {
+            color: rgba(255,255,255,.4);
+            font-size: 14px;
+            transition: color .3s;
+        }
+        .footer-brand .social a:hover { color: #e31e24; }
+        .footer-col h4 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a { font-size: 13px; color: rgba(255,255,255,.4); transition: color .3s; }
+        .footer-col ul li a:hover { color: #e31e24; }
+        .footer-bottom {
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255,255,255,.25);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .cars-grid { grid-template-columns: repeat(2, 1fr); }
+            .reasons-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .brands-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0; right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 16px 24px;
+                gap: 12px;
+                box-shadow: 0 8px 24px rgba(0,0,0,.08);
+            }
+            .nav-links.open { display: flex; }
+            .header-right a:not(.icon-link) { display: none; }
+            .hero h1 { font-size: 34px; }
+            .sell-grid { grid-template-columns: 1fr; }
+            .sell-steps { grid-template-columns: 1fr; }
+            .cars-grid { grid-template-columns: 1fr; }
+            .reasons-grid { grid-template-columns: 1fr; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+            .brands-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed; bottom: 24px; right: 24px; z-index: 999;
+            width: 60px; height: 60px; background: #25D366; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(37,211,102,.4);
+            transition: transform .3s, box-shadow .3s; text-decoration: none;
+            animation: pulse-whatsapp 2s infinite;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(37,211,102,.6); animation: none; }
+        .whatsapp-float svg { width: 32px; height: 32px; fill: #fff; }
+        .whatsapp-float .tooltip {
+            position: absolute; right: 72px; background: #fff; color: #075e54;
+            padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 600;
+            white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,.15);
+            opacity: 0; transition: opacity .3s; pointer-events: none;
+        }
+        .whatsapp-float:hover .tooltip { opacity: 1; }
+        @keyframes pulse-whatsapp {
+            0% { box-shadow: 0 4px 20px rgba(37,211,102,.4); }
+            50% { box-shadow: 0 4px 30px rgba(37,211,102,.7); }
+            100% { box-shadow: 0 4px 20px rgba(37,211,102,.4); }
+        }
+
+        /* ===== STATS ===== */
+        .stats { padding: 60px 0; background: #0a1628; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+        .stat-item .number { font-family: 'Oswald', sans-serif; font-size: 42px; font-weight: 700; color: #e31e24; line-height: 1.2; }
+        .stat-item .label { font-size: 13px; color: rgba(255,255,255,.5); margin-top: 4px; text-transform: uppercase; letter-spacing: .5px; }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials2 { padding: 80px 0; background: #f8f9fa; }
+        .testimonials2 .testimonials-header { text-align: center; margin-bottom: 48px; }
+        .testimonials2 .testimonials-header h2 { font-family: 'Oswald', sans-serif; font-size: 34px; font-weight: 700; color: #0a1628; }
+        .testimonials2 .testimonials-header h2 span { color: #e31e24; }
+        .testimonials2 .testimonials-header p { color: #6b7280; margin-top: 8px; font-size: 16px; }
+        .testimonials2 .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .testimonials2 .testimonial-card { background: #fff; border-radius: 12px; padding: 28px; border: 1px solid #e5e7eb; transition: transform .3s, box-shadow .3s; }
+        .testimonials2 .testimonial-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,.08); }
+        .testimonials2 .testimonial-card .stars { color: #f5a623; font-size: 16px; margin-bottom: 12px; }
+        .testimonials2 .testimonial-card .text { font-size: 14px; color: #4b5563; line-height: 1.7; font-style: italic; margin-bottom: 16px; }
+        .testimonials2 .testimonial-card .author-avatar { width: 44px; height: 44px; border-radius: 50%; background: #0a1628; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; color: #fff; margin-bottom: 8px; }
+        .testimonials2 .testimonial-card .author-info .name { font-weight: 600; color: #0a1628; font-size: 15px; }
+        .testimonials2 .testimonial-card .author-info .role { font-size: 13px; color: #9ca3af; }
+
+        /* ===== FGF BADGE ===== */
+        .fgf-badge {
+            position: fixed; top: 12px; left: 12px; z-index: 9999;
+            background: rgba(10,22,40,.85); backdrop-filter: blur(8px);
+            color: #e31e24; padding: 6px 14px; border-radius: 20px;
+            font-size: 11px; font-weight: 600; letter-spacing: .3px;
+            border: 1px solid rgba(227,30,36,.2); pointer-events: none;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .animate { opacity: 0; transform: translateY(30px); transition: opacity .6s ease-out, transform .6s ease-out; }
+        .animate.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+            .testimonials2 .testimonials-grid { grid-template-columns: 1fr; }
+        }
+
+/* === RESPONSIVE MOBILE FGF === */
+@media (max-width: 768px) {
+  .container, section > div:not(.no-resp) { padding: 0 16px !important; }
+  h1 { font-size: 2rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  .grid, .grid-2, [class*="grid"] { grid-template-columns: 1fr !important; }
+  .flex, [class*="flex"] { flex-wrap: wrap !important; }
+  img { max-width: 100% !important; height: auto !important; }
+  table { font-size: 12px !important; }
+  td, th { padding: 6px 4px !important; }
+  .btn, button, a.btn { width: 100% !important; text-align: center !important; }
+  nav, .nav, .navbar { flex-wrap: wrap !important; }
+  .hero { padding: 80px 16px 40px !important; }
+  .hero h1 { font-size: 2.2rem !important; }
+  section { padding: 40px 0 !important; }
+}
+@media (max-width: 480px) {
+  h1 { font-size: 1.6rem !important; }
+  h2 { font-size: 1.3rem !important; }
+  body { font-size: 14px !important; }
+  .hide-mobile { display: none !important; }
+}
+
+    </style>
+</head>
+<body>
+<!-- ════════════════════════════════════════════ -->
+<!-- FGF DIGITAL · Modelo de referencia          -->
+<!-- ════════════════════════════════════════════ -->
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;text-align:center;padding:12px 20px;font-family:sans-serif;font-size:14px;border-bottom:3px solid #e94560;">
+  🚧 <strong>FGF DIGITAL</strong> · Modelo de referencia ·
+  <a href="https://fgfdigital.cl" style="color:#e94560;text-decoration:underline;">fgfdigital.cl</a>
+</div>
+
+
+
+    <!-- ===== TOP BAR ===== -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="left">
+                <a href="#">¡Bienvenido!</a>
+                <a href="#">Ingresar</a>
+                <a href="#">Crear cuenta</a>
+            </div>
+            <div class="right">
+                <a href="#">Ayuda</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="container">
+            <div class="header-left">
+                <button class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
+                </button>
+                <a href="#" class="logo">
+                    <div class="logo-icon">C1</div>
+                    <div class="logo-text">Car<span>One</span></div>
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#">Comprar</a></li>
+                    <li><a href="#">Vender</a></li>
+                    <li><a href="#">Financiar</a></li>
+                    <li><a href="#">Asegurar</a></li>
+                </ul>
+            </div>
+            <div class="header-right">
+                <a href="#" class="icon-link">🔍</a>
+                <a href="#" class="icon-link">👤</a>
+                <a href="#">Mi cuenta</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="container">
+            <h1>Encontrá acá tu próximo<br><span class="highlight">auto con la mejor garantía</span><br>y financiación</h1>
+            <p>Más de 15 marcas de 0km y la más amplia variedad de usados certificados.</p>
+            <div class="btn-group">
+                <a href="#" class="btn btn-primary">Ver más</a>
+                <a href="#" class="btn btn-outline-light">Vender mi auto</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROMO ===== -->
+    <div class="promo-bar">
+        10 a 20hs — 26, 27 y 28 de julio
+        <small>Promoción válida en unidades seleccionadas o hasta agotar stock</small>
+    </div>
+
+    <!-- ===== BRANDS ===== -->
+    <section class="brands">
+        <div class="container">
+            <h2>Marcas <span>0km</span></h2>
+            <div class="brands-grid">
+                <div class="brand-item"><div class="icon">🚗</div><div class="name">Changan</div></div>
+                <div class="brand-item"><div class="icon">🚗</div><div class="name">Chevrolet</div></div>
+                <div class="brand-item"><div class="icon">🚗</div><div class="name">Fiat</div></div>
+                <div class="brand-item"><div class="icon">🚗</div><div class="name">JMC</div></div>
+                <div class="brand-item"><div class="icon">🚗</div><div class="name">Leapmotor</div></div>
+                <div class="brand-item"><div class="icon">🚗</div><div class="name">Nissan</div></div>
+                <div class="brand-item"><div class="icon">🚗</div><div class="name">Opel</div></div>
+                <div class="brand-item"><div class="icon">🚗</div><div class="name">Peugeot</div></div>
+                <div class="brand-item"><div class="icon">🚗</div><div class="name">Renault</div></div>
+                <div class="brand-item"><div class="icon">🚗</div><div class="name">Subaru</div></div>
+                <div class="brand-item"><div class="icon">🚗</div><div class="name">Suzuki</div></div>
+                <div class="brand-item"><div class="icon">🚗</div><div class="name">Volkswagen</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SELL SECTION ===== -->
+    <section class="sell-section animate">
+        <div class="container">
+            <div class="sell-grid">
+                <div class="sell-text">
+                    <h2>Vendenos tu auto<br><span>en 3 pasos</span></h2>
+                    <p>Seguro y sin tratar con desconocidos. Te pagamos rápido y sin vueltas.</p>
+                    <a href="#" class="btn">Cotizar</a>
+                </div>
+                <div class="sell-steps">
+                    <div class="step-card">
+                        <div class="num">1</div>
+                        <h4>Cotizá online</h4>
+                        <p>Completá los datos de tu auto y recibí una oferta</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="num">2</div>
+                        <h4>Agendá visita</h4>
+                        <p>Traé tu auto a nuestro complejo para verificarlo</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="num">3</div>
+                        <h4>Recibí el pago</h4>
+                        <p>Firmamos y te transferimos el dinero al instante</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEW ARRIVALS ===== -->
+    <section class="new-arrivals">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nuevos <span>Ingresos</span></h2>
+                <a href="#" class="see-all">Ver todos los vehículos →</a>
+            </div>
+            <div class="type-tabs">
+                <a href="#" class="active">Todos</a>
+                <a href="#">BOX</a>
+                <a href="#">COUPE</a>
+                <a href="#">FURGON</a>
+                <a href="#">HATCH</a>
+                <a href="#">PICKUP</a>
+                <a href="#">RURAL</a>
+                <a href="#">SEDAN</a>
+                <a href="#">SUV</a>
+            </div>
+            <div class="cars-grid">
+                <div class="car-card">
+                    <div class="thumb">🚗</div>
+                    <div class="body">
+                        <div class="name">Volkswagen T-Cross 1.0 TSI</div>
+                        <div class="year-km">2023 · 18,500 km</div>
+                        <div class="price">US$ 28,900</div>
+                        <div class="tag">Certificado</div>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="thumb">🚗</div>
+                    <div class="body">
+                        <div class="name">Chevrolet Onix 1.4 LTZ</div>
+                        <div class="year-km">2022 · 32,000 km</div>
+                        <div class="old-price">US$ 22,500</div>
+                        <div class="price">US$ 19,900</div>
+                        <div class="tag">Oferta</div>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="thumb">🚗</div>
+                    <div class="body">
+                        <div class="name">Fiat Cronos 1.3 Drive</div>
+                        <div class="year-km">2024 · 8,200 km</div>
+                        <div class="price">US$ 23,500</div>
+                        <div class="tag">0km</div>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="thumb">🚗</div>
+                    <div class="body">
+                        <div class="name">Nissan Frontier 2.3 4x4</div>
+                        <div class="year-km">2021 · 45,000 km</div>
+                        <div class="price">US$ 35,900</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== REASONS ===== -->
+    <section class="reasons animate">
+        <div class="container">
+            <h2>4 razones para <span>elegir CarOne</span></h2>
+            <div class="reasons-grid">
+                <div class="reason-card">
+                    <div class="icon">🛡️</div>
+                    <h4>7 días de prueba</h4>
+                    <p>Tenés 7 días o 500 km para probarlo o te devolvemos tu dinero.*</p>
+                </div>
+                <div class="reason-card">
+                    <div class="icon">🔧</div>
+                    <h4>Garantía mecánica</h4>
+                    <p>Te damos garantía mecánica por un año o hasta 30,000 km.*</p>
+                </div>
+                <div class="reason-card">
+                    <div class="icon">✅</div>
+                    <h4>Autos certificados</h4>
+                    <p>Autos certificados por el Automóvil Club del Uruguay.*</p>
+                </div>
+                <div class="reason-card">
+                    <div class="icon">📋</div>
+                    <h4>Trámites incluidos</h4>
+                    <p>Nos encargamos de todos los trámites y te lo hacemos fácil.*</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <section class="stats animate">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="number">15+</div>
+                    <div class="label">Marcas Disponibles</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">3K+</div>
+                    <div class="label">Autos Vendidos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">7</div>
+                    <div class="label">Años de Trayectoria</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">98%</div>
+                    <div class="label">Clientes Recomiendan</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>Qué dicen nuestros <span>clientes</span></h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="text">"Fui a cotizar mi auto para venderlo. En 15 minutos tenía una oferta. El servicio es excelente, ágil y súper cordial la atención."</div>
+                    <div class="author">Daniel Oliva</div>
+                    <div class="date">Julio 2024</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="text">"Vendí un sedan y compré un VW Virtus nuevo. La atención muy buena, el vendedor nos ayudó en todo. Muy recomendable."</div>
+                    <div class="author">Rafael Carlos Silva</div>
+                    <div class="date">Agosto 2024</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="text">"Vendí mi auto sin problemas. Fui el domingo, demoré media hora y el jueves tenía el dinero en mi cuenta. Muy recomendable."</div>
+                    <div class="author">Silvana Charlone</div>
+                    <div class="date">Setiembre 2024</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="text">"Excelente lugar para vender y comprar vehículos. El trato y el servicio fue súper completo. El vendedor nos asesoró en todo momento."</div>
+                    <div class="author">Yeni Bakst</div>
+                    <div class="date">Octubre 2024</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-newsletter">
+                <h3>Suscríbete a nuestro boletín</h3>
+                <p>Recibí las mejores ofertas y novedades en tu correo.</p>
+                <form class="news-form">
+                    <input type="email" placeholder="Tu correo electrónico" required>
+                    <button type="submit">Regístrate</button>
+                </form>
+            </div>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo-text">Car<span>One</span></div>
+                    <p>Cambiamos la forma de comercializar autos nuevos y usados garantizados en Uruguay.</p>
+                    <div class="social">
+                        <a href="#">📘 Facebook</a>
+                        <a href="#">💼 LinkedIn</a>
+                        <a href="#">📷 Instagram</a>
+                        <a href="#">▶️ YouTube</a>
+                        <a href="#">📱 WhatsApp</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Categorías</h4>
+                    <ul>
+                        <li><a href="#">Comprar</a></li>
+                        <li><a href="#">Vender</a></li>
+                        <li><a href="#">El complejo</a></li>
+                        <li><a href="#">Financiación</a></li>
+                        <li><a href="#">Seguros</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Ayuda</h4>
+                    <ul>
+                        <li><a href="#">Preguntas frecuentes</a></li>
+                        <li><a href="#">Sumate al equipo</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Políticas de Privacidad</a></li>
+                        <li><a href="#">Información Legal</a></li>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 CarOne — Todos los derechos reservados. Interbalnearia esq. Camino de los Horneros, Canelones, UY
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/59892227663?text=Hola%2C%20quiero%20consultar%20por%20un%20auto" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+        <span class="tooltip">¡Escribinos!</span>
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <div class="fgf-badge">🚀 Demo — FGF Digital</div>
+
+    <script>
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+            });
+        }, { threshold: .1 });
+        document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

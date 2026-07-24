@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monopoli Inversiones</title>
+    <link rel="icon" href="imagenes/monopoli_inversiones_logo.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Arial',sans-serif;}
+        body{background-color:#f5f5f5;overflow-x:hidden;}
+        .top-bar{background-color:#023963;color:white;padding:10px 0;display:flex;justify-content:space-between;}
+        .navbar{background-color:white;padding:15px 0;box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+        .hero{position:relative;height:70vh;overflow:hidden;}
+        .hero-content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;color:white;z-index:2;width:80%;max-width:800px;}
+        .hero-content h1{font-size:48px;margin-bottom:20px;text-shadow:2px 2px 4px rgba(0,0,0,0.7);}
+        .hero-content p{font-size:20px;margin-bottom:30px;}
+        .search-container{max-width:1200px;margin:-50px auto 50px;background-color:#023963;padding:20px;border-radius:5px;position:relative;z-index:20;}
+        .section-title{text-align:center;margin-bottom:30px;}
+        .section-title h2{font-size:30px;color:#333;display:inline-block;padding-bottom:10px;}
+        .property-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:30px;max-width:1200px;margin:0 auto 50px;padding:0 15px;}
+        .property-card{background-color:white;border-radius:5px;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,0.1);transition:transform 0.3s;}
+        .property-card:hover{transform:translateY(-5px);}
+        .property-img{width:100%;height:200px;overflow:hidden;position:relative;}
+        .property-img img{width:100%;height:100%;object-fit:cover;}
+        .property-info{padding:15px;}
+        .property-title{font-size:18px;margin-bottom:5px;color:#333;}
+        .property-price{font-size:18px;font-weight:bold;color:#023963;margin:10px 0;}
+        footer{background-color:#002642;color:#ccc;padding:40px 0 20px;}
+        @media(max-width:768px){.hero-content h1{font-size:32px;}.property-grid{grid-template-columns:1fr;}}
+    </style>
+</head>
+<body>
+<!-- ════════════════════════════════════════════ -->
+<!-- FGF DIGITAL · Modelo de referencia          -->
+<!-- ════════════════════════════════════════════ -->
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;text-align:center;padding:12px 20px;font-family:sans-serif;font-size:14px;border-bottom:3px solid #e94560;">
+  🚧 <strong>FGF DIGITAL</strong> · Modelo de referencia · 
+  <a href="https://fgfdigital.cl" style="color:#e94560;text-decoration:underline;">fgfdigital.cl</a>
+</div>
+
+
+    <div class="top-bar"><div class="contact-info" style="display:flex;justify-content:space-between;max-width:1200px;margin:0 auto;width:100%;padding:0 15px;"><div><i class="fas fa-map-marker-alt"></i><span>Las Condes</span></div><div><i class="fas fa-envelope"></i><a href="mailto:contacto@monopoli.cl" style="color:white;">contacto@monopoli.cl</a></div><div><i class="fas fa-phone"></i><a href="tel:+56997996212" style="color:white;">+56 9 9799 6212</a></div></div></div>
+    <nav class="navbar"><div class="navbar-container" style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 15px;"><div class="logo"><a href="index.html"><img src="imagenes/monopoli_inversiones_logo.jpg" alt="Monopoli Inversiones" style="height:90px;"></a></div></div></nav>
+    <section class="hero"><div class="overlay" style="position:absolute;inset:0;background-color:rgba(0,0,0,0.3);"></div><div class="hero-content"><h1>COMPRA, VENDE Y ARRIENDA PROPIEDADES</h1><p>CON ASESORIA DE CONFIANZA EN INVERSIONES INMOBILIARIAS</p></div></section>
+    <div class="search-container"><form class="search-form" style="display:flex;flex-wrap:wrap;gap:15px;"><div class="search-group" style="flex:1;min-width:200px;"><label style="display:block;margin-bottom:5px;color:white;font-weight:500;">OPERACION</label><select style="width:100%;padding:10px;border:none;border-radius:3px;"><option>Seleccione</option><option>Venta</option><option>Arriendo</option></select></div><div class="search-group" style="flex:1;min-width:200px;"><label style="display:block;margin-bottom:5px;color:white;font-weight:500;">TIPO PROPIEDAD</label><select style="width:100%;padding:10px;border:none;border-radius:3px;"><option>Seleccione</option><option>Casa</option><option>Departamento</option><option>Parcela</option></select></div><button type="submit" class="search-btn" style="background-color:#222;color:white;border:none;padding:10px 20px;font-size:16px;font-weight:bold;cursor:pointer;border-radius:3px;flex:0 0 150px;margin-top:25px;">BUSCAR</button></form></div>
+    <div class="section-title"><h2>Propiedades Destacadas</h2></div>
+    <div class="property-grid"><div class="property-card"><div class="property-img"><img src="propiedades1/Oficina/providencia.jpg" alt="Oficina"><div class="property-code" style="position:absolute;top:10px;left:10px;background-color:#023963;color:white;padding:3px 8px;font-size:12px;border-radius:3px;">Cod: 9039</div></div><div class="property-info"><h3 class="property-title">CASA COMERCIAL PROVIDENCIA</h3><div class="property-price">Venta: UF 19.800</div><a href="#" class="btn" style="display:block;text-align:center;padding:8px 0;background-color:#f5f5f5;color:#333;border-radius:3px;font-weight:500;">DETALLES</a></div></div><div class="property-card"><div class="property-img"><img src="propiedades1/Casa/5583a.jpg" alt="Parcela"><div class="property-code" style="position:absolute;top:10px;left:10px;background-color:#023963;color:white;padding:3px 8px;font-size:12px;border-radius:3px;">Cod: 5583</div></div><div class="property-info"><h3 class="property-title">PARCELA CALERA DE TANGO</h3><div class="property-price">Venta: UF 18.500</div><a href="#" class="btn">DETALLES</a></div></div></div>
+    <footer><div class="footer-content" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:30px;padding:0 15px 20px;border-bottom:1px solid #444;"><div class="footer-section"><h3 style="color:white;margin-bottom:20px;">Sobre Nosotros</h3><p>Monopoli Inversiones es una empresa dedicada a ofrecer las mejores soluciones inmobiliarias.</p></div><div class="footer-section"><h3 style="color:white;margin-bottom:20px;">Contacto</h3><p><i class="fas fa-map-marker-alt"></i> Las Condes, Santiago</p><p><i class="fas fa-phone"></i> +56 9 9799 6212</p></div></div><div class="footer-bottom" style="max-width:1200px;margin:0 auto;text-align:center;padding:20px 15px 0;color:#888;"><p>&copy; 2025 Monopoli Inversiones. Todos los derechos reservados.</p></div></footer>
+</body>
+</html>

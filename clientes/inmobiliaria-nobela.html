@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nobela | McWilliams Ballard - Residencias de lujo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1c1c1c;
+            background: #fff;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .container-sm {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(255,255,255,.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,.06);
+            padding: 14px 0;
+            transition: background .3s;
+        }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-mark {
+            width: 36px;
+            height: 36px;
+            background: #1c1c1c;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+        }
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: #1c1c1c;
+            letter-spacing: -.3px;
+        }
+        .logo-text span {
+            font-weight: 300;
+            color: #888;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        .header-right .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+        .header-right .nav-links a {
+            font-size: 13px;
+            font-weight: 500;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            transition: color .3s;
+        }
+        .header-right .nav-links a:hover {
+            color: #1c1c1c;
+        }
+        .header-right .social a {
+            color: #888;
+            font-size: 18px;
+            transition: color .3s;
+        }
+        .header-right .social a:hover {
+            color: #1c1c1c;
+        }
+        .header-right .social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: #1c1c1c;
+            border-radius: 2px;
+            transition: .3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            margin-top: 66px;
+            position: relative;
+            height: 90vh;
+            min-height: 560px;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,.7) 0%, rgba(0,0,0,.2) 50%, transparent 100%);
+        }
+        .hero-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            opacity: .1;
+            color: #fff;
+            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            user-select: none;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 60px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .hero-content .tag {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.6);
+            border: 1px solid rgba(255,255,255,.2);
+            padding: 6px 16px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+        }
+        .hero-content h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 72px;
+            font-weight: 300;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .hero-content h1 strong {
+            font-weight: 700;
+        }
+        .hero-content .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-style: italic;
+            color: rgba(255,255,255,.7);
+            margin-bottom: 24px;
+        }
+        .hero-content .address {
+            font-size: 15px;
+            color: rgba(255,255,255,.6);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .hero-content .address strong {
+            color: #fff;
+        }
+
+        /* ===== VIP SECTION ===== */
+        .vip {
+            padding: 80px 0;
+            background: #f8f7f4;
+        }
+        .vip .container-sm {
+            text-align: center;
+        }
+        .vip h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: #1c1c1c;
+            margin-bottom: 8px;
+        }
+        .vip p {
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 32px;
+        }
+        .vip-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            text-align: left;
+        }
+        .vip-form .full {
+            grid-column: 1 / -1;
+        }
+        .vip-form label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-bottom: 6px;
+        }
+        .vip-form input,
+        .vip-form select,
+        .vip-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 15px;
+            color: #1c1c1c;
+            background: #fff;
+            transition: border-color .3s;
+            outline: none;
+        }
+        .vip-form input:focus,
+        .vip-form select:focus,
+        .vip-form textarea:focus {
+            border-color: #1c1c1c;
+        }
+        .vip-form .btn {
+            grid-column: 1 / -1;
+            background: #1c1c1c;
+            color: #fff;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background .3s;
+        }
+        .vip-form .btn:hover {
+            background: #333;
+        }
+
+        /* ===== GALLERY ===== */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0;
+        }
+        .gallery-item {
+            aspect-ratio: 1 / 1;
+            background: #eee;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .gallery-item:nth-child(1) { background: linear-gradient(135deg, #2c3e50, #3498db); }
+        .gallery-item:nth-child(2) { background: linear-gradient(135deg, #4a4a4a, #2c3e50); }
+        .gallery-item:nth-child(3) { background: linear-gradient(135deg, #5d5d5d, #3a3a3a); }
+        .gallery-item:nth-child(4) { background: linear-gradient(135deg, #34495e, #2c3e50); }
+        .gallery-item:nth-child(5) { background: linear-gradient(135deg, #3d3d3d, #1a1a1a); }
+        .gallery-item:nth-child(6) { background: linear-gradient(135deg, #2c3e50, #4a6741); }
+        .gallery-item:nth-child(7) { background: linear-gradient(135deg, #4a4a4a, #5d5d5d); }
+        .gallery-item:nth-child(8) { background: linear-gradient(135deg, #1a1a2e, #16213e); }
+        .gallery-item:nth-child(9) { background: linear-gradient(135deg, #3a3a3a, #2c3e50); }
+        .gallery-item:nth-child(10) { background: linear-gradient(135deg, #2c3e50, #1a1a2e); }
+        .gallery-item .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity .3s;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        /* ===== FEATURES ===== */
+        .features {
+            padding: 80px 0;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+        .features-text h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+            margin-bottom: 16px;
+        }
+        .features-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 500;
+            color: #1c1c1c;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+        .features-text h3 em {
+            font-style: italic;
+        }
+        .features-text .intro {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+        .features-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 24px;
+            list-style: none;
+        }
+        .features-list li {
+            font-size: 14px;
+            color: #444;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .features-list li::before {
+            content: '—';
+            color: #ccc;
+            font-weight: 300;
+        }
+        .features-visual {
+            background: #f8f7f4;
+            border-radius: 20px;
+            padding: 48px 40px;
+            position: sticky;
+            top: 90px;
+        }
+        .features-visual .stat {
+            margin-bottom: 32px;
+        }
+        .features-visual .stat:last-child {
+            margin-bottom: 0;
+        }
+        .features-visual .stat-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #1c1c1c;
+            line-height: 1;
+        }
+        .features-visual .stat-label {
+            font-size: 13px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+        .features-visual .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 24px 0;
+        }
+
+        /* ===== AMENITIES ===== */
+        .amenities {
+            padding: 80px 0;
+            background: #f8f7f4;
+        }
+        .amenities-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .amenities-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        .amenities-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 500;
+            color: #1c1c1c;
+        }
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .amenity-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform .3s, box-shadow .3s;
+        }
+        .amenity-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,.06);
+        }
+        .amenity-card .thumb {
+            height: 200px;
+            background: #ddd;
+        }
+        .amenity-card .thumb:nth-child(1) { background: linear-gradient(135deg, #2c3e50, #34495e); }
+        .amenity-card .body {
+            padding: 24px;
+        }
+        .amenity-card .body h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #1c1c1c;
+            margin-bottom: 6px;
+        }
+        .amenity-card .body p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* ===== NEIGHBORHOOD ===== */
+        .neighborhood {
+            padding: 80px 0;
+        }
+        .neighborhood .container-sm {
+            text-align: center;
+        }
+        .neighborhood h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        .neighborhood h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 500;
+            color: #1c1c1c;
+            margin-bottom: 16px;
+        }
+        .neighborhood p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 32px;
+            font-size: 16px;
+        }
+        .neighborhood .map-placeholder {
+            width: 100%;
+            height: 360px;
+            background: #f0f0f0;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* ===== INQUIRE ===== */
+        .inquire {
+            padding: 80px 0;
+            background: #1c1c1c;
+            color: #fff;
+        }
+        .inquire .container-sm {
+            text-align: center;
+        }
+        .inquire h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .inquire p {
+            color: rgba(255,255,255,.6);
+            font-size: 15px;
+            margin-bottom: 32px;
+        }
+        .inquire-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            text-align: left;
+        }
+        .inquire-form .full {
+            grid-column: 1 / -1;
+        }
+        .inquire-form label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: rgba(255,255,255,.5);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin-bottom: 6px;
+        }
+        .inquire-form input,
+        .inquire-form select,
+        .inquire-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 15px;
+            color: #fff;
+            background: rgba(255,255,255,.06);
+            transition: border-color .3s;
+            outline: none;
+        }
+        .inquire-form input:focus,
+        .inquire-form select:focus,
+        .inquire-form textarea:focus {
+            border-color: rgba(255,255,255,.4);
+        }
+        .inquire-form input::placeholder,
+        .inquire-form textarea::placeholder {
+            color: rgba(255,255,255,.25);
+        }
+        .inquire-form select option {
+            color: #1c1c1c;
+        }
+        .inquire-form .btn {
+            grid-column: 1 / -1;
+            background: #fff;
+            color: #1c1c1c;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background .3s;
+        }
+        .inquire-form .btn:hover {
+            background: #ddd;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #111;
+            color: rgba(255,255,255,.5);
+            padding: 48px 0 32px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+            margin-bottom: 24px;
+        }
+        .footer-brand .logo-text {
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .footer-brand p {
+            font-size: 13px;
+            line-height: 1.7;
+            max-width: 320px;
+        }
+        .footer-col h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            font-size: 13px;
+            color: rgba(255,255,255,.5);
+            transition: color .3s;
+        }
+        .footer-col ul li a:hover {
+            color: #fff;
+        }
+        .footer-col .social {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .footer-col .social a {
+            color: rgba(255,255,255,.4);
+            font-size: 18px;
+            transition: color .3s;
+        }
+        .footer-col .social a:hover {
+            color: #fff;
+        }
+        .footer-bottom {
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255,255,255,.3);
+        }
+        .footer-bottom a {
+            color: rgba(255,255,255,.5);
+        }
+        .footer-bottom a:hover {
+            color: #fff;
+        }
+        .footer-bottom .sep {
+            margin: 0 6px;
+        }
+
+        /* ===== SCROLL NAV ===== */
+        .scroll-nav {
+            position: fixed;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 90;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .scroll-nav a {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(0,0,0,.15);
+            transition: background .3s, transform .3s;
+        }
+        .scroll-nav a:hover,
+        .scroll-nav a.active {
+            background: #1c1c1c;
+            transform: scale(1.3);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .header-right .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 16px 24px;
+                box-shadow: 0 8px 24px rgba(0,0,0,.08);
+                gap: 12px;
+            }
+            .header-right .nav-links.open {
+                display: flex;
+            }
+            .header-right .social {
+                display: none;
+            }
+            .hero {
+                height: 70vh;
+                min-height: 420px;
+            }
+            .hero-content h1 {
+                font-size: 40px;
+            }
+            .hero-content .subtitle {
+                font-size: 18px;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+            .features-visual {
+                position: static;
+            }
+            .amenities-grid {
+                grid-template-columns: 1fr;
+            }
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .vip-form {
+                grid-template-columns: 1fr;
+            }
+            .inquire-form {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .scroll-nav {
+                display: none;
+            }
+        }
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-content h1 {
+                font-size: 32px;
+            }
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed; bottom: 24px; right: 24px; z-index: 999;
+            width: 60px; height: 60px; background: #25D366; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(37,211,102,.4);
+            transition: transform .3s, box-shadow .3s; text-decoration: none;
+            animation: pulse-whatsapp 2s infinite;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(37,211,102,.6); animation: none; }
+        .whatsapp-float svg { width: 32px; height: 32px; fill: #fff; }
+        .whatsapp-float .tooltip {
+            position: absolute; right: 72px; background: #fff; color: #075e54;
+            padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 600;
+            white-space: nowrap; box-shadow: 0 4px 12px rgba(0,0,0,.15);
+            opacity: 0; transition: opacity .3s; pointer-events: none;
+        }
+        .whatsapp-float:hover .tooltip { opacity: 1; }
+        @keyframes pulse-whatsapp {
+            0% { box-shadow: 0 4px 20px rgba(37,211,102,.4); }
+            50% { box-shadow: 0 4px 30px rgba(37,211,102,.7); }
+            100% { box-shadow: 0 4px 20px rgba(37,211,102,.4); }
+        }
+
+        /* ===== STATS ===== */
+        .stats { padding: 60px 0; background: #1c1c1c; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+        .stat-item .number { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 600; color: #d4a853; line-height: 1.2; }
+        .stat-item .label { font-size: 13px; color: rgba(255,255,255,.5); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials { padding: 80px 0; background: #f8f7f4; }
+        .testimonials-header { text-align: center; margin-bottom: 48px; }
+        .testimonials-header h2 { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 600; color: #1c1c1c; }
+        .testimonials-header h2 span { color: #d4a853; }
+        .testimonials-header p { color: #6b7280; margin-top: 8px; font-size: 16px; }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .testimonial-card { background: #fff; border-radius: 16px; padding: 28px; border: 1px solid #e5e7eb; transition: transform .3s, box-shadow .3s; }
+        .testimonial-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,.08); }
+        .testimonial-card .stars { color: #d4a853; font-size: 16px; margin-bottom: 12px; }
+        .testimonial-card .text { font-size: 14px; color: #4b5563; line-height: 1.7; font-style: italic; margin-bottom: 16px; }
+        .testimonial-card .author { display: flex; align-items: center; gap: 12px; }
+        .testimonial-card .author-avatar { width: 44px; height: 44px; border-radius: 50%; background: #1c1c1c; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px; color: #d4a853; }
+        .testimonial-card .author-info .name { font-weight: 600; color: #1c1c1c; font-size: 15px; }
+        .testimonial-card .author-info .role { font-size: 13px; color: #9ca3af; }
+
+        /* ===== FGF BADGE ===== */
+        .fgf-badge {
+            position: fixed; top: 12px; left: 12px; z-index: 9999;
+            background: rgba(28,28,28,.85); backdrop-filter: blur(8px);
+            color: #d4a853; padding: 6px 14px; border-radius: 20px;
+            font-size: 11px; font-weight: 600; letter-spacing: .3px;
+            border: 1px solid rgba(212,168,83,.2); pointer-events: none;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .animate { opacity: 0; transform: translateY(30px); transition: opacity .6s ease-out, transform .6s ease-out; }
+        .animate.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+/* === RESPONSIVE MOBILE FGF === */
+@media (max-width: 768px) {
+  .container, section > div:not(.no-resp) { padding: 0 16px !important; }
+  h1 { font-size: 2rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  .grid, .grid-2, [class*="grid"] { grid-template-columns: 1fr !important; }
+  .flex, [class*="flex"] { flex-wrap: wrap !important; }
+  img { max-width: 100% !important; height: auto !important; }
+  table { font-size: 12px !important; }
+  td, th { padding: 6px 4px !important; }
+  .btn, button, a.btn { width: 100% !important; text-align: center !important; }
+  nav, .nav, .navbar { flex-wrap: wrap !important; }
+  .hero { padding: 80px 16px 40px !important; }
+  .hero h1 { font-size: 2.2rem !important; }
+  section { padding: 40px 0 !important; }
+}
+@media (max-width: 480px) {
+  h1 { font-size: 1.6rem !important; }
+  h2 { font-size: 1.3rem !important; }
+  body { font-size: 14px !important; }
+  .hide-mobile { display: none !important; }
+}
+
+    </style>
+</head>
+<body>
+<!-- ════════════════════════════════════════════ -->
+<!-- FGF DIGITAL · Modelo de referencia          -->
+<!-- ════════════════════════════════════════════ -->
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;text-align:center;padding:12px 20px;font-family:sans-serif;font-size:14px;border-bottom:3px solid #e94560;">
+  🚧 <strong>FGF DIGITAL</strong> · Modelo de referencia ·
+  <a href="https://fgfdigital.cl" style="color:#e94560;text-decoration:underline;">fgfdigital.cl</a>
+</div>
+
+
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">
+                <div class="logo-mark">MB</div>
+                <div class="logo-text">McWilliams <span>Ballard</span></div>
+            </a>
+            <div class="header-right">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">DMV</a></li>
+                    <li><a href="#">Coastal</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Search</a></li>
+                    <li><a href="#">Portfolio</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <div class="social">
+                    <a href="#">in</a>
+                    <a href="#">fb</a>
+                    <a href="#">ig</a>
+                </div>
+                <button class="hamburger" id="hamburger" aria-label="Menú">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="hero-placeholder">NOBELA</div>
+        </div>
+        <div class="hero-content">
+            <div class="tag">Brand New</div>
+            <h1><strong>novel.</strong> notable. <strong>nobela.</strong></h1>
+            <div class="subtitle">9-home condominium community</div>
+            <div class="address">
+                📍 <strong>1722 Connecticut Avenue NW</strong> &nbsp;—&nbsp; Washington, DC 20009 &nbsp;·&nbsp; <strong>(202) 803-6355</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <section class="stats animate">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="number">15+</div>
+                    <div class="label">Años de Experiencia</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">500+</div>
+                    <div class="label">Propiedades Vendidas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">300+</div>
+                    <div class="label">Clientes Satisfechos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">98%</div>
+                    <div class="label">Recomendación</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== VIP LIST ===== -->
+    <section class="vip animate" id="about">
+        <div class="container-sm">
+            <h2>Join the VIP List</h2>
+            <p>Be the first to know about availability, pricing, and exclusive previews.</p>
+            <form class="vip-form">
+                <div>
+                    <label>First Name *</label>
+                    <input type="text" required>
+                </div>
+                <div>
+                    <label>Last Name *</label>
+                    <input type="text" required>
+                </div>
+                <div>
+                    <label>Email *</label>
+                    <input type="email" required>
+                </div>
+                <div>
+                    <label>Phone</label>
+                    <input type="tel">
+                </div>
+                <div>
+                    <label>Zip Code *</label>
+                    <input type="text" required>
+                </div>
+                <div>
+                    <label>How did you hear about us?</label>
+                    <select>
+                        <option>Select</option>
+                        <option>Agent</option>
+                        <option>Internet Search</option>
+                        <option>Signage</option>
+                        <option>Zillow</option>
+                        <option>Eblast</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Join VIP List</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== GALLERY ===== -->
+    <section class="gallery" id="gallery">
+        <div class="gallery-item"><div class="overlay">View</div></div>
+        <div class="gallery-item"><div class="overlay">View</div></div>
+        <div class="gallery-item"><div class="overlay">View</div></div>
+        <div class="gallery-item"><div class="overlay">View</div></div>
+        <div class="gallery-item"><div class="overlay">View</div></div>
+        <div class="gallery-item"><div class="overlay">View</div></div>
+        <div class="gallery-item"><div class="overlay">View</div></div>
+        <div class="gallery-item"><div class="overlay">View</div></div>
+        <div class="gallery-item"><div class="overlay">View</div></div>
+        <div class="gallery-item"><div class="overlay">View</div></div>
+    </section>
+
+    <!-- ===== FEATURES ===== -->
+    <section class="features" id="residences">
+        <div class="container">
+            <div class="features-grid">
+                <div class="features-text">
+                    <h2>Residences</h2>
+                    <h3>Timeless detailing.<br><em>Modern finishes.</em></h3>
+                    <p class="intro">
+                        Nobela offers 1-bedroom, 1-bedroom + den, and 2-bedroom residences
+                        with soaring 11' ceilings, Bosch appliance packages, and private
+                        outdoor spaces with oversized terraces.
+                    </p>
+                    <ul class="features-list">
+                        <li>9-Home boutique community</li>
+                        <li>Historic Connecticut Avenue brick facade</li>
+                        <li>Soaring ceiling heights up to 11 ft.</li>
+                        <li>Original refurbished oak central staircases</li>
+                        <li>Timeless detailing &amp; modern finishes</li>
+                        <li>Private outdoor spaces &amp; oversized terraces</li>
+                        <li>Smart-touch home entry system</li>
+                        <li>French white oak engineered hardwood floors</li>
+                        <li>Bosch appliance package including washer &amp; dryer</li>
+                        <li>Complete ELFA closet systems</li>
+                        <li>Solid wood doors with matte black hardware</li>
+                        <li>Ample recessed lighting</li>
+                    </ul>
+                </div>
+                <div class="features-visual">
+                    <div class="stat">
+                        <div class="stat-num">11'</div>
+                        <div class="stat-label">Ceiling heights</div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="stat">
+                        <div class="stat-num">9</div>
+                        <div class="stat-label">Boutique homes</div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="stat">
+                        <div class="stat-num">Bosch</div>
+                        <div class="stat-label">Appliance package</div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="stat">
+                        <div class="stat-num">2024</div>
+                        <div class="stat-label">Brand new construction</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== AMENITIES ===== -->
+    <section class="amenities" id="amenities">
+        <div class="container">
+            <div class="amenities-header">
+                <h2>Amenities</h2>
+                <h3>Thoughtfully curated</h3>
+            </div>
+            <div class="amenities-grid">
+                <div class="amenity-card">
+                    <div class="thumb"></div>
+                    <div class="body">
+                        <h4>Rooftop Terrace</h4>
+                        <p>Panoramic views of the city skyline with lounge seating and landscaped planters.</p>
+                    </div>
+                </div>
+                <div class="amenity-card">
+                    <div class="thumb"></div>
+                    <div class="body">
+                        <h4>Fitness Center</h4>
+                        <p>State-of-the-art equipment with dedicated yoga and stretching area.</p>
+                    </div>
+                </div>
+                <div class="amenity-card">
+                    <div class="thumb"></div>
+                    <div class="body">
+                        <h4>Concierge Service</h4>
+                        <p>24/7 concierge to handle packages, reservations, and resident requests.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEIGHBORHOOD ===== -->
+    <section class="neighborhood" id="neighborhood">
+        <div class="container-sm">
+            <h2>Location</h2>
+            <h3>Dupont Circle</h3>
+            <p>
+                Nestled in the heart of Washington DC's most vibrant neighborhood.
+                Steps from restaurants, cafes, galleries, and metro access.
+            </p>
+            <div class="map-placeholder">
+                🗺️ Map — 1722 Connecticut Avenue NW, Washington, DC 20009
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== INQUIRE ===== -->
+    <section class="inquire" id="contact">
+        <div class="container-sm">
+            <h2>Inquire About Nobela</h2>
+            <p>Contact our sales team for pricing, floor plans, and availability.</p>
+            <form class="inquire-form">
+                <div>
+                    <label>First Name *</label>
+                    <input type="text" required>
+                </div>
+                <div>
+                    <label>Last Name *</label>
+                    <input type="text" required>
+                </div>
+                <div>
+                    <label>Email *</label>
+                    <input type="email" required>
+                </div>
+                <div>
+                    <label>Phone</label>
+                    <input type="tel">
+                </div>
+                <div>
+                    <label>Zip Code *</label>
+                    <input type="text" required>
+                </div>
+                <div>
+                    <label>How did you hear about us? *</label>
+                    <select required>
+                        <option>Select</option>
+                        <option>Agent</option>
+                        <option>Internet Search</option>
+                        <option>Signage</option>
+                        <option>Zillow</option>
+                        <option>Eblast</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="full">
+                    <label>Comments</label>
+                    <textarea rows="4" placeholder="Tell us about your interest..."></textarea>
+                </div>
+                <button type="submit" class="btn">Send Inquiry</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonials animate">
+        <div class="container">
+            <div class="testimonials-header">
+                <h2>Lo que dicen <span>nuestros clientes</span></h2>
+                <p>La experiencia de quienes encontraron su hogar con nosotros.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="text">"El equipo de Nobela hizo que la compra de nuestro primer hogar fuera una experiencia increíble. Profesionales, atentos y transparentes en todo momento."</div>
+                    <div class="author">
+                        <div class="author-avatar">JM</div>
+                        <div class="author-info">
+                            <div class="name">James Mitchell</div>
+                            <div class="role">Comprador · Washington DC</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="text">"Servicio de primera clase. Nos guiaron en cada paso del proceso y encontramos la propiedad perfecta. Altamente recomendados."</div>
+                    <div class="author">
+                        <div class="author-avatar">SK</div>
+                        <div class="author-info">
+                            <div class="name">Sarah Kim</div>
+                            <div class="role">Inversora · Nueva York</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="text">"La atención personalizada marcó la diferencia. Entendieron exactamente lo que buscábamos y superaron nuestras expectativas."</div>
+                    <div class="author">
+                        <div class="author-avatar">RD</div>
+                        <div class="author-info">
+                            <div class="name">Robert Davis</div>
+                            <div class="role">Cliente · Virginia</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SCROLL NAV ===== -->
+    <nav class="scroll-nav">
+        <a href="#about" title="About"></a>
+        <a href="#residences" title="Residences"></a>
+        <a href="#amenities" title="Amenities"></a>
+        <a href="#gallery" title="Gallery"></a>
+        <a href="#neighborhood" title="Neighborhood"></a>
+        <a href="#contact" title="Contact"></a>
+    </nav>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo-text">McWilliams <span style="font-weight:300;color:rgba(255,255,255,.4);">Ballard</span></div>
+                    <p>123 N Alfred Street, Suite 200, Alexandria, VA 22314</p>
+                    <p style="margin-top:8px;">Real estate brokerage &amp; development advisory.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigate</h4>
+                    <ul>
+                        <li><a href="#">Find Your Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Portfolio</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Follow</h4>
+                    <div class="social">
+                        <a href="#">📄 in</a>
+                        <a href="#">📄 fb</a>
+                        <a href="#">📷 ig</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 McWilliams Ballard
+                <span class="sep">|</span>
+                <a href="#">Privacy Policy</a>
+                <span class="sep">|</span>
+                All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/12025551234?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20Nobela" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+        <span class="tooltip">¡Escribinos!</span>
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <div class="fgf-badge">🚀 Demo — FGF Digital</div>
+
+    <script>
+        // Hamburger
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('open');
+        });
+
+        // Scroll nav highlight
+        const sections = document.querySelectorAll('section[id]');
+        const navDots = document.querySelectorAll('.scroll-nav a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => {
+                const top = s.offsetTop - 100;
+                if (window.scrollY >= top) current = s.id;
+            });
+            navDots.forEach(d => {
+                d.classList.toggle('active', d.getAttribute('href') === '#' + current);
+            });
+        });
+
+        // Scroll animation observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+            });
+        }, { threshold: .1 });
+        document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

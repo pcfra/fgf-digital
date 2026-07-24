@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psicología Migrante | Psicoterapia para migrantes hispanohablantes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #2d2b3a;
+            background: #faf9fc;
+            line-height: 1.7;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: #fff;
+            padding: 16px 0;
+            border-bottom: 1px solid #ede9f0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #fff;
+        }
+        .logo-text {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            font-size: 20px;
+            color: #2d2b3a;
+        }
+        .logo-text span {
+            color: #6c5ce7;
+        }
+        .logo-sub {
+            font-size: 11px;
+            color: #8884a0;
+            font-weight: 400;
+            letter-spacing: .5px;
+            margin-top: -2px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+        .nav a {
+            font-size: 14px;
+            font-weight: 500;
+            color: #5a5670;
+            transition: color .3s;
+            position: relative;
+        }
+        .nav a:hover,
+        .nav a.active {
+            color: #6c5ce7;
+        }
+        .nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #6c5ce7;
+            border-radius: 2px;
+        }
+        .btn-nav-cta {
+            background: #6c5ce7;
+            color: #fff !important;
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: background .3s, transform .2s;
+        }
+        .btn-nav-cta:hover {
+            background: #5a4bd1;
+            transform: translateY(-1px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .hamburger span {
+            width: 26px;
+            height: 3px;
+            background: #2d2b3a;
+            border-radius: 3px;
+            transition: .3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #2d2b3a 0%, #4a3f6b 50%, #6c5ce7 100%);
+            color: #fff;
+            padding: 120px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(162,155,254,.1) 0%, transparent 60%);
+            border-radius: 50%;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(108,92,231,.08) 0%, transparent 60%);
+            border-radius: 50%;
+        }
+        .hero h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .hero h1 span {
+            color: #a29bfe;
+        }
+        .hero .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-style: italic;
+            color: #c8c3e8;
+            margin-bottom: 32px;
+            position: relative;
+        }
+        .hero p {
+            font-size: 17px;
+            color: #d5d0ed;
+            max-width: 600px;
+            margin: 0 auto 36px;
+            position: relative;
+        }
+        .hero .btn {
+            display: inline-block;
+            background: #a29bfe;
+            color: #2d2b3a;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 15px;
+            transition: background .3s, transform .2s;
+            position: relative;
+        }
+        .hero .btn:hover {
+            background: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            padding: 80px 0;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+        .about-text h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: #2d2b3a;
+            margin-bottom: 8px;
+        }
+        .about-text h2 span {
+            color: #6c5ce7;
+        }
+        .about-text .subhead {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-style: italic;
+            color: #8884a0;
+            margin-bottom: 24px;
+        }
+        .about-text p {
+            color: #5a5670;
+            margin-bottom: 18px;
+            font-size: 15px;
+        }
+        .about-text strong {
+            color: #2d2b3a;
+        }
+        .about-highlights {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 24px;
+            list-style: none;
+        }
+        .about-highlights li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #4a3f6b;
+            background: #f2effb;
+            padding: 10px 16px;
+            border-radius: 12px;
+        }
+        .about-highlights li::before {
+            content: '✦';
+            color: #6c5ce7;
+            font-size: 14px;
+        }
+        .about-side {
+            background: linear-gradient(135deg, #f2effb, #e8e3f7);
+            border-radius: 24px;
+            padding: 48px 36px;
+            position: relative;
+            overflow: hidden;
+        }
+        .about-side .quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-style: italic;
+            color: #4a3f6b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .about-side .quote-author {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6c5ce7;
+        }
+        .about-side .deco-circle {
+            position: absolute;
+            bottom: -40px;
+            right: -40px;
+            width: 160px;
+            height: 160px;
+            background: rgba(108,92,231,.06);
+            border-radius: 50%;
+        }
+
+        /* ===== SERVICES ===== */
+        .services {
+            padding: 80px 0;
+            background: #fff;
+        }
+        .services-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .services-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: #2d2b3a;
+        }
+        .services-header h2 span {
+            color: #6c5ce7;
+        }
+        .services-header .subhead {
+            font-family: 'Playfair Display', serif;
+            font-size: 17px;
+            font-style: italic;
+            color: #8884a0;
+            margin-top: 4px;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+        .service-card {
+            background: #faf9fc;
+            border-radius: 20px;
+            padding: 36px 28px;
+            border: 1px solid #ede9f0;
+            transition: transform .3s, box-shadow .3s, border-color .3s;
+        }
+        .service-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(108,92,231,.08);
+            border-color: #d5cff0;
+        }
+        .service-card .icon-wrap {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f2effb, #e8e3f7);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .service-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #2d2b3a;
+            margin-bottom: 10px;
+        }
+        .service-card p {
+            font-size: 14px;
+            color: #5a5670;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+        .service-card .link {
+            font-weight: 600;
+            font-size: 14px;
+            color: #6c5ce7;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .service-card .link:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== NEWSLETTER ===== */
+        .newsletter {
+            padding: 64px 0;
+            background: linear-gradient(135deg, #2d2b3a, #4a3f6b);
+            color: #fff;
+            text-align: center;
+        }
+        .newsletter h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .newsletter p {
+            color: #c8c3e8;
+            font-size: 15px;
+            margin-bottom: 24px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        .newsletter-form input {
+            flex: 1;
+            min-width: 220px;
+            padding: 14px 20px;
+            border-radius: 50px;
+            border: none;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+        }
+        .newsletter-form button {
+            background: #a29bfe;
+            color: #2d2b3a;
+            padding: 14px 28px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background .3s;
+        }
+        .newsletter-form button:hover {
+            background: #fff;
+        }
+        .newsletter .social-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+        .newsletter .social-links a {
+            color: #c8c3e8;
+            font-size: 14px;
+            transition: color .3s;
+        }
+        .newsletter .social-links a:hover {
+            color: #a29bfe;
+        }
+
+        /* ===== POEM SECTION ===== */
+        .poem {
+            padding: 80px 0;
+            background: #faf9fc;
+        }
+        .poem .container {
+            max-width: 720px;
+            text-align: center;
+        }
+        .poem h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d2b3a;
+            margin-bottom: 32px;
+        }
+        .poem h2 span {
+            color: #6c5ce7;
+        }
+        .poem-content {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-style: italic;
+            color: #4a3f6b;
+            line-height: 2;
+            text-align: center;
+        }
+        .poem-content p {
+            margin-bottom: 20px;
+        }
+        .poem-content .author {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            color: #8884a0;
+            margin-top: 32px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #1e1c2e;
+            color: #b0aac8;
+            padding: 48px 0 24px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #2d2b3a;
+            margin-bottom: 24px;
+        }
+        .footer-brand .logo-text {
+            color: #fff;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        .footer-brand .logo-text span {
+            color: #a29bfe;
+        }
+        .footer-brand .logo-sub {
+            color: #8884a0;
+            font-size: 12px;
+            margin-bottom: 16px;
+        }
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 360px;
+        }
+        .footer-col h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        .footer-col ul li a {
+            font-size: 14px;
+            color: #8884a0;
+            transition: color .3s;
+        }
+        .footer-col ul li a:hover {
+            color: #a29bfe;
+        }
+        .footer-bottom {
+            text-align: center;
+            font-size: 13px;
+            color: #5a5670;
+        }
+        .footer-bottom a {
+            color: #a29bfe;
+        }
+        .footer-bottom .sep {
+            margin: 0 8px;
+            color: #3d3a52;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                padding-top: 16px;
+            }
+            .nav.open {
+                display: flex;
+            }
+            .nav a {
+                padding: 8px 0;
+                border-bottom: 1px solid #ede9f0;
+            }
+            .hero {
+                padding: 80px 0 60px;
+            }
+            .hero h1 {
+                font-size: 34px;
+            }
+            .hero .subtitle {
+                font-size: 18px;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .about-highlights {
+                grid-template-columns: 1fr;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .newsletter-form input {
+                min-width: unset;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37,211,102,.4);
+            transition: transform .3s, box-shadow .3s;
+            text-decoration: none;
+            animation: pulse-whatsapp 2s infinite;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(37,211,102,.6);
+            animation: none;
+        }
+        .whatsapp-float svg { width: 32px; height: 32px; fill: #fff; }
+        .whatsapp-float .tooltip {
+            position: absolute;
+            right: 72px;
+            background: #fff;
+            color: #075e54;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,.15);
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+        }
+        .whatsapp-float:hover .tooltip { opacity: 1; }
+        @keyframes pulse-whatsapp {
+            0% { box-shadow: 0 4px 20px rgba(37,211,102,.4); }
+            50% { box-shadow: 0 4px 30px rgba(37,211,102,.7); }
+            100% { box-shadow: 0 4px 20px rgba(37,211,102,.4); }
+        }
+
+        /* ===== STATS ===== */
+        .stats {
+            padding: 60px 0;
+            background: #2d2b3a;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            text-align: center;
+        }
+        .stat-item .number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 42px;
+            font-weight: 800;
+            color: #a29bfe;
+            line-height: 1.2;
+        }
+        .stat-item .label {
+            font-size: 13px;
+            color: #c8c3e8;
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 80px 0;
+            background: #faf9fc;
+        }
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .testimonials-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: #2d2b3a;
+        }
+        .testimonials-header h2 span { color: #6c5ce7; }
+        .testimonials-header p {
+            color: #5a5670;
+            margin-top: 8px;
+            font-size: 16px;
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .testimonial-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid #ede9f0;
+            transition: transform .3s, box-shadow .3s;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(108,92,231,.08);
+        }
+        .testimonial-card .stars { color: #a29bfe; font-size: 16px; margin-bottom: 12px; }
+        .testimonial-card .text {
+            font-size: 14px;
+            color: #5a5670;
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 16px;
+        }
+        .testimonial-card .author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .testimonial-card .author-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f2effb, #e8e3f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: #6c5ce7;
+        }
+        .testimonial-card .author-info .name { font-weight: 600; color: #2d2b3a; font-size: 15px; }
+        .testimonial-card .author-info .role { font-size: 13px; color: #8884a0; }
+
+        /* ===== FGF DEMO BADGE ===== */
+        .fgf-badge {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 9999;
+            background: rgba(45,43,58,.85);
+            backdrop-filter: blur(8px);
+            color: #a29bfe;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .3px;
+            border: 1px solid rgba(162,155,254,.2);
+            pointer-events: none;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity .6s ease-out, transform .6s ease-out;
+        }
+        .animate.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+/* === RESPONSIVE MOBILE FGF === */
+@media (max-width: 768px) {
+  .container, section > div:not(.no-resp) { padding: 0 16px !important; }
+  h1 { font-size: 2rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  .grid, .grid-2, [class*="grid"] { grid-template-columns: 1fr !important; }
+  .flex, [class*="flex"] { flex-wrap: wrap !important; }
+  img { max-width: 100% !important; height: auto !important; }
+  table { font-size: 12px !important; }
+  td, th { padding: 6px 4px !important; }
+  .btn, button, a.btn { width: 100% !important; text-align: center !important; }
+  nav, .nav, .navbar { flex-wrap: wrap !important; }
+  .hero { padding: 80px 16px 40px !important; }
+  .hero h1 { font-size: 2.2rem !important; }
+  section { padding: 40px 0 !important; }
+}
+@media (max-width: 480px) {
+  h1 { font-size: 1.6rem !important; }
+  h2 { font-size: 1.3rem !important; }
+  body { font-size: 14px !important; }
+  .hide-mobile { display: none !important; }
+}
+
+    </style>
+</head>
+<body>
+<!-- ════════════════════════════════════════════ -->
+<!-- FGF DIGITAL · Modelo de referencia          -->
+<!-- ════════════════════════════════════════════ -->
+<div style="background:linear-gradient(135deg,#1a1a2e,#16213e);color:#fff;text-align:center;padding:12px 20px;font-family:sans-serif;font-size:14px;border-bottom:3px solid #e94560;">
+  🚧 <strong>FGF DIGITAL</strong> · Modelo de referencia ·
+  <a href="https://fgfdigital.cl" style="color:#e94560;text-decoration:underline;">fgfdigital.cl</a>
+</div>
+
+
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">
+                <div class="logo-icon">🧠</div>
+                <div>
+                    <div class="logo-text">Psi<span>Migrante</span></div>
+                    <div class="logo-sub">Psicoterapia para migrantes</div>
+                </div>
+            </a>
+            <button class="hamburger" id="hamburger" aria-label="Menú">
+                <span></span><span></span><span></span>
+            </button>
+            <nav class="nav" id="nav">
+                <a href="#" class="active">Home</a>
+                <a href="#">Psicólogo Berlín</a>
+                <a href="#">Servicios</a>
+                <a href="#">Tarifas</a>
+                <a href="#">Artículos</a>
+                <a href="#">Contacto</a>
+                <a href="#" class="btn-nav-cta">Agendar Cita</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="container">
+            <h1>Psicología <span>Migrante</span></h1>
+            <div class="subtitle">Migrante es el rumbo del camino</div>
+            <p>Psicoterapia especializada para migrantes hispanohablantes. Presencial en Berlín y online para todo el mundo.</p>
+            <a href="#" class="btn">📅 Agendar una cita</a>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="about animate">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>Psicología desde el <span>Extranjero</span></h2>
+                    <div class="subhead">Un espacio pensado para quienes viven lejos de casa</div>
+                    <p>
+                        <strong>Psicología Migrante</strong> es una consulta de psicoterapia para migrantes hispanohablantes.
+                        Un espacio pensado para personas que viven fuera de su país y buscan apoyo psicológico
+                        para afrontar <strong>ansiedad, depresión, estrés, bloqueos, crisis vitales o dificultades de adaptación</strong>.
+                    </p>
+                    <p>
+                        No todo malestar psicológico nace de la migración. A veces sufrimos por razones parecidas
+                        a las de cualquier otra persona: una relación que se rompe, una pérdida, una decisión difícil.
+                        Pero cuando vivimos lejos, todo eso ocurre con <strong>menos red de apoyo, otro idioma,
+                        distancia familiar y la sensación de estar entre dos mundos</strong>.
+                    </p>
+                    <p>
+                        Desde un <strong>enfoque cognitivo-conductual</strong>, con integración de mindfulness
+                        y herramientas narrativas, la psicoterapia para migrantes permite comprender lo que ocurre,
+                        ordenar la experiencia y desarrollar estrategias ajustadas a cada situación vital.
+                    </p>
+                    <ul class="about-highlights">
+                        <li>Terapia presencial en Berlín</li>
+                        <li>Psicoterapia online para todo el mundo</li>
+                        <li>Enfoque cognitivo-conductual</li>
+                        <li>Mindfulness y escritura terapéutica</li>
+                        <li>Atención en español</li>
+                        <li>Workshops y seminarios</li>
+                    </ul>
+                </div>
+                <div class="about-side">
+                    <div class="quote">
+                        "Migrar puede traer soledad, culpa, cansancio o crisis de pertenencia.
+                        También puede activar recursos que a veces olvidamos: capacidad de adaptación,
+                        resiliencia y nuevas formas de habitar la propia historia."
+                    </div>
+                    <div class="quote-author">— Psicología Migrante</div>
+                    <div class="deco-circle"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <section class="stats animate">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="number">10+</div>
+                    <div class="label">Años de Experiencia</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">500+</div>
+                    <div class="label">Pacientes Atendidos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">15+</div>
+                    <div class="label">Países Alcanzados</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number">97%</div>
+                    <div class="label">Satisfacción</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SERVICES ===== -->
+    <section class="services">
+        <div class="container">
+            <div class="services-header">
+                <h2>Nuestros <span>Servicios</span></h2>
+                <div class="subhead">Migrantes que se levantan de nuevo</div>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon-wrap">🏛️</div>
+                    <h3>Psicoterapia Berlín</h3>
+                    <p>Terapia psicológica presencial en Berlín en español, especializada en el apoyo a inmigrantes y sus procesos de adaptación.</p>
+                    <a href="#" class="link">Saber más →</a>
+                </div>
+                <div class="service-card">
+                    <div class="icon-wrap">💻</div>
+                    <h3>Psicoterapia Online</h3>
+                    <p>Consulta de psicología online profesional para migrantes hispanohablantes desde cualquier parte del mundo.</p>
+                    <a href="#" class="link">Saber más →</a>
+                </div>
+                <div class="service-card">
+                    <div class="icon-wrap">🎯</div>
+                    <h3>Workshops y Seminarios</h3>
+                    <p>Talleres, charlas y seminarios sobre psicología, migración, duelo migratorio e interculturalidad.</p>
+                    <a href="#" class="link">Saber más →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonials animate">
+        <div class="container">
+            <div class="testimonials-header">
+                <h2>Lo que dicen <span>nuestros pacientes</span></h2>
+                <p>Historias de quienes encontraron apoyo y claridad en su proceso migratorio.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="text">"Empecé terapia online desde Canadá. Me ayudó muchísimo a manejar la ansiedad del proceso migratorio. Gracias por crear este espacio."</div>
+                    <div class="author">
+                        <div class="author-avatar">AM</div>
+                        <div class="author-info">
+                            <div class="name">Andrea Martínez</div>
+                            <div class="role">Paciente online · Canadá</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="text">"La terapia presencial en Berlín me ayudó a procesar el duelo migratorio. Me sentí comprendida y acompañada en cada sesión."</div>
+                    <div class="author">
+                        <div class="author-avatar">CG</div>
+                        <div class="author-info">
+                            <div class="name">Carmen García</div>
+                            <div class="role">Paciente presencial · Berlín</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <div class="text">"Un espacio seguro y profesional. Las herramientas de mindfulness y escritura terapéutica fueron transformadoras para mi proceso."</div>
+                    <div class="author">
+                        <div class="author-avatar">PL</div>
+                        <div class="author-info">
+                            <div class="name">Pedro Lara</div>
+                            <div class="role">Paciente online · México</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEWSLETTER ===== -->
+    <section class="newsletter animate">
+        <div class="container">
+            <h2>📬 Mantente al día</h2>
+            <p>Suscríbete a nuestra newsletter sobre psicología, migración y escritura terapéutica, y no te pierdas ningún evento.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Tu correo electrónico" required>
+                <button type="submit">Suscribirme</button>
+            </form>
+            <div class="social-links">
+                <a href="#">📷 Instagram</a>
+                <a href="#">📘 Facebook</a>
+                <a href="#">🎙️ Skype</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== POEM ===== -->
+    <section class="poem animate">
+        <div class="container">
+            <h2>Migrantes <span>Somos</span></h2>
+            <div class="poem-content">
+                <p>
+                    Migrantes somos,<br>
+                    somos los que se fueron y los de fuera,<br>
+                    los que salen por la puerta y entran por la ventana,<br>
+                    los de aquí y de allá,<br>
+                    los que vuelan sin alas.
+                </p>
+                <p>
+                    Migrantes somos,<br>
+                    los raros, los especiales,<br>
+                    los diferentes que a lo común representan,<br>
+                    primera línea en la batalla contra los prejuicios,<br>
+                    abanderados de la diversidad.
+                </p>
+                <p>
+                    Somos la paciencia y el esfuerzo constante<br>
+                    pero también el hastío y el cansancio,<br>
+                    el recuerdo y la añoranza,<br>
+                    la extraña y triste belleza de un sol eclipsado.
+                </p>
+                <p>
+                    Migrantes somos y seremos,<br>
+                    nos quedemos o nos volvamos,<br>
+                    los fuertes, los valientes, los supervivientes;<br>
+                    a pesar de todo y aunque lo hayamos olvidado.
+                </p>
+                <div class="author">© Psicología Migrante</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo-text">Psi<span>Migrante</span></div>
+                    <div class="logo-sub">Psicoterapia para migrantes</div>
+                    <p>Psicoterapia especializada en migración. Presencial en Berlín y online para hispanohablantes en todo el mundo.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Servicios</h4>
+                    <ul>
+                        <li><a href="#">Psicoterapia Berlín</a></li>
+                        <li><a href="#">Psicoterapia Online</a></li>
+                        <li><a href="#">Workshops</a></li>
+                        <li><a href="#">Escritura Terapéutica</a></li>
+                        <li><a href="#">Debates Berlineses</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Enlaces</h4>
+                    <ul>
+                        <li><a href="#">Tarifas</a></li>
+                        <li><a href="#">Artículos</a></li>
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Impressum</a></li>
+                        <li><a href="#">Datenschutz</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; Psicología Migrante 2026
+                <span class="sep">|</span>
+                <a href="#">Impressum</a>
+                <span class="sep">|</span>
+                <a href="#">Datenschutz</a>
+                <span class="sep">|</span>
+                Todos los derechos reservados
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/4930123456?text=Hola%2C%20quiero%20consultar%20por%20terapia" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+        <span class="tooltip">¡Escribinos!</span>
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <div class="fgf-badge">🚀 Demo — FGF Digital</div>
+
+    <script>
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.getElementById('nav').classList.toggle('open');
+        });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+            });
+        }, { threshold: .1 });
+        document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
