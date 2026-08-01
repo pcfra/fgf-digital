@@ -342,6 +342,59 @@
             letter-spacing: 0.5px;
         }
 
+        /* ═══ EQUIPO ═══ */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+        }
+        .team-card {
+            background: var(--card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 28px 22px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .team-card:hover {
+            border-color: rgba(124,58,237,0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .team-card .avatar {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 14px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            background: linear-gradient(135deg, var(--purple), var(--neon));
+        }
+        .team-card h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .team-card .role {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        .team-card p {
+            font-size: 12px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
         /* ═══ TECH CARDS ═══ */
         .tech-grid {
             display: grid;
@@ -1074,6 +1127,7 @@
             </a>
             <div class="nav-links" id="navLinks">
                 <a href="#about">Inicio</a>
+                <a href="#team">Equipo</a>
                 <a href="#tech">Tecnología</a>
                 <a href="#projects">Proyectos</a>
                 <a href="#plans">Planes</a>
@@ -1131,7 +1185,7 @@
         <div class="about-grid">
             <div class="about-card reveal reveal-d1">
                 <h3><span class="icon">👋</span>¿Quién soy?</h3>
-                <p><strong style="color:var(--purple3);">Francisco Javier Pardo Jara</strong>, freelancer experto en informática, publicidad y desarrollo web. Desde Talagante, ayudo a panaderías, talleres, almacenes, farmacias, desarmadurías y profesionales independientes a tener presencia digital profesional.</p>
+                <p><strong style="color:var(--purple3);">Francisco Javier Pardo Jara</strong>, desarrollador web y programador Python, experto en informática y publicidad. Nos encargamos de todo el desarrollo digital de tu negocio: desde el sitio web hasta aplicaciones propias hechas a la medida de cada cliente. Desde Talagante, ayudo a panaderías, talleres, almacenes, farmacias, desarmadurías y profesionales independientes a tener presencia digital profesional.</p>
                 <div class="stat-grid">
                     <div class="mini-stat">
                         <div class="n">+20</div>
@@ -1159,6 +1213,65 @@
         <div class="about-card reveal reveal-d3" style="margin-top:20px; text-align:center; grid-column: 1 / -1;">
             <h3><span class="icon">🚀</span>¡Vienen cositas grandes!</h3>
             <p>Actualmente estamos en desarrollo de <strong style="color:var(--neon);">dos aplicaciones</strong> que van a cambiar la forma en que las pymes chilenas se digitalizan. Apps modernas, funcionales y hechas a la medida del negocio chileno. <strong style="color:var(--purple3);">Pronto más info...</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ EQUIPO ═══ -->
+    <section class="section" id="team">
+        <div class="section-header reveal">
+            <div class="tag">👥 Nuestro Equipo</div>
+            <h2>Las personas <span class="highlight">detrás de FGF Digital</span></h2>
+            <p>Un equipo cercano, comprometido con que tu negocio dé el salto digital sin complicaciones.</p>
+        </div>
+        <div class="team-grid">
+            <div class="team-card reveal reveal-d1">
+                <div class="avatar">FP</div>
+                <h4>Francisco Pardo</h4>
+                <div class="role">CEO &amp; Fundador</div>
+                <p>Desarrollador web y programador Python. Desarrolla desde el sitio web hasta aplicaciones propias a la medida de cada cliente.</p>
+            </div>
+            <div class="team-card reveal reveal-d1">
+                <div class="avatar">FH</div>
+                <h4>Francisca Huala</h4>
+                <div class="role">CEO &amp; Administradora</div>
+                <p>Administra la gestión de FGF Digital: coordinación de clientes, seguimiento de proyectos y entrega de cada trabajo terminado.</p>
+            </div>
+            <div class="team-card reveal reveal-d2">
+                <div class="avatar">PE</div>
+                <h4>Patricia Encina</h4>
+                <div class="role">Ejecutiva de Ventas</div>
+                <p>Especialista en el rubro dental: conecta a clínicas y odontólogos con la solución digital que necesitan.</p>
+            </div>
+            <div class="team-card reveal reveal-d2">
+                <div class="avatar">GH</div>
+                <h4>Germán Huala</h4>
+                <div class="role">Cofundador &amp; Ejecutivo de Ventas</div>
+                <p>Especialista en talleres mecánicos. Acompaña a los nuevos clientes desde el primer contacto.</p>
+            </div>
+            <div class="team-card reveal reveal-d3">
+                <div class="avatar">TH</div>
+                <h4>Tamara Huala</h4>
+                <div class="role">Ejecutiva de Ventas</div>
+                <p>Especialista en veterinarias y clínicas de mascotas. Asesora a cada negocio sobre el plan digital más conveniente.</p>
+            </div>
+            <div class="team-card reveal reveal-d3">
+                <div class="avatar">PC</div>
+                <h4>Patricia Carreño</h4>
+                <div class="role">Ejecutiva de Ventas</div>
+                <p>Especialista en barberías. Conecta a cada negocio con la presencia digital que necesita.</p>
+            </div>
+            <div class="team-card reveal reveal-d4">
+                <div class="avatar">CJ</div>
+                <h4>Camilo Jaque</h4>
+                <div class="role">Ejecutivo de Ventas</div>
+                <p>Especialista en tecnología: celulares, paneles solares, computadores, cámaras de seguridad y electrónica general.</p>
+            </div>
+            <div class="team-card reveal reveal-d4">
+                <div class="avatar">ME</div>
+                <h4>Marisol Encina</h4>
+                <div class="role">Ejecutiva de Ventas</div>
+                <p>Especialista en psicólogos y profesionales de la salud mental.</p>
             </div>
         </div>
     </section>
