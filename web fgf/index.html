@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FGF Digital — Desarrollo web y aplicaciones a medida para pymes en Chile.">
+  <title>FGF Digital — Web y apps para tu negocio</title>
+  <link rel="icon" type="image/png" href="../logo-principal.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="noise-bg">
+
+  <img class="hero-grid" src="https://cdn.prod.website-files.com/656759acf6013e1492415a32/682dbe40a73884f3cba79f4d_hero_grid.svg" alt="" aria-hidden="true">
+
+  <div class="fgf-bg" aria-hidden="true">
+    <video id="fgfReel" class="fgf-bg-video" autoplay muted loop playsinline>
+      <source src="fgf-reel.mp4" type="video/mp4">
+    </video>
+    <div class="fgf-bg-shade"></div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="logo" href="#inicio">FGF Digital</a>
+      <div class="nav-links" id="navLinks">
+        <a href="#servicios">Servicios</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#soporte">Soporte</a>
+        <a href="#contacto" class="btn btn-sm">Contacto</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="inicio">
+    <div class="hero-copy reveal">
+      <div class="hero-lines">
+        <span class="hero-line">Desarrollamos la web</span>
+        <span class="hero-line">y las apps que</span>
+        <span class="hero-line dim">tu negocio necesita.</span>
+      </div>
+      <p class="lead">Convertimos lo que te falta digitalmente en productos reales: páginas en línea, aplicaciones propias y sistemas a medida.</p>
+      <div class="hero-btns">
+        <a class="btn" href="https://wa.me/56940894579?text=Hola%2C%20vi%20FGF%20Digital%20y%20quiero%20saber%20m%C3%A1s." target="_blank" rel="noopener">Hablar con nosotros</a>
+        <a class="btn btn-ghost" href="#proyectos">Ver proyectos</a>
+      </div>
+      <div class="chips">
+        <span class="chip">PGN en línea</span>
+        <span class="chip">Apps propias</span>
+        <span class="chip">Demos por rubro</span>
+        <span class="chip">Hosting + soporte</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="block" id="servicios">
+    <p class="section-label reveal">Servicios</p>
+    <h2 class="section-title reveal">Lo digital que aún no tienes, construido para tu rubro.</h2>
+    <p class="section-sub reveal">No vendemos plantillas. Detectamos qué le falta a tu negocio y lo desarrollamos.</p>
+    <div class="cards">
+      <article class="card reveal">
+        <p class="card-num">01</p>
+        <h3>Páginas en línea</h3>
+        <p>Sitios publicados y listos para Google, WhatsApp y clientes reales.</p>
+      </article>
+      <article class="card reveal">
+        <p class="card-num">02</p>
+        <h3>Aplicaciones propias</h3>
+        <p>Catálogos, reservas, admin y herramientas hechas a la medida.</p>
+      </article>
+      <article class="card reveal">
+        <p class="card-num">03</p>
+        <h3>Sistemas a medida</h3>
+        <p>Cuando una web no alcanza, construimos la app que tu operación necesita.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="block" id="proyectos">
+    <p class="section-label reveal">Proyectos</p>
+    <h2 class="section-title reveal">Trabajo real. En línea y en demo.</h2>
+    <p class="section-sub reveal">Páginas publicadas, apps desarrolladas y modelos por rubro.</p>
+
+    <div class="tabs reveal">
+      <button class="tab active" data-tab="live">En línea</button>
+      <button class="tab" data-tab="apps">Apps</button>
+      <button class="tab" data-tab="demos">Demos</button>
+    </div>
+
+    <div class="tab-panel active" id="tab-live">
+      <div class="project-grid">
+        <article class="project-card">
+          <a class="project-preview" href="https://pcfra.github.io/fgf-digital/proyecto-desarmaduria/index.html" target="_blank" rel="noopener">
+            <img src="_screenshots/desarmaduria.png" alt="Vista del sitio Desarmaduría FGF" loading="lazy" width="640" height="400">
+          </a>
+          <div class="project-card-body">
+            <span class="badge">En vivo</span>
+            <h3>Desarmaduría FGF</h3>
+            <p>Web, catálogo, admin y app móvil para repuestos en Talagante.</p>
+            <div class="project-links">
+              <a href="https://pcfra.github.io/fgf-digital/proyecto-desarmaduria/index.html" target="_blank" rel="noopener">Ver sitio</a>
+              <a href="https://pcfra.github.io/fgf-digital/proyecto-desarmaduria/catalogo/index.html" target="_blank" rel="noopener">Catálogo</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <a class="project-preview" href="../clientes/edo-tattoo/index.html" target="_blank" rel="noopener">
+            <img src="_screenshots/edo-tattoo.png" alt="Vista del sitio Edo Tattoo" loading="lazy" width="640" height="400">
+          </a>
+          <div class="project-card-body">
+            <span class="badge">En vivo</span>
+            <h3>Edo Tattoo</h3>
+            <p>Sitio profesional para tatuador en el Maule.</p>
+            <div class="project-links">
+              <a href="../clientes/edo-tattoo/index.html" target="_blank" rel="noopener">Ver sitio</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <a class="project-preview" href="../turismo-historico/index.html" target="_blank" rel="noopener">
+            <img src="_screenshots/turismo.png" alt="Vista del sitio Turismo Histórico" loading="lazy" width="640" height="400">
+          </a>
+          <div class="project-card-body">
+            <span class="badge">En vivo</span>
+            <h3>Turismo Histórico</h3>
+            <p>Plataforma con inscripción y panel admin.</p>
+            <div class="project-links">
+              <a href="../turismo-historico/index.html" target="_blank" rel="noopener">Ver sitio</a>
+              <a href="../turismo-historico/admin/index.html" target="_blank" rel="noopener">Admin</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-apps">
+      <div class="project-grid">
+        <article class="project-card">
+          <a class="project-preview" href="https://pcfra.github.io/fgf-digital/app-generadora/index.html" target="_blank" rel="noopener">
+            <img src="_screenshots/app-gen.png" alt="Vista del Creador de Aplicaciones" loading="lazy" width="640" height="400">
+          </a>
+          <div class="project-card-body">
+            <span class="badge">App</span>
+            <h3>Creador de Aplicaciones</h3>
+            <p>Webs personalizadas al instante para más de 20 rubros.</p>
+            <div class="project-links">
+              <a href="https://pcfra.github.io/fgf-digital/app-generadora/index.html" target="_blank" rel="noopener">Probar</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <a class="project-preview" href="https://pcfra.github.io/fgf-digital/proyecto-desarmaduria/admin/index.html" target="_blank" rel="noopener">
+            <img src="_screenshots/admin-desarmaduria.png" alt="Vista del admin Desarmaduría" loading="lazy" width="640" height="400">
+          </a>
+          <div class="project-card-body">
+            <span class="badge">App</span>
+            <h3>Admin Desarmaduría</h3>
+            <p>Panel para gestionar productos y operación.</p>
+            <div class="project-links">
+              <a href="https://pcfra.github.io/fgf-digital/proyecto-desarmaduria/admin/index.html" target="_blank" rel="noopener">Ver admin</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <a class="project-preview project-preview--mobile" href="https://pcfra.github.io/fgf-digital/proyecto-desarmaduria/app-movil/index.html" target="_blank" rel="noopener">
+            <img src="_screenshots/app-movil-desarmaduria.png" alt="Vista de la app móvil Desarmaduría" loading="lazy" width="390" height="844">
+          </a>
+          <div class="project-card-body">
+            <span class="badge">App</span>
+            <h3>App móvil Desarmaduría</h3>
+            <p>Versión móvil del ecosistema comercial.</p>
+            <div class="project-links">
+              <a href="https://pcfra.github.io/fgf-digital/proyecto-desarmaduria/app-movil/index.html" target="_blank" rel="noopener">Ver app</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-demos">
+      <div class="project-grid">
+        <article class="project-card">
+          <a class="project-preview" href="../modelos/dojo-olimpo/index.html" target="_blank" rel="noopener">
+            <img src="_screenshots/dojo.png" alt="Vista demo Dojo Olimpo" loading="lazy" width="640" height="400">
+          </a>
+          <div class="project-card-body">
+            <span class="badge">Demo</span>
+            <h3>Dojo Olimpo</h3>
+            <p>Modelo para academias y deportes.</p>
+            <div class="project-links">
+              <a href="../modelos/dojo-olimpo/index.html" target="_blank" rel="noopener">Ver demo</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <a class="project-preview" href="https://pcfra.github.io/fgf-digital/modelos/panaderia-el-trigo.html" target="_blank" rel="noopener">
+            <img src="_screenshots/panaderia.png" alt="Vista demo Panadería El Trigo" loading="lazy" width="640" height="400">
+          </a>
+          <div class="project-card-body">
+            <span class="badge">Demo</span>
+            <h3>Panadería El Trigo</h3>
+            <p>Modelo para panaderías y retail.</p>
+            <div class="project-links">
+              <a href="https://pcfra.github.io/fgf-digital/modelos/panaderia-el-trigo.html" target="_blank" rel="noopener">Ver demo</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <a class="project-preview" href="https://pcfra.github.io/fgf-digital/modelos/barberia-oldschool.html" target="_blank" rel="noopener">
+            <img src="_screenshots/barberia.png" alt="Vista demo Barbería Oldschool" loading="lazy" width="640" height="400">
+          </a>
+          <div class="project-card-body">
+            <span class="badge">Demo</span>
+            <h3>Barbería Oldschool</h3>
+            <p>Modelo para barberías y estética masculina.</p>
+            <div class="project-links">
+              <a href="https://pcfra.github.io/fgf-digital/modelos/barberia-oldschool.html" target="_blank" rel="noopener">Ver demo</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <a class="project-preview" href="https://pcfra.github.io/fgf-digital/modelos/taller-automotriz.html" target="_blank" rel="noopener">
+            <img src="_screenshots/taller.png" alt="Vista demo Taller Automotriz" loading="lazy" width="640" height="400">
+          </a>
+          <div class="project-card-body">
+            <span class="badge">Demo</span>
+            <h3>Taller Automotriz</h3>
+            <p>Modelo para talleres y servicios mecánicos.</p>
+            <div class="project-links">
+              <a href="https://pcfra.github.io/fgf-digital/modelos/taller-automotriz.html" target="_blank" rel="noopener">Ver demo</a>
+            </div>
+          </div>
+        </article>
+        <article class="project-card">
+          <a class="project-preview" href="https://pcfra.github.io/fgf-digital/modelos/restaurant-don-carlo.html" target="_blank" rel="noopener">
+            <img src="_screenshots/restaurant.png" alt="Vista demo Restaurant Don Carlo" loading="lazy" width="640" height="400">
+          </a>
+          <div class="project-card-body">
+            <span class="badge">Demo</span>
+            <h3>Restaurant Don Carlo</h3>
+            <p>Modelo para restaurantes y gastronomía.</p>
+            <div class="project-links">
+              <a href="https://pcfra.github.io/fgf-digital/modelos/restaurant-don-carlo.html" target="_blank" rel="noopener">Ver demo</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <p class="more-link reveal"><a href="../portafolio-fgf-premium.html">Portafolio completo →</a></p>
+    </div>
+  </section>
+
+  <section class="block" id="proceso">
+    <p class="section-label reveal">Proceso</p>
+    <h2 class="section-title reveal">De diagnóstico a entrega, sin complicaciones.</h2>
+    <ol class="steps reveal">
+      <li><strong>Diagnóstico</strong><span>Entendemos tu negocio y qué te falta.</span></li>
+      <li><strong>Diseño</strong><span>Propuesta visual y funcional para tu rubro.</span></li>
+      <li><strong>Desarrollo</strong><span>Construimos web, app o sistema.</span></li>
+      <li><strong>Entrega</strong><span>Publicamos y te dejamos operando.</span></li>
+    </ol>
+  </section>
+
+  <section class="block" id="soporte">
+    <div class="support-box reveal">
+      <p class="section-label">Acompañamiento</p>
+      <h2>No te dejamos solo.</h2>
+      <p class="support-text">Mientras tu sitio esté con nosotros en el <strong>hosting</strong>, estamos contigo para actualizar, mejorar y resolver lo que necesites.</p>
+      <ul class="support-list">
+        <li>Actualizaciones cuando las pidas</li>
+        <li>Soporte técnico con hosting FGF</li>
+        <li>Mejoras sin quedarte botado</li>
+        <li>Un partner digital, no un proveedor de una sola vez</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="contacto">
+    <p class="section-label reveal">Contacto</p>
+    <h2 class="section-title reveal">Hablemos de tu proyecto.</h2>
+    <div class="contact-card reveal">
+      <div>
+        <p class="contact-name">Francisco Pardo · FGF Digital</p>
+        <p class="contact-meta">Talagante, Chile · fgfdigital.cl</p>
+      </div>
+      <a class="btn btn-wa" href="https://wa.me/56940894579?text=Hola%2C%20vi%20FGF%20Digital%20y%20quiero%20saber%20m%C3%A1s." target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>FGF Digital © 2026 — Desarrollo web y apps · Chile</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
