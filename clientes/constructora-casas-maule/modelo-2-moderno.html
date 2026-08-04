@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Constructora Casas del Maule — Diseño moderno para tu terreno</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Poppins','Segoe UI',system-ui,sans-serif; background:#0b0b0c; color:#f2f2f2; line-height:1.6; }
+  a { text-decoration:none; color:inherit; }
+  .fade-up { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+  .fade-up.visible { opacity:1; transform:translateY(0); }
+
+  .wa-float {
+    position:fixed; bottom:24px; right:24px; z-index:999;
+    background:#25d366; color:#fff; border-radius:50px; padding:14px 20px;
+    font-weight:700; display:flex; align-items:center; gap:8px;
+    box-shadow:0 6px 20px rgba(0,0,0,.4);
+  }
+
+  header {
+    position:sticky; top:0; z-index:200; padding:18px 32px;
+    background:rgba(11,11,12,.5); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,.06); transition:background .3s;
+  }
+  header.scrolled { background:rgba(11,11,12,.9); }
+  .header-inner { max-width:1300px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
+  .logo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.05em; letter-spacing:.5px; }
+  .logo svg { width:30px; height:30px; flex-shrink:0; }
+  nav ul { display:flex; gap:36px; list-style:none; }
+  nav a { font-size:.9em; letter-spacing:.5px; text-transform:uppercase; color:#c9c9c9; transition:color .2s; }
+  nav a:hover { color:#d4a373; }
+  .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; }
+  .hamburger span { width:26px; height:2px; background:#fff; }
+
+  .hero {
+    min-height:92vh; display:flex; align-items:flex-end; padding:0 32px 80px;
+    background:linear-gradient(180deg, rgba(11,11,12,0) 0%, rgba(11,11,12,.95) 92%), url('assets/casa-2.webp') center/cover no-repeat;
+  }
+  .hero-inner { max-width:1300px; margin:0 auto; width:100%; }
+  .hero-tag { color:#d4a373; letter-spacing:3px; text-transform:uppercase; font-size:.85em; margin-bottom:16px; }
+  .hero h1 { font-size:3em; font-weight:700; max-width:780px; margin-bottom:20px; line-height:1.15; }
+  .hero p { max-width:520px; color:#c9c9c9; margin-bottom:32px; }
+  .cta-btn {
+    display:inline-block; background:#d4a373; color:#0b0b0c; padding:16px 36px;
+    font-weight:700; letter-spacing:.5px; text-transform:uppercase; font-size:.9em; transition:background .2s;
+  }
+  .cta-btn:hover { background:#e6b98a; }
+
+  .section { padding:110px 32px; max-width:1300px; margin:0 auto; }
+  .section-eyebrow { color:#d4a373; letter-spacing:3px; text-transform:uppercase; font-size:.8em; margin-bottom:10px; }
+  .section-title { font-size:2.4em; font-weight:700; margin-bottom:44px; max-width:600px; }
+
+  .models-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:2px; background:#1a1a1c; }
+  .model-card { background:#0b0b0c; position:relative; overflow:hidden; height:420px; }
+  .model-card img { width:100%; height:100%; object-fit:cover; transition:transform .5s; }
+  .model-card:hover img { transform:scale(1.08); }
+  .model-overlay { position:absolute; inset:0; background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.9) 100%); display:flex; flex-direction:column; justify-content:flex-end; padding:26px; }
+  .model-overlay h3 { font-size:1.3em; margin-bottom:6px; }
+  .model-overlay p { color:#c9c9c9; font-size:.88em; margin-bottom:14px; }
+  .model-overlay a { font-size:.85em; letter-spacing:.5px; text-transform:uppercase; color:#d4a373; font-weight:700; }
+
+  .about-grid { display:grid; grid-template-columns:1fr 1.1fr; gap:60px; align-items:center; }
+  .about-grid img { width:100%; height:100%; object-fit:cover; }
+  .about-text p { color:#c9c9c9; margin-bottom:16px; }
+  .stat-row { display:flex; gap:40px; margin-top:30px; flex-wrap:wrap; }
+  .stat b { display:block; font-size:2em; color:#d4a373; }
+  .stat span { color:#9a9a9a; font-size:.85em; }
+
+  .gallery { background:#111113; }
+  .gallery-grid { display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:180px; gap:4px; }
+  .gallery-grid img { width:100%; height:100%; object-fit:cover; }
+  .gallery-grid > :nth-child(1) { grid-column:span 2; grid-row:span 2; }
+
+  .contact-wrap { display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  .form-group { display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
+  .form-group label { font-size:.8em; letter-spacing:1px; text-transform:uppercase; color:#9a9a9a; }
+  input, textarea, select {
+    background:#151517; border:1px solid #2a2a2c; color:#fff; padding:14px; font-family:inherit; font-size:1em;
+  }
+  input:focus, textarea:focus, select:focus { border-color:#d4a373; outline:none; }
+  textarea { min-height:110px; resize:vertical; }
+  .contact-info h3 { font-size:1.6em; margin-bottom:16px; }
+  .contact-info p { color:#c9c9c9; margin-bottom:10px; }
+  .contact-info a { color:#d4a373; font-weight:700; }
+
+  footer { border-top:1px solid #1e1e20; padding:50px 32px 24px; }
+  .footer-inner { max-width:1300px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px; }
+  .footer-bottom { text-align:center; color:#6b6b6b; font-size:.82em; margin-top:34px; }
+
+  @media (max-width:860px) {
+    .about-grid, .contact-wrap { grid-template-columns:1fr; }
+    .gallery-grid { grid-template-columns:repeat(2,1fr); }
+    .gallery-grid > :nth-child(1) { grid-column:span 2; grid-row:span 1; }
+  }
+  @media (max-width:768px) {
+    nav ul { position:fixed; top:66px; right:0; background:#0b0b0c; flex-direction:column; width:240px;
+      padding:26px; gap:22px; transform:translateX(100%); transition:transform .3s; border-left:1px solid #222; }
+    nav ul.open { transform:translateX(0); }
+    .hamburger { display:flex; }
+    .hero h1 { font-size:2em; }
+  }
+</style>
+</head>
+<body>
+
+<a class="wa-float" href="https://wa.me/56965764666?text=Hola%2C%20quiero%20cotizar%20una%20casa%20prefabricada" target="_blank">💬 WhatsApp</a>
+
+<header id="header">
+  <div class="header-inner">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 11L12 3L21 11V21H14V14H10V21H3V11Z" stroke="#d4a373" stroke-width="2" stroke-linejoin="round"/></svg>
+      CONSTRUCTORA CASAS DEL MAULE
+    </div>
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <nav><ul id="navList">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#modelos">Modelos</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <div class="hero-tag">Casas prefabricadas · Región del Maule</div>
+    <h1>Diseño, madera y velocidad de entrega.</h1>
+    <p>Construimos tu casa prefabricada con estructura sólida y terminaciones de calidad, adaptada a tu terreno.</p>
+    <a href="#contacto" class="cta-btn">Cotizar mi casa</a>
+  </div>
+</section>
+
+<section class="section" id="modelos">
+  <div class="section-eyebrow fade-up">Catálogo</div>
+  <h2 class="section-title fade-up">Modelos disponibles</h2>
+  <div class="models-row">
+    <div class="model-card fade-up">
+      <img src="assets/casa-1.webp" alt="Modelo Compacta">
+      <div class="model-overlay">
+        <h3>Casa Compacta</h3>
+        <p>Rápida instalación, ideal para parcela.</p>
+        <a href="https://wa.me/56965764666?text=Hola%2C%20quiero%20cotizar%20la%20Casa%20Compacta" target="_blank">Cotizar →</a>
+      </div>
+    </div>
+    <div class="model-card fade-up">
+      <img src="assets/casa-3.webp" alt="Modelo Familiar">
+      <div class="model-overlay">
+        <h3>Casa Familiar</h3>
+        <p>Más espacio, distribución cálida.</p>
+        <a href="https://wa.me/56965764666?text=Hola%2C%20quiero%20cotizar%20la%20Casa%20Familiar" target="_blank">Cotizar →</a>
+      </div>
+    </div>
+    <div class="model-card fade-up">
+      <img src="assets/casa-4.webp" alt="Modelo Premium">
+      <div class="model-overlay">
+        <h3>Casa Premium</h3>
+        <p>Terminaciones superiores, mayor metraje.</p>
+        <a href="https://wa.me/56965764666?text=Hola%2C%20quiero%20cotizar%20la%20Casa%20Premium" target="_blank">Cotizar →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="nosotros">
+  <div class="about-grid">
+    <img class="fade-up" src="assets/casa-2.webp" alt="Trabajo Constructora Casas del Maule">
+    <div class="about-text fade-up">
+      <div class="section-eyebrow">Quiénes somos</div>
+      <h2 class="section-title" style="margin-bottom:16px;">Construimos con experiencia real</h2>
+      <p>Trabajamos casas prefabricadas de principio a fin: diseño, armado en fábrica y entrega en terreno, con seguimiento directo contigo.</p>
+      <p>Sin intermediarios, sin letra chica — hablas directo con quien arma tu casa.</p>
+      <div class="stat-row">
+        <div class="stat"><b>100%</b><span>Madera certificada</span></div>
+        <div class="stat"><b>Maule</b><span>Zona de cobertura</span></div>
+        <div class="stat"><b>Directo</b><span>Sin intermediarios</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section gallery" id="galeria">
+  <div class="section-eyebrow fade-up">Portafolio</div>
+  <h2 class="section-title fade-up">Trabajos entregados</h2>
+  <div class="gallery-grid">
+    <img class="fade-up" src="assets/casa-2.webp" alt="Casa entregada">
+    <img class="fade-up" src="assets/casa-1.webp" alt="Casa entregada">
+    <img class="fade-up" src="assets/casa-3.webp" alt="Casa entregada">
+    <img class="fade-up" src="assets/casa-4.webp" alt="Casa entregada">
+  </div>
+</section>
+
+<section class="section" id="contacto">
+  <div class="contact-wrap">
+    <div class="contact-info fade-up">
+      <div class="section-eyebrow">Hablemos</div>
+      <h3>Cotiza tu casa hoy mismo</h3>
+      <p>Respondemos por WhatsApp en el día.</p>
+      <p>📞 <a href="https://wa.me/56965764666">+56 9 6576 4666</a></p>
+      <p>📍 Talca, Región del Maule</p>
+    </div>
+    <form class="fade-up" id="contactForm">
+      <div class="form-group"><label>Nombre completo</label><input type="text" id="nombre" required></div>
+      <div class="form-group"><label>Teléfono</label><input type="tel" id="telefono" required></div>
+      <div class="form-group">
+        <label>Modelo de interés</label>
+        <select id="modelo">
+          <option>Casa Compacta</option>
+          <option>Casa Familiar</option>
+          <option>Casa Premium</option>
+          <option>Aún no sé, quiero asesoría</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Mensaje</label><textarea id="mensaje" placeholder="Ubicación, plazo, tamaño..."></textarea></div>
+      <button type="submit" class="cta-btn" style="border:none; cursor:pointer; width:100%;">Enviar por WhatsApp</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" width="26" height="26"><path d="M3 11L12 3L21 11V21H14V14H10V21H3V11Z" stroke="#d4a373" stroke-width="2" stroke-linejoin="round"/></svg>
+      CONSTRUCTORA CASAS DEL MAULE
+    </div>
+    <div style="color:#9a9a9a; font-size:.9em;">+56 9 6576 4666 · Talca, Maule</div>
+  </div>
+  <div class="footer-bottom">© 2026 Constructora Casas Prefabricadas del Maule · Hecho por FGF Digital SPA</div>
+</footer>
+
+<script>
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 40));
+
+  const hamburger = document.getElementById('hamburger');
+  const navList = document.getElementById('navList');
+  hamburger.addEventListener('click', () => navList.classList.toggle('open'));
+  navList.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navList.classList.remove('open')));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value;
+    const telefono = document.getElementById('telefono').value;
+    const modelo = document.getElementById('modelo').value;
+    const mensaje = document.getElementById('mensaje').value;
+    const texto = `Hola, soy ${nombre} (${telefono}). Me interesa: ${modelo}. ${mensaje}`;
+    window.open(`https://wa.me/56965764666?text=${encodeURIComponent(texto)}`, '_blank');
+  });
+</script>
+</body>
+</html>
