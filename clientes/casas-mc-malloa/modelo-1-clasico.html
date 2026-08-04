@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casas Prefabricadas MC — Malloa, tu casa propia a tu medida</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Segoe UI', system-ui, sans-serif; color:#1a1a1a; line-height:1.6; background:#fff; }
+  a { text-decoration:none; }
+  .fade-up { opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+  .fade-up.visible { opacity:1; transform:translateY(0); }
+
+  .wa-float {
+    position:fixed; bottom:24px; right:24px; z-index:999;
+    background:#25d366; color:#fff; border-radius:50px; padding:14px 20px;
+    font-weight:700; display:flex; align-items:center; gap:8px;
+    box-shadow:0 6px 18px rgba(0,0,0,.25); transition:transform .2s;
+  }
+  .wa-float:hover { transform:scale(1.06); }
+
+  header {
+    position:sticky; top:0; z-index:200; padding:14px 24px;
+    background:rgba(12,74,110,.55); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+    transition:background .3s;
+  }
+  header.scrolled { background:rgba(12,74,110,.92); }
+  .header-inner { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
+  .logo { display:flex; align-items:center; gap:10px; color:#fff; font-weight:800; font-size:1.2em; }
+  .logo svg { width:34px; height:34px; flex-shrink:0; }
+  nav ul { display:flex; gap:26px; list-style:none; }
+  nav a { color:#fff; font-weight:600; font-size:.95em; }
+  nav a:hover { color:#fbbf24; }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; }
+  .hamburger span { width:26px; height:3px; background:#fff; border-radius:2px; }
+
+  .hero {
+    background:linear-gradient(rgba(12,74,110,.72),rgba(12,74,110,.86)), url('assets/casa-2.jpg') center/cover no-repeat;
+    color:#fff; text-align:center; padding:150px 20px 110px;
+  }
+  .hero-badge { display:inline-block; background:rgba(251,191,36,.15); border:1px solid #fbbf24; color:#fbbf24; padding:6px 18px; border-radius:30px; font-size:.85em; font-weight:700; letter-spacing:.5px; margin-bottom:22px; }
+  .hero h1 { font-size:2.7em; max-width:820px; margin:0 auto 18px; }
+  .hero p { font-size:1.15em; max-width:620px; margin:0 auto 32px; opacity:.92; }
+  .cta-btn {
+    display:inline-block; background:#fbbf24; color:#0c4a6e; padding:16px 36px;
+    border-radius:8px; font-weight:800; font-size:1.05em; transition:background .2s, transform .2s;
+  }
+  .cta-btn:hover { background:#f59e0b; transform:translateY(-2px); }
+
+  .trust-bar { background:#0c4a6e; padding:20px 24px; }
+  .trust-inner { max-width:1200px; margin:0 auto; display:flex; justify-content:space-around; flex-wrap:wrap; gap:18px; color:#e0f2fe; font-size:.92em; font-weight:600; }
+
+  .section { padding:84px 24px; max-width:1200px; margin:0 auto; }
+  .section-title { font-size:2.1em; color:#0c4a6e; margin-bottom:10px; text-align:center; }
+  .section-subtitle { color:#64748b; font-size:1.05em; max-width:650px; margin:0 auto 46px; text-align:center; }
+
+  .models-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:30px; }
+  .model-card { background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.08); transition:transform .25s, box-shadow .25s; }
+  .model-card:hover { transform:translateY(-8px); box-shadow:0 16px 34px rgba(0,0,0,.14); }
+  .model-card img { width:100%; height:220px; object-fit:cover; display:block; }
+  .model-body { padding:24px; }
+  .model-body h3 { color:#0c4a6e; margin-bottom:8px; font-size:1.25em; }
+  .badge { display:inline-block; background:#e0f2fe; color:#0c4a6e; padding:4px 12px; border-radius:20px; font-size:.82em; font-weight:700; margin-bottom:12px; }
+  .model-body p { color:#64748b; font-size:.93em; margin-bottom:18px; }
+  .model-btn { display:inline-block; background:#0ea5e9; color:#fff; padding:11px 24px; border-radius:6px; font-weight:700; transition:background .2s; }
+  .model-btn:hover { background:#0c4a6e; }
+
+  .about { background:#f8fafc; }
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
+  .about-grid img { width:100%; border-radius:16px; box-shadow:0 10px 28px rgba(0,0,0,.12); }
+  .about-text h2 { color:#0c4a6e; font-size:1.9em; margin-bottom:16px; }
+  .about-text p { color:#475569; margin-bottom:14px; }
+  .steps { display:flex; flex-direction:column; gap:14px; margin-top:20px; }
+  .step { display:flex; gap:12px; align-items:flex-start; }
+  .step-num { background:#0ea5e9; color:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0; }
+
+  .gallery-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+  .gallery-grid img { width:100%; height:230px; object-fit:cover; border-radius:14px; transition:transform .35s; }
+  .gallery-grid img:hover { transform:scale(1.05); }
+
+  .contact-form { background:#f8fafc; border-radius:16px; padding:44px; box-shadow:0 8px 24px rgba(0,0,0,.08); }
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .form-group { display:flex; flex-direction:column; gap:6px; }
+  .form-group.full { grid-column:1/-1; }
+  .form-group label { font-weight:700; color:#0c4a6e; font-size:.9em; }
+  input, textarea, select {
+    padding:12px 14px; border:2px solid #e2e8f0; border-radius:8px; font-family:inherit; font-size:1em;
+  }
+  input:focus, textarea:focus, select:focus { border-color:#0ea5e9; outline:none; }
+  textarea { min-height:110px; resize:vertical; }
+
+  footer { background:linear-gradient(135deg,#0c4a6e 0%,#020617 100%); color:#fff; padding:54px 24px 26px; }
+  .footer-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:36px; }
+  .footer-col h3 { color:#fbbf24; margin-bottom:14px; font-size:1.05em; }
+  .footer-col p, .footer-col a { color:#cbd5e1; font-size:.92em; }
+  .footer-bottom { text-align:center; border-top:1px solid #334155; margin-top:38px; padding-top:18px; font-size:.85em; color:#94a3b8; }
+
+  @media (max-width:860px) { .about-grid { grid-template-columns:1fr; } }
+  @media (max-width:768px) {
+    nav ul { position:fixed; top:64px; right:0; background:#0c4a6e; flex-direction:column; width:220px;
+      padding:20px; gap:18px; transform:translateX(100%); transition:transform .3s; }
+    nav ul.open { transform:translateX(0); }
+    .hamburger { display:flex; }
+    .hero h1 { font-size:1.9em; }
+    .form-grid { grid-template-columns:1fr; }
+    .trust-inner { justify-content:flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<a class="wa-float" href="https://wa.me/56988228318?text=Hola%2C%20quiero%20cotizar%20una%20casa%20prefabricada" target="_blank">💬 WhatsApp</a>
+
+<header id="header">
+  <div class="header-inner">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 11L12 3L21 11V21H14V14H10V21H3V11Z" stroke="#fbbf24" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      Casas <span style="color:#fbbf24">Prefabricadas MC</span>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+    <nav><ul id="navList">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#modelos">Modelos</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul></nav>
+  </div>
+</header>
+
+<section class="hero" id="inicio">
+  <div class="hero-badge">📍 Malloa, Región de O'Higgins</div>
+  <h1>El sueño de tu casa propia, hecho realidad</h1>
+  <p>Casas prefabricadas de madera, armadas con calidad y terminaciones cuidadas, a tu medida.</p>
+  <a href="#contacto" class="cta-btn">Cotizar Ahora</a>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-inner">
+    <span>🪵 Madera de calidad</span>
+    <span>🛠️ Armado profesional</span>
+    <span>📍 Malloa 301, O'Higgins</span>
+    <span>💬 Respuesta rápida por WhatsApp</span>
+  </div>
+</div>
+
+<section class="section" id="modelos">
+  <h2 class="section-title fade-up">Nuestros Modelos</h2>
+  <p class="section-subtitle fade-up">Elige el modelo que se ajusta a tu terreno y tu familia. Todos con estructura de madera resistente y armado profesional.</p>
+  <div class="models-grid">
+    <div class="model-card fade-up">
+      <img src="assets/casa-1.jpg" alt="Modelo casa prefabricada compacta">
+      <div class="model-body">
+        <span class="badge">Modelo Básico</span>
+        <h3>Casa Compacta</h3>
+        <p>Ideal para parcela o segunda vivienda. Estructura sólida y rápida instalación.</p>
+        <a href="https://wa.me/56988228318?text=Hola%2C%20quiero%20cotizar%20la%20Casa%20Compacta" class="model-btn" target="_blank">Cotizar</a>
+      </div>
+    </div>
+    <div class="model-card fade-up">
+      <img src="assets/casa-6.jpg" alt="Modelo casa prefabricada familiar">
+      <div class="model-body">
+        <span class="badge">Modelo Familiar</span>
+        <h3>Casa Familiar</h3>
+        <p>Más espacio y distribución pensada para familias. Diseño cálido y funcional.</p>
+        <a href="https://wa.me/56988228318?text=Hola%2C%20quiero%20cotizar%20la%20Casa%20Familiar" class="model-btn" target="_blank">Cotizar</a>
+      </div>
+    </div>
+    <div class="model-card fade-up">
+      <img src="assets/casa-8.jpg" alt="Modelo casa prefabricada premium">
+      <div class="model-body">
+        <span class="badge">Modelo Premium</span>
+        <h3>Casa Premium</h3>
+        <p>Terminaciones superiores y mayor metraje. Tu casa soñada, lista para habitar.</p>
+        <a href="https://wa.me/56988228318?text=Hola%2C%20quiero%20cotizar%20la%20Casa%20Premium" class="model-btn" target="_blank">Cotizar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section about" id="nosotros">
+  <div class="about-grid">
+    <img src="assets/casa-3.jpg" alt="Trabajo Casas Prefabricadas MC" class="fade-up">
+    <div class="about-text fade-up">
+      <h2>¿Por qué elegirnos?</h2>
+      <p>Armamos casas prefabricadas de calidad en Malloa y la Región de O'Higgins, cuidando cada detalle desde la estructura hasta las terminaciones.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><p>Cotizas tu modelo por WhatsApp, sin compromiso.</p></div>
+        <div class="step"><div class="step-num">2</div><p>Coordinamos medidas, terreno y forma de pago.</p></div>
+        <div class="step"><div class="step-num">3</div><p>Armamos tu casa en terreno, lista para habitar.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="galeria">
+  <h2 class="section-title fade-up">Galería de Trabajos</h2>
+  <p class="section-subtitle fade-up">Casas reales, entregadas a clientes reales en Malloa.</p>
+  <div class="gallery-grid">
+    <img class="fade-up" src="assets/casa-2.jpg" alt="Casa prefabricada">
+    <img class="fade-up" src="assets/casa-4.jpg" alt="Casa prefabricada">
+    <img class="fade-up" src="assets/casa-5.jpg" alt="Casa prefabricada">
+    <img class="fade-up" src="assets/casa-7.jpg" alt="Casa prefabricada">
+    <img class="fade-up" src="assets/casa-9.jpg" alt="Casa prefabricada">
+    <img class="fade-up" src="assets/casa-10.jpg" alt="Casa prefabricada">
+    <img class="fade-up" src="assets/casa-11.jpg" alt="Casa prefabricada">
+    <img class="fade-up" src="assets/casa-12.jpg" alt="Casa prefabricada">
+  </div>
+</section>
+
+<section class="section" id="contacto">
+  <h2 class="section-title fade-up">¡Cotiza tu casa!</h2>
+  <p class="section-subtitle fade-up">Déjanos tus datos y te contactamos por WhatsApp.</p>
+  <div class="contact-form fade-up">
+    <form class="form-grid" id="contactForm">
+      <div class="form-group"><label>Nombre completo</label><input type="text" id="nombre" required></div>
+      <div class="form-group"><label>Teléfono</label><input type="tel" id="telefono" required></div>
+      <div class="form-group full">
+        <label>Modelo de interés</label>
+        <select id="modelo">
+          <option>Casa Compacta</option>
+          <option>Casa Familiar</option>
+          <option>Casa Premium</option>
+          <option>Aún no sé, quiero asesoría</option>
+        </select>
+      </div>
+      <div class="form-group full"><label>Cuéntanos tu proyecto</label><textarea id="mensaje" placeholder="Ubicación del terreno, plazo, tamaño que necesitas..."></textarea></div>
+      <div class="form-group full"><button type="submit" class="cta-btn" style="border:none; cursor:pointer;">Enviar por WhatsApp →</button></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="logo" style="margin-bottom:10px;">
+        <svg viewBox="0 0 24 24" fill="none" width="28" height="28"><path d="M3 11L12 3L21 11V21H14V14H10V21H3V11Z" stroke="#fbbf24" stroke-width="2" stroke-linejoin="round"/></svg>
+        Casas Prefabricadas MC
+      </div>
+      <p>Casas prefabricadas de calidad en Malloa, O'Higgins.</p>
+    </div>
+    <div class="footer-col">
+      <h3>Contacto</h3>
+      <p>📞 <a href="https://wa.me/56988228318">+56 9 8822 8318</a></p>
+      <p>📍 Malloa 301, Malloa, Chile</p>
+    </div>
+    <div class="footer-col">
+      <h3>Navegación</h3>
+      <p><a href="#modelos">Modelos</a></p>
+      <p><a href="#galeria">Galería</a></p>
+      <p><a href="#contacto">Contacto</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Casas Prefabricadas MC · Hecho por FGF Digital SPA</div>
+</footer>
+
+<script>
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 40));
+
+  const hamburger = document.getElementById('hamburger');
+  const navList = document.getElementById('navList');
+  hamburger.addEventListener('click', () => navList.classList.toggle('open'));
+  navList.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navList.classList.remove('open')));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const nombre = document.getElementById('nombre').value;
+    const telefono = document.getElementById('telefono').value;
+    const modelo = document.getElementById('modelo').value;
+    const mensaje = document.getElementById('mensaje').value;
+    const texto = `Hola, soy ${nombre} (${telefono}). Me interesa: ${modelo}. ${mensaje}`;
+    window.open(`https://wa.me/56988228318?text=${encodeURIComponent(texto)}`, '_blank');
+  });
+</script>
+</body>
+</html>
