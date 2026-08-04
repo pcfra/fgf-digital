@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="Ps. Valentina Cartagena Durán — Psicóloga clínica infanto-juvenil y adultos. Atención presencial y online en Santiago, Chile.">
   <title>Ps. Valentina Cartagena Durán | Psicóloga clínica</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +12,21 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+  <div class="preview-gate" id="previewGate" hidden>
+    <div class="preview-gate-box">
+      <p class="preview-gate-label">Vista privada · FGF Digital</p>
+      <h1>Web en borrador</h1>
+      <p>Ingresa la clave que te compartimos para ver la propuesta de Valentina Cartagena.</p>
+      <form id="previewGateForm">
+        <input type="password" id="previewPass" placeholder="Clave de acceso" autocomplete="off" required>
+        <button type="submit">Entrar</button>
+      </form>
+      <p class="preview-gate-error" id="previewGateError" hidden>Clave incorrecta</p>
+    </div>
+  </div>
+
+  <div class="preview-banner" id="previewBanner" hidden>Borrador privado — no indexado · FGF Digital</div>
 
   <header class="nav">
     <div class="nav-inner">
@@ -185,5 +201,6 @@
   <a class="wa-float" href="https://wa.me/569873697679?text=Hola%20Valentina%2C%20quiero%20agendar%20una%20consulta." target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
 
   <script src="main.js"></script>
+  <script src="gate.js"></script>
 </body>
 </html>
